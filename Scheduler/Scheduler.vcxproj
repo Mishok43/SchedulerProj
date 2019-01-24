@@ -133,16 +133,46 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActivitiesForm.cpp" />
+    <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="ParametersForm.cpp" />
+    <ClCompile Include="ScheduleForm.cpp" />
+    <ClCompile Include="StudentsForm.cpp" />
+    <ClCompile Include="TeachersForm.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ActivitiesForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ClassroomsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="MainForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ParametersForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ScheduleForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="StudentsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="TeachersForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ParametersForm.resx">
+      <DependentUpon>ParametersForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StudentsForm.resx">
+      <DependentUpon>StudentsForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
