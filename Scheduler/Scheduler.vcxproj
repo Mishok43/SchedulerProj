@@ -141,6 +141,7 @@
     <ClCompile Include="ParametersForm.cpp" />
     <ClCompile Include="ScheduleForm.cpp" />
     <ClCompile Include="StudentsForm.cpp" />
+    <ClCompile Include="TeacherInfoForm.cpp" />
     <ClCompile Include="TeachersForm.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -168,11 +169,20 @@
     <ClInclude Include="StudentsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="TeacherInfoForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="TeachersForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ActivitiesForm.resx">
+      <DependentUpon>ActivitiesForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassroomsForm.resx">
+      <DependentUpon>ClassroomsForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupsForm.resx">
       <DependentUpon>GroupsForm.h</DependentUpon>
     </EmbeddedResource>
@@ -184,6 +194,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StudentsForm.resx">
       <DependentUpon>StudentsForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TeachersForm.resx">
+      <DependentUpon>TeachersForm.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

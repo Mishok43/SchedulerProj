@@ -76,6 +76,10 @@ namespace Scheduler {
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
+			this->groupName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupSize = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupAreRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupTags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
 			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->buttonRemove = (gcnew System::Windows::Forms::Button());
@@ -88,10 +92,6 @@ namespace Scheduler {
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->groupName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupSize = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupAreRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupTags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -130,8 +130,39 @@ namespace Scheduler {
 			});
 			this->dataGridView->Location = System::Drawing::Point(12, 41);
 			this->dataGridView->Name = L"dataGridView";
+			this->dataGridView->RowHeadersVisible = false;
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 3;
+			// 
+			// groupName
+			// 
+			this->groupName->Frozen = true;
+			this->groupName->HeaderText = L"Группа";
+			this->groupName->Name = L"groupName";
+			this->groupName->ReadOnly = true;
+			// 
+			// groupSize
+			// 
+			this->groupSize->Frozen = true;
+			this->groupSize->HeaderText = L"Размер";
+			this->groupSize->Name = L"groupSize";
+			this->groupSize->ReadOnly = true;
+			// 
+			// groupAreRules
+			// 
+			this->groupAreRules->Frozen = true;
+			this->groupAreRules->HeaderText = L"Огранич.";
+			this->groupAreRules->Name = L"groupAreRules";
+			this->groupAreRules->ReadOnly = true;
+			this->groupAreRules->Width = 60;
+			// 
+			// groupTags
+			// 
+			this->groupTags->Frozen = true;
+			this->groupTags->HeaderText = L"Теги";
+			this->groupTags->Name = L"groupTags";
+			this->groupTags->ReadOnly = true;
+			this->groupTags->Width = 500;
 			// 
 			// buttonAdd
 			// 
@@ -244,36 +275,6 @@ namespace Scheduler {
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(651, 2);
 			this->label5->TabIndex = 15;
-			// 
-			// groupName
-			// 
-			this->groupName->Frozen = true;
-			this->groupName->HeaderText = L"Группа";
-			this->groupName->Name = L"groupName";
-			this->groupName->ReadOnly = true;
-			// 
-			// groupSize
-			// 
-			this->groupSize->Frozen = true;
-			this->groupSize->HeaderText = L"Размер";
-			this->groupSize->Name = L"groupSize";
-			this->groupSize->ReadOnly = true;
-			// 
-			// groupAreRules
-			// 
-			this->groupAreRules->Frozen = true;
-			this->groupAreRules->HeaderText = L"Огранич.";
-			this->groupAreRules->Name = L"groupAreRules";
-			this->groupAreRules->ReadOnly = true;
-			this->groupAreRules->Width = 60;
-			// 
-			// groupTags
-			// 
-			this->groupTags->Frozen = true;
-			this->groupTags->HeaderText = L"Теги";
-			this->groupTags->Name = L"groupTags";
-			this->groupTags->ReadOnly = true;
-			this->groupTags->Width = 500;
 			// 
 			// GroupsForm
 			// 
