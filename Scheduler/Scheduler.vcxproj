@@ -195,6 +195,9 @@
     <EmbeddedResource Include="StudentsForm.resx">
       <DependentUpon>StudentsForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TeacherInfoForm.resx">
+      <DependentUpon>TeacherInfoForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TeachersForm.resx">
       <DependentUpon>TeachersForm.h</DependentUpon>
     </EmbeddedResource>

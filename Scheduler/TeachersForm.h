@@ -1,4 +1,5 @@
 #pragma once
+#include "TeacherInfoForm.h"
 
 namespace Scheduler {
 
@@ -173,6 +174,7 @@ namespace Scheduler {
 			this->buttonEdit->TabIndex = 8;
 			this->buttonEdit->Text = L"Èçìåíèòü";
 			this->buttonEdit->UseVisualStyleBackColor = true;
+			this->buttonEdit->Click += gcnew System::EventHandler(this, &TeachersForm::buttonEdit_Click);
 			// 
 			// buttonAdd
 			// 
@@ -267,5 +269,9 @@ namespace Scheduler {
 		this->textBox2->Text = "íå_óòðî: ÍÅ ÂÐÅÌß(9:00-12:00)\r\nòîëüêî_áóäíè: ÄÅÍÜÍÅÄÅËÈ(ÏÎÍÅÄÅËÜÍÈÊ-ÏßÒÍÈÖÀ)\r\nòîëüêî_âûõîäíûå: ÄÅÍÜÍÅÄÅËÈ(ÑÓÁÁÎÒÀ,ÂÎÑÊÐÅÑÅÍÜÅ)";
 
 	}
+private: System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+	TeacherInfoForm ^ form = gcnew TeacherInfoForm;
+	form->ShowDialog();
+}
 };
 }
