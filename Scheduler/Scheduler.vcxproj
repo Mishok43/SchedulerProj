@@ -90,6 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
@@ -137,6 +138,7 @@
     <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
+    <ClCompile Include="ScheduleObject.cpp" />
     <ClCompile Include="GroupInfoForm.cpp" />
     <ClCompile Include="GroupsForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
@@ -155,6 +157,7 @@
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp" />
     <ClInclude Include="Excel\ExcelFormat.h" />
+    <ClInclude Include="ScheduleObject.h" />
     <ClInclude Include="GroupInfoForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>

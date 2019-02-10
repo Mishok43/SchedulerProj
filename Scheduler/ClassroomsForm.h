@@ -1,4 +1,6 @@
 #pragma once
+#include "ScheduleObject.h"
+
 
 namespace Scheduler {
 
@@ -73,6 +75,10 @@ namespace Scheduler {
 		void InitializeComponent(void)
 		{
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
+			this->groupName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupSize = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupAreRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->groupTags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
@@ -87,10 +93,6 @@ namespace Scheduler {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->groupName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupSize = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupAreRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupTags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -106,6 +108,36 @@ namespace Scheduler {
 			this->dataGridView->RowHeadersVisible = false;
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 7;
+			// 
+			// groupName
+			// 
+			this->groupName->Frozen = true;
+			this->groupName->HeaderText = L"Идентификатор";
+			this->groupName->Name = L"groupName";
+			this->groupName->ReadOnly = true;
+			// 
+			// groupSize
+			// 
+			this->groupSize->Frozen = true;
+			this->groupSize->HeaderText = L"Вместимость";
+			this->groupSize->Name = L"groupSize";
+			this->groupSize->ReadOnly = true;
+			// 
+			// groupAreRules
+			// 
+			this->groupAreRules->Frozen = true;
+			this->groupAreRules->HeaderText = L"Огранич.";
+			this->groupAreRules->Name = L"groupAreRules";
+			this->groupAreRules->ReadOnly = true;
+			this->groupAreRules->Width = 60;
+			// 
+			// groupTags
+			// 
+			this->groupTags->Frozen = true;
+			this->groupTags->HeaderText = L"Теги";
+			this->groupTags->Name = L"groupTags";
+			this->groupTags->ReadOnly = true;
+			this->groupTags->Width = 500;
 			// 
 			// textBox1
 			// 
@@ -132,6 +164,7 @@ namespace Scheduler {
 			this->buttonImport->TabIndex = 4;
 			this->buttonImport->Text = L"Импорт";
 			this->buttonImport->UseVisualStyleBackColor = true;
+			this->buttonImport->Click += gcnew System::EventHandler(this, &ClassroomsForm::buttonImport_Click);
 			// 
 			// button1
 			// 
@@ -235,36 +268,6 @@ namespace Scheduler {
 			this->label1->TabIndex = 16;
 			this->label1->Text = L"Ограничения по тегам";
 			// 
-			// groupName
-			// 
-			this->groupName->Frozen = true;
-			this->groupName->HeaderText = L"Идентификатор";
-			this->groupName->Name = L"groupName";
-			this->groupName->ReadOnly = true;
-			// 
-			// groupSize
-			// 
-			this->groupSize->Frozen = true;
-			this->groupSize->HeaderText = L"Вместимость";
-			this->groupSize->Name = L"groupSize";
-			this->groupSize->ReadOnly = true;
-			// 
-			// groupAreRules
-			// 
-			this->groupAreRules->Frozen = true;
-			this->groupAreRules->HeaderText = L"Огранич.";
-			this->groupAreRules->Name = L"groupAreRules";
-			this->groupAreRules->ReadOnly = true;
-			this->groupAreRules->Width = 60;
-			// 
-			// groupTags
-			// 
-			this->groupTags->Frozen = true;
-			this->groupTags->HeaderText = L"Теги";
-			this->groupTags->Name = L"groupTags";
-			this->groupTags->ReadOnly = true;
-			this->groupTags->Width = 500;
-			// 
 			// ClassroomsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -293,5 +296,14 @@ namespace Scheduler {
 
 		}
 #pragma endregion
-	};
+	private: System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
+	    std::vector<Classroom*> classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
+		
+		this->dataGridView->Rows->Clear();
+		
+		for (auto c = classrooms.begin(); c != classrooms.end(); ++c)
+			this->dataGridView->Rows->Add((*c)->getParamRow());
+			
+	}
+};
 }

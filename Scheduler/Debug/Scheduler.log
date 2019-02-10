@@ -1,6 +1,9 @@
-﻿  BasicExcel.cpp
+﻿  ClassroomsForm.cpp
+  BasicExcel.cpp
   ExcelFormat.cpp
+  MainForm.cpp
+e:\c\cpp\schedulerproj\scheduler\mainform.cpp(8): warning C4829: Возможно, неправильные параметры функции main. Рекомендуемый вариант - "int main(Platform::Array<Platform::String^>^ argv)"
+  ScheduleObject.cpp
   Создание кода...
-  .NETFramework,Version=v4.6.1.AssemblyAttributes.cpp
   ActivitiesForm.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
   Scheduler.vcxproj -> E:\c\cpp\SchedulerProj\Debug\Scheduler.exe

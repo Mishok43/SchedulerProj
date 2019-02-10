@@ -250,6 +250,8 @@ private: System::Void buttonTeachers_Click(System::Object^  sender, System::Even
 private: System::Void buttonClassrooms_Click(System::Object^  sender, System::EventArgs^  e) {
 	ClassroomsForm ^ form = gcnew ClassroomsForm;
 	form->ShowDialog();
+
+	 
 }
 private: System::Void buttonActivities_Click(System::Object^  sender, System::EventArgs^  e) {
 	ActivitiesForm ^ form = gcnew ActivitiesForm;

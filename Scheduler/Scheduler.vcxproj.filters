@@ -45,6 +45,9 @@
     <ClCompile Include="TeacherInfoForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="ScheduleObject.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="Excel\BasicExcel.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -83,10 +86,13 @@
     <ClInclude Include="TeacherInfoForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Excel\ExcelFormat.h">
+    <ClInclude Include="ScheduleObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\ExcelFormat.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
