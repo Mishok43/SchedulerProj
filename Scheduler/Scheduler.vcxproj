@@ -135,6 +135,8 @@
   <ItemGroup>
     <ClCompile Include="ActivitiesForm.cpp" />
     <ClCompile Include="ClassroomsForm.cpp" />
+    <ClCompile Include="Excel\BasicExcel.cpp" />
+    <ClCompile Include="Excel\ExcelFormat.cpp" />
     <ClCompile Include="GroupInfoForm.cpp" />
     <ClCompile Include="GroupsForm.cpp" />
     <ClCompile Include="MainForm.cpp" />
@@ -151,6 +153,8 @@
     <ClInclude Include="ClassroomsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Excel\BasicExcel.hpp" />
+    <ClInclude Include="Excel\ExcelFormat.h" />
     <ClInclude Include="GroupInfoForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
