@@ -6606,6 +6606,44 @@ const char* BasicExcelCell::GetString() const
 	return NULL;
 }
 
+
+
+string BasicExcelCell::GetValue() 
+{
+	
+	string s;
+
+	switch (type_)
+	{
+	case UNDEFINED:
+		
+		break;
+
+	case BasicExcelCell::INT:
+		s = std::to_string(GetInteger());
+		break;
+
+	case BasicExcelCell::DOUBLE:
+		s = std::to_string(int(GetDouble()));
+		break;
+
+	case BasicExcelCell::STRING:
+		s = GetString();
+		break;
+
+	case BasicExcelCell::WSTRING:
+		wstring str = GetWString();
+		for (char x : str)
+			s += char(int(x) - 1104);
+		
+
+		break;
+	}
+
+	return s;
+}
+
+
 // Get an Unicode string.
 // Returns NULL if cell does not contain an Unicode string.
 const wchar_t* BasicExcelCell::GetWString() const

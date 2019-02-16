@@ -1,6 +1,5 @@
 #pragma once
-#include "ScheduleObject.h"
-
+#include "GlobalData.h"
 
 namespace Scheduler {
 
@@ -51,15 +50,20 @@ namespace Scheduler {
 	private: System::Windows::Forms::Button^  buttonEdit;
 	private: System::Windows::Forms::Button^  buttonAdd;
 	private: System::Windows::Forms::Label^  label5;
-	private: System::Windows::Forms::TextBox^  textBox3;
+
 	private: System::Windows::Forms::TextBox^  textBox2;
-	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::Label^  label2;
+
+
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  groupName;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  groupSize;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  groupAreRules;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  groupTags;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  id;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  capacity;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  areRules;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tags;
+
+
+
+
 
 	private:
 		/// <summary>
@@ -75,10 +79,6 @@ namespace Scheduler {
 		void InitializeComponent(void)
 		{
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
-			this->groupName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupSize = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupAreRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->groupTags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
@@ -88,56 +88,30 @@ namespace Scheduler {
 			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// dataGridView
 			// 
+			this->dataGridView->AllowUserToAddRows = false;
+			this->dataGridView->AllowUserToDeleteRows = false;
 			this->dataGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
-				this->groupName,
-					this->groupSize, this->groupAreRules, this->groupTags
+			this->dataGridView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
+				this->id, this->name,
+					this->capacity, this->areRules, this->tags
 			});
 			this->dataGridView->Location = System::Drawing::Point(12, 38);
 			this->dataGridView->Name = L"dataGridView";
 			this->dataGridView->RowHeadersVisible = false;
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 7;
-			// 
-			// groupName
-			// 
-			this->groupName->Frozen = true;
-			this->groupName->HeaderText = L"Идентификатор";
-			this->groupName->Name = L"groupName";
-			this->groupName->ReadOnly = true;
-			// 
-			// groupSize
-			// 
-			this->groupSize->Frozen = true;
-			this->groupSize->HeaderText = L"Вместимость";
-			this->groupSize->Name = L"groupSize";
-			this->groupSize->ReadOnly = true;
-			// 
-			// groupAreRules
-			// 
-			this->groupAreRules->Frozen = true;
-			this->groupAreRules->HeaderText = L"Огранич.";
-			this->groupAreRules->Name = L"groupAreRules";
-			this->groupAreRules->ReadOnly = true;
-			this->groupAreRules->Width = 60;
-			// 
-			// groupTags
-			// 
-			this->groupTags->Frozen = true;
-			this->groupTags->HeaderText = L"Теги";
-			this->groupTags->Name = L"groupTags";
-			this->groupTags->ReadOnly = true;
-			this->groupTags->Width = 500;
 			// 
 			// textBox1
 			// 
@@ -219,43 +193,13 @@ namespace Scheduler {
 			this->label5->Size = System::Drawing::Size(651, 2);
 			this->label5->TabIndex = 21;
 			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(353, 292);
-			this->textBox3->Multiline = true;
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(307, 74);
-			this->textBox3->TabIndex = 20;
-			// 
 			// textBox2
 			// 
-			this->textBox2->Location = System::Drawing::Point(12, 292);
+			this->textBox2->Location = System::Drawing::Point(12, 259);
 			this->textBox2->Multiline = true;
 			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(307, 74);
+			this->textBox2->Size = System::Drawing::Size(647, 107);
 			this->textBox2->TabIndex = 19;
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label3->Location = System::Drawing::Point(350, 265);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(125, 17);
-			this->label3->TabIndex = 18;
-			this->label3->Text = L"ОБЯЗАТЕЛЬНО";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(12, 265);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(109, 17);
-			this->label2->TabIndex = 17;
-			this->label2->Text = L"ИСКЛЮЧЕНО";
 			// 
 			// label1
 			// 
@@ -268,16 +212,51 @@ namespace Scheduler {
 			this->label1->TabIndex = 16;
 			this->label1->Text = L"Ограничения по тегам";
 			// 
+			// id
+			// 
+			this->id->Frozen = true;
+			this->id->HeaderText = L"ID";
+			this->id->Name = L"id";
+			this->id->ReadOnly = true;
+			this->id->Width = 25;
+			// 
+			// name
+			// 
+			this->name->Frozen = true;
+			this->name->HeaderText = L"Идентификатор";
+			this->name->Name = L"name";
+			this->name->ReadOnly = true;
+			// 
+			// capacity
+			// 
+			this->capacity->Frozen = true;
+			this->capacity->HeaderText = L"Вместимость";
+			this->capacity->Name = L"capacity";
+			this->capacity->ReadOnly = true;
+			// 
+			// areRules
+			// 
+			this->areRules->Frozen = true;
+			this->areRules->HeaderText = L"Огранич.";
+			this->areRules->Name = L"areRules";
+			this->areRules->ReadOnly = true;
+			this->areRules->Width = 60;
+			// 
+			// tags
+			// 
+			this->tags->Frozen = true;
+			this->tags->HeaderText = L"Теги";
+			this->tags->Name = L"tags";
+			this->tags->ReadOnly = true;
+			this->tags->Width = 500;
+			// 
 			// ClassroomsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(672, 378);
 			this->Controls->Add(this->label5);
-			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->buttonAddTag);
@@ -297,11 +276,12 @@ namespace Scheduler {
 		}
 #pragma endregion
 	private: System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
-	    std::vector<Classroom*> classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
+	    
+		GlobalData::Classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
 		
 		this->dataGridView->Rows->Clear();
 		
-		for (auto c = classrooms.begin(); c != classrooms.end(); ++c)
+		for (auto c = GlobalData::Classrooms.begin(); c != GlobalData::Classrooms.end(); ++c)
 			this->dataGridView->Rows->Add((*c)->getParamRow());
 			
 	}

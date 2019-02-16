@@ -1834,6 +1834,7 @@ public:
 	int GetInteger() const; 			///< Get an integer value. Returns 0 if cell does not contain an integer.
 	double GetDouble() const;			///< Get a double value. Returns 0.0 if cell does not contain a double.
 	const char* GetString() const;		///< Get an ANSI string. Returns 0 if cell does not contain an ANSI string.
+	string GetValue();
 	const wchar_t* GetWString() const;	///< Get an Unicode string. Returns 0 if cell does not contain an Unicode string.
 
 	friend ostream& operator<<(ostream& os, const BasicExcelCell& cell);	///< Print cell to output stream. Print a null character if cell is undefined.

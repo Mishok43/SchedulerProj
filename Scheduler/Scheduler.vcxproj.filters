@@ -54,6 +54,9 @@
     <ClCompile Include="Excel\ExcelFormat.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="GlobalData.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
@@ -93,6 +96,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Excel\ExcelFormat.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalData.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

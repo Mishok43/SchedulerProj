@@ -138,6 +138,7 @@
     <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
+    <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="ScheduleObject.cpp" />
     <ClCompile Include="GroupInfoForm.cpp" />
     <ClCompile Include="GroupsForm.cpp" />
@@ -157,6 +158,7 @@
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp" />
     <ClInclude Include="Excel\ExcelFormat.h" />
+    <ClInclude Include="GlobalData.h" />
     <ClInclude Include="ScheduleObject.h" />
     <ClInclude Include="GroupInfoForm.h">
       <FileType>CppForm</FileType>
