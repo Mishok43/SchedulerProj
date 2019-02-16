@@ -6633,9 +6633,11 @@ string BasicExcelCell::GetValue()
 
 	case BasicExcelCell::WSTRING:
 		wstring str = GetWString();
-		for (char x : str)
-			s += char(int(x) - 1104);
-		
+
+
+		for (wchar_t x : str)
+			s += (int(x) >= 0 && int(x) <= 128) ? x : char(int(x) - 1104);
+			
 
 		break;
 	}
