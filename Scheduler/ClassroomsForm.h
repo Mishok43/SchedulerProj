@@ -65,6 +65,11 @@ namespace Scheduler {
 
 
 
+
+
+
+
+
 	private:
 		/// <summary>
 		/// Обязательная переменная конструктора.
@@ -223,7 +228,7 @@ namespace Scheduler {
 			// name
 			// 
 			this->name->Frozen = true;
-			this->name->HeaderText = L"Идентификатор";
+			this->name->HeaderText = L"Название/Номер";
 			this->name->Name = L"name";
 			this->name->ReadOnly = true;
 			// 

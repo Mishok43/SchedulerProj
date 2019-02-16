@@ -1,18 +1,90 @@
 #include "ScheduleObject.h"
 
 
+char translit(char c)
+{
 
+	if (c >= '0' && c <= '9')
+		return c;
+	if (c >= 'a' && c <= 'z')
+		return c;
+	if (c >= 'A' && c <= 'Z')
+		return (c + 20);
 
+	if (c >= 'А' && c <= 'Я')
+		return (c + 32);
+
+	switch (c) {
+
+	case 'а': return 'a';
+	case 'б': return 'b';
+	case 'в': return 'v';
+	case 'г': return 'g';
+	case 'д': return 'd';
+	case 'е': return 'e';
+	//case 'ё': return 'yo';
+	case 'ж': return 'j';
+	case 'з': return 'z';
+	case 'и': return 'i';
+	case 'й': return 'Y';
+	case 'к': return 'k';
+	case 'л': return 'l';
+	case 'м': return 'm';
+	case 'н': return 'n';
+	case 'о': return 'o';
+	case 'п': return 'p';
+	case 'р': return 'r';
+	case 'с': return 's';
+	case 'т': return 't';
+	case 'у': return 'u';
+	case 'ф': return 'f';
+	case 'х': return 'h';
+	case 'ц': return 't';
+	case 'ч': return 'c';
+	case 'ш': return 's';
+	case 'щ': return 'S';
+	case 'ъ': return 'I';
+	case 'ы': return 'y';
+	case 'ь': return 'i';
+	case 'э': return 'e';
+	case 'ю': return 'Y';
+	case 'я': return 'A';
+	default: return '_';
+	}
+		
+}
+
+std::set<std::string> splitToSet(std::string s)
+{
+	std::set<std::string> temp;
+	int i = 0;
+	for (int j=0;j<s.size();j++)
+		if (s[j] == ',')
+		{
+			temp.insert(s.substr(i, j - i ));
+			i = j + 2;
+		}
+
+	temp.insert(s.substr(i, s.size() - i));
+	return temp;
+		
+
+}
 
 ScheduleObject::ScheduleObject(std::string name, std::set<std::string> tags)
 {
-	this->name = name;
+	setName(name);
 	this->tags = tags;
 }
 
 void ScheduleObject::setName(std::string value)
 {
-	id = value;
+	string s;
+
+	for (auto it = value.begin(); it != value.end(); ++it)
+		if (*it !=' ')
+			s += translit(*it);
+	id = s;
 	name = value;
 }
 
@@ -41,13 +113,16 @@ std::string ScheduleObject::getTagsAsString()
 {
 	std::string s;
 
+	int i = 0;
 	for (auto const& e : tags)
 	{
+		if (i>0)
+			s += ", ";
 		s += e;
-		s += ", ";
+		i++;
+		
 	}
 	return s;
-
 }
 
 std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
@@ -63,52 +138,20 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 
 	//ExcelFormat::BasicExcelCell* cell;
 
-	
-	for (int i = 1; true; i++)
+	int i = 1;
+	while (!sheet->Cell(i, 0)->GetValue().empty())
 	{
 		
-		ExcelFormat::BasicExcelCell* cell = sheet->Cell(i, 0);
 		
-		string name = cell->GetValue();
+		string name = sheet->Cell(i, 0)->GetValue();
+		int capacity = std::stoi(sheet->Cell(i, 1)->GetValue());
+		string tags = sheet->Cell(i, 2)->GetValue();
 
-		if (name.empty())
-			break;
-
-		v.push_back(new Classroom(name, {}, 4));
+		v.push_back(new Classroom(name, splitToSet(tags), capacity));
+		++i;
 		
 	}
 		
-
-	/*
-	ExcelFormat::BasicExcelCell* cell = sheet->Cell(0, 0);
-	//cell->SetFormat(fmt);
-	//const char* s = sheet->Cell(1, 0)->GetString();
-	//std::wstring s = std::wstring();
-	
-
-	
-	std::wstring s2 = std::wstring(cell->GetWString());
-	std::wstring s = L"Идентификатор";
-
-	std::string ss = wstring_to_utf16(s);
-
-	 int o = int('И');
-	//std::wstring s = L"аваыаыва";
-	OutputDebugStringW(std::to_wstring(o).c_str());
-
-	o = int(s[0]);
-	OutputDebugStringW(std::to_wstring(o).c_str());
-	//OutputDebugStringW(stemp.c_str());
-
-	ss = "Идентификатор";
-	v.push_back(new Classroom(wstring_to_utf16(s), {},4));
-	v.push_back(new Classroom(wstring_to_utf16(s2), {}, 4));
-
-	//std::wstring s = std::wstring(cell->GetWString());
-
-	//v.push_back(new Classroom(std::string(s.begin(),s.end()), {},4));
-	*/
-
 	return v;
 }
 
