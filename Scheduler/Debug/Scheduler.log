@@ -1,4 +1,0 @@
-﻿  ScheduleObject.cpp
-e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(61): warning C4018: <: несоответствие типов со знаком и без знака
-  ActivitiesForm.obj : обнаружен модуль MSIL; для MSIL последовательная компоновка отключена; выполняется полная компоновка
-  Scheduler.vcxproj -> E:\c\cpp\SchedulerProj\Debug\Scheduler.exe
