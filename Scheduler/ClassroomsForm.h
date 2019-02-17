@@ -282,12 +282,25 @@ namespace Scheduler {
 #pragma endregion
 	private: System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
 	    
-		GlobalData::Classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
+		GlobalData::Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
+
+
+
+		this->dataGridView->Rows->Clear();
+
+		//GlobalData::Classrooms.updateId(new Classroom("A", {}, 33));
+
+		vector<Classroom*> list = GlobalData::Classrooms.getVal();
+
+		for (auto c = list.begin(); c != list.end(); ++c)
+			this->dataGridView->Rows->Add((*c)->getParamRow());
+
+		/*GlobalData::Classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
 		
 		this->dataGridView->Rows->Clear();
 		
-		for (auto c = GlobalData::Classrooms.begin(); c != GlobalData::Classrooms.end(); ++c)
-			this->dataGridView->Rows->Add((*c)->getParamRow());
+		for (auto c = GlobalData::Classroom.get.begin(); c != GlobalData::Classrooms.end(); ++c)
+			this->dataGridView->Rows->Add((*c)->getParamRow());*/
 			
 	}
 };

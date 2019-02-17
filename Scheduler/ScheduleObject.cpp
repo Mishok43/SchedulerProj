@@ -1,58 +1,6 @@
 #include "ScheduleObject.h"
 
 
-char translit(char c)
-{
-
-	if (c >= '0' && c <= '9')
-		return c;
-	if (c >= 'a' && c <= 'z')
-		return c;
-	if (c >= 'A' && c <= 'Z')
-		return (c + 20);
-
-	if (c >= 'À' && c <= 'ß')
-		return (c + 32);
-
-	switch (c) {
-
-	case 'à': return 'a';
-	case 'á': return 'b';
-	case 'â': return 'v';
-	case 'ã': return 'g';
-	case 'ä': return 'd';
-	case 'å': return 'e';
-	//case '¸': return 'yo';
-	case 'æ': return 'j';
-	case 'ç': return 'z';
-	case 'è': return 'i';
-	case 'é': return 'Y';
-	case 'ê': return 'k';
-	case 'ë': return 'l';
-	case 'ì': return 'm';
-	case 'í': return 'n';
-	case 'î': return 'o';
-	case 'ï': return 'p';
-	case 'ð': return 'r';
-	case 'ñ': return 's';
-	case 'ò': return 't';
-	case 'ó': return 'u';
-	case 'ô': return 'f';
-	case 'õ': return 'h';
-	case 'ö': return 't';
-	case '÷': return 'c';
-	case 'ø': return 's';
-	case 'ù': return 'S';
-	case 'ú': return 'I';
-	case 'û': return 'y';
-	case 'ü': return 'i';
-	case 'ý': return 'e';
-	case 'þ': return 'Y';
-	case 'ÿ': return 'A';
-	default: return '_';
-	}
-		
-}
 
 std::set<std::string> splitToSet(std::string s)
 {
@@ -77,15 +25,13 @@ ScheduleObject::ScheduleObject(std::string name, std::set<std::string> tags)
 	this->tags = tags;
 }
 
+
+
+
 void ScheduleObject::setName(std::string value)
 {
-	string s;
-
-	for (auto it = value.begin(); it != value.end(); ++it)
-		if (*it !=' ')
-			s += translit(*it);
-	id = s;
 	name = value;
+	id = "";
 }
 
 std::string ScheduleObject::getName()
@@ -93,10 +39,17 @@ std::string ScheduleObject::getName()
 	return name;
 }
 
+void ScheduleObject::setId(std::string value)
+{
+	id = value;
+}
+
 std::string ScheduleObject::getId()
 {
 	return id;
 }
+
+
 
 
 
@@ -124,6 +77,9 @@ std::string ScheduleObject::getTagsAsString()
 	}
 	return s;
 }
+
+
+
 
 std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 {

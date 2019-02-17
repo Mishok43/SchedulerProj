@@ -7,6 +7,7 @@ public:
 	GlobalData();
 
 
-	static vector<Classroom*> Classrooms;
+	//static vector<Classroom*> Classrooms;
+	static ScheduleObjectContainer<Classroom> Classrooms;
 };
 
