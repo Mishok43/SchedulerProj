@@ -57,6 +57,7 @@ cli::array<System::String^>^ ScheduleObject::getParamRow()
 {
 	cli::array<System::String^>^ a = gcnew cli::array<System::String^>(getParamNum());
 	for (int i = 0; i < getParamNum(); i++)
+		//a[i] = StdToSys(getParam(i));
 		a[i] = gcnew System::String(getParam(i).c_str());
 
 	return a;

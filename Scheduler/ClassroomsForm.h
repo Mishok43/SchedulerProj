@@ -1,5 +1,6 @@
 #pragma once
 #include "GlobalData.h"
+#include "ClassroomInfoForm.h"
 
 namespace Scheduler {
 
@@ -84,6 +85,11 @@ namespace Scheduler {
 		void InitializeComponent(void)
 		{
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
+			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
@@ -95,11 +101,6 @@ namespace Scheduler {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -117,6 +118,44 @@ namespace Scheduler {
 			this->dataGridView->RowHeadersVisible = false;
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 7;
+			// 
+			// id
+			// 
+			this->id->Frozen = true;
+			this->id->HeaderText = L"ID";
+			this->id->Name = L"id";
+			this->id->ReadOnly = true;
+			this->id->Width = 25;
+			// 
+			// name
+			// 
+			this->name->Frozen = true;
+			this->name->HeaderText = L"Название/Номер";
+			this->name->Name = L"name";
+			this->name->ReadOnly = true;
+			// 
+			// capacity
+			// 
+			this->capacity->Frozen = true;
+			this->capacity->HeaderText = L"Вместимость";
+			this->capacity->Name = L"capacity";
+			this->capacity->ReadOnly = true;
+			// 
+			// areRules
+			// 
+			this->areRules->Frozen = true;
+			this->areRules->HeaderText = L"Огранич.";
+			this->areRules->Name = L"areRules";
+			this->areRules->ReadOnly = true;
+			this->areRules->Width = 60;
+			// 
+			// tags
+			// 
+			this->tags->Frozen = true;
+			this->tags->HeaderText = L"Теги";
+			this->tags->Name = L"tags";
+			this->tags->ReadOnly = true;
+			this->tags->Width = 500;
 			// 
 			// textBox1
 			// 
@@ -180,6 +219,7 @@ namespace Scheduler {
 			this->buttonEdit->TabIndex = 10;
 			this->buttonEdit->Text = L"Изменить";
 			this->buttonEdit->UseVisualStyleBackColor = true;
+			this->buttonEdit->Click += gcnew System::EventHandler(this, &ClassroomsForm::buttonEdit_Click);
 			// 
 			// buttonAdd
 			// 
@@ -217,44 +257,6 @@ namespace Scheduler {
 			this->label1->TabIndex = 16;
 			this->label1->Text = L"Ограничения по тегам";
 			// 
-			// id
-			// 
-			this->id->Frozen = true;
-			this->id->HeaderText = L"ID";
-			this->id->Name = L"id";
-			this->id->ReadOnly = true;
-			this->id->Width = 25;
-			// 
-			// name
-			// 
-			this->name->Frozen = true;
-			this->name->HeaderText = L"Название/Номер";
-			this->name->Name = L"name";
-			this->name->ReadOnly = true;
-			// 
-			// capacity
-			// 
-			this->capacity->Frozen = true;
-			this->capacity->HeaderText = L"Вместимость";
-			this->capacity->Name = L"capacity";
-			this->capacity->ReadOnly = true;
-			// 
-			// areRules
-			// 
-			this->areRules->Frozen = true;
-			this->areRules->HeaderText = L"Огранич.";
-			this->areRules->Name = L"areRules";
-			this->areRules->ReadOnly = true;
-			this->areRules->Width = 60;
-			// 
-			// tags
-			// 
-			this->tags->Frozen = true;
-			this->tags->HeaderText = L"Теги";
-			this->tags->Name = L"tags";
-			this->tags->ReadOnly = true;
-			this->tags->Width = 500;
-			// 
 			// ClassroomsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -274,6 +276,7 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonImport);
 			this->Name = L"ClassroomsForm";
 			this->Text = L"Аудитории";
+			this->Load += gcnew System::EventHandler(this, &ClassroomsForm::ClassroomsForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
@@ -284,24 +287,40 @@ namespace Scheduler {
 	    
 		GlobalData::Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
 
+		updateGrid();
+	}
 
 
+	System::Void updateGrid()
+	{
 		this->dataGridView->Rows->Clear();
-
-		//GlobalData::Classrooms.updateId(new Classroom("A", {}, 33));
 
 		vector<Classroom*> list = GlobalData::Classrooms.getVal();
 
 		for (auto c = list.begin(); c != list.end(); ++c)
 			this->dataGridView->Rows->Add((*c)->getParamRow());
-
-		/*GlobalData::Classrooms = Classroom::ExcelToClassrooms("../TestData/classrooms.xls");
-		
-		this->dataGridView->Rows->Clear();
-		
-		for (auto c = GlobalData::Classroom.get.begin(); c != GlobalData::Classrooms.end(); ++c)
-			this->dataGridView->Rows->Add((*c)->getParamRow());*/
-			
 	}
+
+	System::Void ClassroomsForm_Load(System::Object^  sender, System::EventArgs^  e) {
+		updateGrid();
+	}
+private: System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (this->dataGridView->CurrentRow)
+	{
+		GlobalData::EditingClassroom =
+			GlobalData::Classrooms.getObjectById(
+				//SysToStd(
+				msclr::interop::marshal_as<std::string>(
+					this->dataGridView->CurrentRow->Cells[0]->Value->ToString()));
+		if (GlobalData::EditingClassroom != nullptr)
+		{
+			ClassroomInfoForm ^ form = gcnew ClassroomInfoForm;
+			form->ShowDialog();
+		}
+	}
+	
+
+
+}
 };
 }

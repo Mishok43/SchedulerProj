@@ -135,6 +135,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ActivitiesForm.cpp" />
+    <ClCompile Include="ClassroomInfoForm.cpp" />
     <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
@@ -151,6 +152,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivitiesForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ClassroomInfoForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ClassroomsForm.h">
@@ -188,6 +192,9 @@
   <ItemGroup>
     <EmbeddedResource Include="ActivitiesForm.resx">
       <DependentUpon>ActivitiesForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ClassroomInfoForm.resx">
+      <DependentUpon>ClassroomInfoForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassroomsForm.resx">
       <DependentUpon>ClassroomsForm.h</DependentUpon>

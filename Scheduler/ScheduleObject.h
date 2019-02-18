@@ -4,7 +4,7 @@
 #include <string>
 #include <set>
 #include <vector>
-
+#include <msclr\marshal_cppstd.h>
 
 
 class ScheduleObject
@@ -125,7 +125,7 @@ public:
 		string fullid = id;
 		int postfix = 1;
 		while (true)
-		{
+		{\
 			bool only = true;
 			for (auto v : values)
 				if (v->getId() == fullid)
@@ -139,6 +139,13 @@ public:
 		obj->setId(fullid);
 	}
 
+	T* getObjectById(string id)
+	{
+		for (auto v : values)
+			if (v->getId() == id)
+				return dynamic_cast<T*>(v);
+		return nullptr;
+	}
 
 private:
 	vector<ScheduleObject*> values;

@@ -9,5 +9,6 @@ public:
 
 	//static vector<Classroom*> Classrooms;
 	static ScheduleObjectContainer<Classroom> Classrooms;
+	static Classroom* EditingClassroom;
 };
 
