@@ -7,6 +7,9 @@
 #include <msclr\marshal_cppstd.h>
 
 
+
+
+
 class ScheduleObject
 {
 public:
@@ -22,13 +25,19 @@ public:
 	virtual std::string getParam(int i) = 0;
 	virtual int getParamNum() = 0;
 
-	
+	virtual void ostreamF(std::ostream& os) const { std::cout << "oops"; };
+	virtual void istreamF(std::istream& is) const {};
+
+	friend std::ostream& operator<<(std::ostream& os, const ScheduleObject& obj);
+	friend std::istream& operator>>(std::ostream& is, ScheduleObject& obj);
 
 protected:
 	std::string id;
 	std::string name;
 	std::set<std::string> tags;
 	std::vector<std::string> stringRules;
+
+	
 };
 
 
@@ -36,7 +45,6 @@ template <class T>
 class ScheduleObjectContainer
 {
 public:
-
 	void setVal(vector<T*> newValues)
 	{
 		values = vector<ScheduleObject*>();
@@ -147,6 +155,38 @@ public:
 		return nullptr;
 	}
 
+
+	friend ostream& operator<<(ostream& os, const ScheduleObjectContainer& soc)
+	{
+		
+		int n = soc.values.size();
+
+		os << n << endl;
+		for (int i=0;i<n;i++)
+			os << *dynamic_cast<T*>(soc.values[i]);
+		return os;
+	}
+	friend istream& operator>>(istream& is, ScheduleObjectContainer& soc)
+	{
+		
+		int n;
+		soc.values.clear();
+
+		is >> n;
+
+		T* obj;
+		for (int i = 0; i < n; i++) 
+		{
+			is >> *obj;
+			soc.push_back(dynamic_cast<ScheduleObject*>(obj));
+		}
+			
+			
+		return is;
+	}
+
+
+
 private:
 	vector<ScheduleObject*> values;
 
@@ -163,9 +203,14 @@ public:
 	int getCapacity();
 	void setCapacity(int value);
 
+
+	virtual void ostreamF(std::ostream& os) const;
+	virtual void istreamF(std::istream& is);
+	
 	virtual std::string getParam(int i);
 	virtual int getParamNum();
 private:
 	int capacity;
+	
 };
 

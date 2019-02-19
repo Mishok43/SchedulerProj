@@ -189,26 +189,28 @@ namespace Scheduler {
 			// newToolStripMenuItem
 			// 
 			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
-			this->newToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->newToolStripMenuItem->Text = L"Создать";
 			this->newToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::newToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->openToolStripMenuItem->Text = L"Открыть";
+			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->saveToolStripMenuItem->Text = L"Сохранить";
+			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem1
 			// 
 			this->saveAsToolStripMenuItem1->Name = L"saveAsToolStripMenuItem1";
-			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(162, 22);
+			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
 			this->saveAsToolStripMenuItem1->Text = L"Сохранить как...";
 			// 
 			// MainForm
@@ -260,6 +262,16 @@ private: System::Void buttonActivities_Click(System::Object^  sender, System::Ev
 private: System::Void buttonSchedule_Click(System::Object^  sender, System::EventArgs^  e) {
 	ScheduleForm ^ form = gcnew ScheduleForm;
 	form->ShowDialog();
+}
+private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	ofstream out("../TestData/data.txt");
+	out << MainData;
+	out.close();
+}
+private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	ifstream in("../TestData/data.txt");
+	in >> MainData;
+	in.close();
 }
 };
 }

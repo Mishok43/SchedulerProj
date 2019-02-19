@@ -2,12 +2,16 @@
 #include "GlobalData.h"
 namespace Scheduler {
 
+
+	
+
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+
 
 	/// <summary>
 	/// Сводка для ClassroomInfoForm
@@ -80,7 +84,7 @@ namespace Scheduler {
 		this->label1->Text =
 			//StdToSys(
 			gcnew System::String(
-				GlobalData::EditingClassroom->getName().c_str());
+				MainData.EditingClassroom->getName().c_str());
 	}
 			 
 	};

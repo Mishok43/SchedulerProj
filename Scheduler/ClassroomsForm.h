@@ -285,7 +285,7 @@ namespace Scheduler {
 #pragma endregion
 	private: System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
 	    
-		GlobalData::Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
+		MainData.Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
 
 		updateGrid();
 	}
@@ -295,7 +295,7 @@ namespace Scheduler {
 	{
 		this->dataGridView->Rows->Clear();
 
-		vector<Classroom*> list = GlobalData::Classrooms.getVal();
+		vector<Classroom*> list = MainData.Classrooms.getVal();
 
 		for (auto c = list.begin(); c != list.end(); ++c)
 			this->dataGridView->Rows->Add((*c)->getParamRow());
@@ -307,12 +307,12 @@ namespace Scheduler {
 private: System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (this->dataGridView->CurrentRow)
 	{
-		GlobalData::EditingClassroom =
-			GlobalData::Classrooms.getObjectById(
+		MainData.EditingClassroom =
+			MainData.Classrooms.getObjectById(
 				//SysToStd(
 				msclr::interop::marshal_as<std::string>(
 					this->dataGridView->CurrentRow->Cells[0]->Value->ToString()));
-		if (GlobalData::EditingClassroom != nullptr)
+		if (MainData.EditingClassroom != nullptr)
 		{
 			ClassroomInfoForm ^ form = gcnew ClassroomInfoForm;
 			form->ShowDialog();

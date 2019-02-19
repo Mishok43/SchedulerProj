@@ -79,8 +79,17 @@ std::string ScheduleObject::getTagsAsString()
 	return s;
 }
 
+std::ostream& operator<<(std::ostream& os, const ScheduleObject& obj)
+{
+	obj.ostreamF(os);
+	return os;
+}
 
-
+std::istream& operator>>(std::istream& is,  ScheduleObject& obj)
+{
+	obj.istreamF(is);
+	return is;
+}
 
 std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 {
@@ -152,3 +161,14 @@ int Classroom::getParamNum()
 {
 	return 5;
 }
+
+void Classroom::ostreamF(std::ostream& os) const
+{
+	os << name << endl;
+}
+
+void Classroom::istreamF(std::istream& is)
+{
+	is >> name;
+}
+

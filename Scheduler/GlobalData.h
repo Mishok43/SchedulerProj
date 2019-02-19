@@ -6,9 +6,16 @@ class GlobalData
 public:
 	GlobalData();
 
+	
 
 	//static vector<Classroom*> Classrooms;
-	static ScheduleObjectContainer<Classroom> Classrooms;
-	static Classroom* EditingClassroom;
+	ScheduleObjectContainer<Classroom> Classrooms;
+	Classroom* EditingClassroom;
+
+	friend ostream& operator<<(ostream& os, const GlobalData& gd);
+	friend istream& operator>>(istream& is, GlobalData& gd);
 };
+
+extern GlobalData MainData;
+
 

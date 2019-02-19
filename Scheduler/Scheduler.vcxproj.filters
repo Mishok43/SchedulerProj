@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ExcelLib">
+      <UniqueIdentifier>{c453b0c2-07a7-4044-9505-8840e3a351cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainForm.cpp">
@@ -48,17 +51,17 @@
     <ClCompile Include="ScheduleObject.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="Excel\BasicExcel.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Excel\ExcelFormat.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="GlobalData.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ClassroomInfoForm.cpp">
       <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Excel\ExcelFormat.cpp">
+      <Filter>ExcelLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Excel\BasicExcel.cpp">
+      <Filter>ExcelLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -95,17 +98,17 @@
     <ClInclude Include="ScheduleObject.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Excel\BasicExcel.hpp">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Excel\ExcelFormat.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalData.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ClassroomInfoForm.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\ExcelFormat.h">
+      <Filter>ExcelLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Excel\BasicExcel.hpp">
+      <Filter>ExcelLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
