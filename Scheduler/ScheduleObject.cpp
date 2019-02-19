@@ -122,7 +122,10 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 }
 
 
-
+Classroom::Classroom() : ScheduleObject("?", {})
+{
+	this->capacity = 0;
+}
 
 Classroom::Classroom(std::string name, std::set<std::string> tags, int capacity) : ScheduleObject(name, tags)
 {

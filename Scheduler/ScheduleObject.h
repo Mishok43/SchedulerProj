@@ -26,10 +26,10 @@ public:
 	virtual int getParamNum() = 0;
 
 	virtual void ostreamF(std::ostream& os) const { std::cout << "oops"; };
-	virtual void istreamF(std::istream& is) const {};
+	virtual void istreamF(std::istream& is) {};
 
 	friend std::ostream& operator<<(std::ostream& os, const ScheduleObject& obj);
-	friend std::istream& operator>>(std::ostream& is, ScheduleObject& obj);
+	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
 
 protected:
 	std::string id;
@@ -168,6 +168,7 @@ public:
 	}
 	friend istream& operator>>(istream& is, ScheduleObjectContainer& soc)
 	{
+
 		
 		int n;
 		soc.values.clear();
@@ -177,8 +178,13 @@ public:
 		T* obj;
 		for (int i = 0; i < n; i++) 
 		{
+			//soc.values.push_back(dynamic_cast<ScheduleObject*>(new T()));
+			//is >> *dynamic_cast<T*>(soc.values[i]);
+
+			obj = new T();
 			is >> *obj;
-			soc.push_back(dynamic_cast<ScheduleObject*>(obj));
+			soc.values.push_back(dynamic_cast<ScheduleObject*>(obj));
+			//soc.values.push_back(dynamic_cast<ScheduleObject*>(obj));
 		}
 			
 			
@@ -199,6 +205,7 @@ public:
 
 	static std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path);
 
+	Classroom();
 	Classroom(std::string name, std::set<std::string> tags, int capacity);
 	int getCapacity();
 	void setCapacity(int value);
