@@ -76,6 +76,7 @@ namespace Scheduler {
 		/// Обязательная переменная конструктора.
 		/// </summary>
 		System::ComponentModel::Container ^components;
+		
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -283,7 +284,8 @@ namespace Scheduler {
 
 		}
 #pragma endregion
-	private: System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: 
+	System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
 	    
 		MainData.Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
 
@@ -295,23 +297,19 @@ namespace Scheduler {
 	{
 		this->dataGridView->Rows->Clear();
 
-		vector<Classroom*> list = MainData.Classrooms.getVal();
+		MainData.ClassroomsFormList = MainData.Classrooms.getVal();
 
-		for (auto c = list.begin(); c != list.end(); ++c)
+		for (auto c = MainData.ClassroomsFormList.begin(); c != MainData.ClassroomsFormList.end(); ++c)
 			this->dataGridView->Rows->Add((*c)->getParamRow());
 	}
 
 	System::Void ClassroomsForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		updateGrid();
 	}
-private: System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+	System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (this->dataGridView->CurrentRow)
 	{
-		MainData.EditingClassroom =
-			MainData.Classrooms.getObjectById(
-				//SysToStd(
-				msclr::interop::marshal_as<std::string>(
-					this->dataGridView->CurrentRow->Cells[0]->Value->ToString()));
+		MainData.EditingClassroom = MainData.ClassroomsFormList[this->dataGridView->CurrentRow->Index];
 		if (MainData.EditingClassroom != nullptr)
 		{
 			ClassroomInfoForm ^ form = gcnew ClassroomInfoForm;

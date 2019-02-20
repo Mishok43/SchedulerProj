@@ -12,6 +12,8 @@ public:
 	ScheduleObjectContainer<Classroom> Classrooms;
 	Classroom* EditingClassroom;
 
+	vector<Classroom*> ClassroomsFormList;
+
 	friend ostream& operator<<(ostream& os, const GlobalData& gd);
 	friend istream& operator>>(istream& is, GlobalData& gd);
 };

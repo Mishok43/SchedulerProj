@@ -31,25 +31,12 @@ ScheduleObject::ScheduleObject(std::string name, std::set<std::string> tags)
 void ScheduleObject::setName(std::string value)
 {
 	name = value;
-	id = "";
 }
 
 std::string ScheduleObject::getName()
 {
 	return name;
 }
-
-void ScheduleObject::setId(std::string value)
-{
-	id = value;
-}
-
-std::string ScheduleObject::getId()
-{
-	return id;
-}
-
-
 
 
 
@@ -149,10 +136,10 @@ std::string Classroom::getParam(int i)
 	std::string s = "";
 	switch (i)
 	{
-	case 0: s = id; break;
-	case 1: s = name; break;
-	case 2: s = std::to_string(capacity); break;
-	case 3: s = stringRules.empty() ? "" : "+"; break;
+	case 0: s = name; break;
+	case 1: s = std::to_string(capacity); break;
+	case 2: s = stringRules.empty() ? "" : "+"; break;
+	case 3: s = descripton; break;
 	case 4: s = getTagsAsString(); break;
 	}
 		
