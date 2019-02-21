@@ -65,6 +65,11 @@ public:
 	}
 	
 
+	void erase(int pos)
+	{
+		values.erase(values.begin()+pos);
+	}
+
 
 	friend ostream& operator<<(ostream& os, const ScheduleObjectContainer& soc)
 	{
