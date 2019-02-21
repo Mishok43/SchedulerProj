@@ -2,27 +2,12 @@
 
 
 
-std::set<std::string> splitToSet(std::string s)
-{
-	std::set<std::string> temp;
-	int i = 0;
-	for (int j=0;j<s.size();j++)
-		if (s[j] == ',')
-		{
-			temp.insert(s.substr(i, j - i ));
-			i = j + 2;
-		}
-
-	temp.insert(s.substr(i, s.size() - i));
-	return temp;
-		
-
-}
-
-ScheduleObject::ScheduleObject(std::string name, std::set<std::string> tags)
+ScheduleObject::ScheduleObject(std::string name,std::string description, std::set<std::string> tags)
 {
 	setName(name);
+	setDescription(description);
 	this->tags = tags;
+
 }
 
 
@@ -38,6 +23,15 @@ std::string ScheduleObject::getName()
 	return name;
 }
 
+void ScheduleObject::setDescription(std::string value)
+{
+	descripton = value;
+}
+
+std::string ScheduleObject::getDescription()
+{
+	return descripton;
+}
 
 
 cli::array<System::String^>^ ScheduleObject::getParamRow()
@@ -66,7 +60,25 @@ std::string ScheduleObject::getTagsAsString()
 	return s;
 }
 
-std::ostream& operator<<(std::ostream& os, const ScheduleObject& obj)
+
+void ScheduleObject::setTagsFromString(string value)
+{
+	std::set<std::string> temp;
+	int i = 0;
+	for (int j = 0; j < value.size(); j++)
+		if (value[j] == ',')
+		{
+			temp.insert(value.substr(i, j - i));
+			i = j + 2;
+		}
+
+	temp.insert(value.substr(i, value.size() - i));
+	
+	tags = temp;
+}
+
+
+std::ostream& operator<<(std::ostream& os, ScheduleObject& obj)
 {
 	obj.ostreamF(os);
 	return os;
@@ -98,10 +110,14 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 		
 		string name = sheet->Cell(i, 0)->GetValue();
 		int capacity = std::stoi(sheet->Cell(i, 1)->GetValue());
-		string tags = sheet->Cell(i, 2)->GetValue();
+		string description = sheet->Cell(i, 2)->GetValue();
+		string tags = sheet->Cell(i, 3)->GetValue();
 
-		v.push_back(new Classroom(name, splitToSet(tags), capacity));
+		Classroom* obj = new Classroom(name,description, {}, capacity);
+		obj->setTagsFromString(tags);
+		v.push_back(obj);
 		++i;
+		
 		
 	}
 		
@@ -109,12 +125,12 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 }
 
 
-Classroom::Classroom() : ScheduleObject("?", {})
+Classroom::Classroom() : ScheduleObject("?","?", {})
 {
 	this->capacity = 0;
 }
 
-Classroom::Classroom(std::string name, std::set<std::string> tags, int capacity) : ScheduleObject(name, tags)
+Classroom::Classroom(std::string name,std::string description, std::set<std::string> tags, int capacity) : ScheduleObject(name,description, tags)
 {
 	this->capacity = capacity;
 }
@@ -138,8 +154,8 @@ std::string Classroom::getParam(int i)
 	{
 	case 0: s = name; break;
 	case 1: s = std::to_string(capacity); break;
-	case 2: s = stringRules.empty() ? "" : "+"; break;
-	case 3: s = descripton; break;
+	case 2: s = descripton;  break;
+	case 3: s = stringRules.empty() ? "" : "+"; break;
 	case 4: s = getTagsAsString(); break;
 	}
 		
@@ -152,13 +168,28 @@ int Classroom::getParamNum()
 	return 5;
 }
 
-void Classroom::ostreamF(std::ostream& os) const
+void Classroom::ostreamF(std::ostream& os)
 {
+
+	string t = getTagsAsString();
 	os << name << endl;
+	os << capacity << endl;
+	os << descripton << endl;
+	os << t << endl;
+
+	
+
 }
 
 void Classroom::istreamF(std::istream& is)
 {
-	is >> name;
+	string temp;
+
+	getline(is,name);
+	getline(is, temp);
+	capacity = atoi(temp.c_str());
+	getline(is, descripton);
+	getline(is, temp);
+	setTagsFromString(temp);
 }
 

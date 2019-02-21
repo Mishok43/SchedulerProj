@@ -13,20 +13,23 @@
 class ScheduleObject
 {
 public:
-	ScheduleObject(std::string name, std::set<std::string> tags);
+	ScheduleObject(std::string name,std::string description, std::set<std::string> tags);
 	void setName(std::string value);
 	std::string getName();
+	void setDescription(std::string value);
+	std::string getDescription();
 	cli::array<System::String^>^ getParamRow();
 
 	std::string getTagsAsString();
+	void setTagsFromString(string value);
 
 	virtual std::string getParam(int i) = 0;
 	virtual int getParamNum() = 0;
 
-	virtual void ostreamF(std::ostream& os) const { std::cout << "oops"; };
+	virtual void ostreamF(std::ostream& os) { std::cout << "oops"; };
 	virtual void istreamF(std::istream& is) {};
 
-	friend std::ostream& operator<<(std::ostream& os, const ScheduleObject& obj);
+	friend std::ostream& operator<<(std::ostream& os, ScheduleObject& obj);
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
 
 protected:
@@ -76,24 +79,22 @@ public:
 	friend istream& operator>>(istream& is, ScheduleObjectContainer& soc)
 	{
 
-		
+		string temp;
+
 		int n;
+
 		soc.values.clear();
 
-		is >> n;
+		getline(is,temp);
+		n = atoi(temp.c_str());
 
 		T* obj;
 		for (int i = 0; i < n; i++) 
 		{
-			//soc.values.push_back(dynamic_cast<ScheduleObject*>(new T()));
-			//is >> *dynamic_cast<T*>(soc.values[i]);
-
 			obj = new T();
 			is >> *obj;
 			soc.values.push_back(dynamic_cast<ScheduleObject*>(obj));
-			//soc.values.push_back(dynamic_cast<ScheduleObject*>(obj));
 		}
-			
 			
 		return is;
 	}
@@ -113,12 +114,12 @@ public:
 	static std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path);
 
 	Classroom();
-	Classroom(std::string name, std::set<std::string> tags, int capacity);
+	Classroom(std::string name,std::string description, std::set<std::string> tags, int capacity);
 	int getCapacity();
 	void setCapacity(int value);
 
 
-	virtual void ostreamF(std::ostream& os) const;
+	virtual void ostreamF(std::ostream& os);
 	virtual void istreamF(std::istream& is);
 	
 	virtual std::string getParam(int i);

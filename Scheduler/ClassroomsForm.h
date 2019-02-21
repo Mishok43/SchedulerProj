@@ -56,11 +56,21 @@ namespace Scheduler {
 
 
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  id;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  capacity;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  description;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  areRules;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tags;
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -86,11 +96,6 @@ namespace Scheduler {
 		void InitializeComponent(void)
 		{
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
-			this->id = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
@@ -102,6 +107,11 @@ namespace Scheduler {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->description = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -111,52 +121,15 @@ namespace Scheduler {
 			this->dataGridView->AllowUserToDeleteRows = false;
 			this->dataGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(5) {
-				this->id, this->name,
-					this->capacity, this->areRules, this->tags
+				this->name, this->capacity,
+					this->description, this->areRules, this->tags
 			});
 			this->dataGridView->Location = System::Drawing::Point(12, 38);
 			this->dataGridView->Name = L"dataGridView";
 			this->dataGridView->RowHeadersVisible = false;
+			this->dataGridView->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 7;
-			// 
-			// id
-			// 
-			this->id->Frozen = true;
-			this->id->HeaderText = L"ID";
-			this->id->Name = L"id";
-			this->id->ReadOnly = true;
-			this->id->Width = 25;
-			// 
-			// name
-			// 
-			this->name->Frozen = true;
-			this->name->HeaderText = L"Название/Номер";
-			this->name->Name = L"name";
-			this->name->ReadOnly = true;
-			// 
-			// capacity
-			// 
-			this->capacity->Frozen = true;
-			this->capacity->HeaderText = L"Вместимость";
-			this->capacity->Name = L"capacity";
-			this->capacity->ReadOnly = true;
-			// 
-			// areRules
-			// 
-			this->areRules->Frozen = true;
-			this->areRules->HeaderText = L"Огранич.";
-			this->areRules->Name = L"areRules";
-			this->areRules->ReadOnly = true;
-			this->areRules->Width = 60;
-			// 
-			// tags
-			// 
-			this->tags->Frozen = true;
-			this->tags->HeaderText = L"Теги";
-			this->tags->Name = L"tags";
-			this->tags->ReadOnly = true;
-			this->tags->Width = 500;
 			// 
 			// textBox1
 			// 
@@ -257,6 +230,45 @@ namespace Scheduler {
 			this->label1->Size = System::Drawing::Size(157, 17);
 			this->label1->TabIndex = 16;
 			this->label1->Text = L"Ограничения по тегам";
+			// 
+			// name
+			// 
+			this->name->Frozen = true;
+			this->name->HeaderText = L"Идентификатор";
+			this->name->Name = L"name";
+			this->name->ReadOnly = true;
+			this->name->Width = 90;
+			// 
+			// capacity
+			// 
+			this->capacity->Frozen = true;
+			this->capacity->HeaderText = L"Вместимость";
+			this->capacity->Name = L"capacity";
+			this->capacity->ReadOnly = true;
+			this->capacity->Width = 80;
+			// 
+			// description
+			// 
+			this->description->Frozen = true;
+			this->description->HeaderText = L"Комментарии";
+			this->description->Name = L"description";
+			this->description->ReadOnly = true;
+			// 
+			// areRules
+			// 
+			this->areRules->Frozen = true;
+			this->areRules->HeaderText = L"Огранич.";
+			this->areRules->Name = L"areRules";
+			this->areRules->ReadOnly = true;
+			this->areRules->Width = 60;
+			// 
+			// tags
+			// 
+			this->tags->Frozen = true;
+			this->tags->HeaderText = L"Теги";
+			this->tags->Name = L"tags";
+			this->tags->ReadOnly = true;
+			this->tags->Width = 500;
 			// 
 			// ClassroomsForm
 			// 
