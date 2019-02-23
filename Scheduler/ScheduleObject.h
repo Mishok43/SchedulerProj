@@ -65,8 +65,14 @@ public:
 	}
 	
 
-	void erase(int pos)
+	void erase(T* obj)
 	{
+		ScheduleObject* casted = dynamic_cast<ScheduleObject*>(obj);
+
+		int pos = -1;
+		for (int i = 0; i < values.size(); i++)
+			if (casted == values[i])
+				pos = i;
 		values.erase(values.begin()+pos);
 	}
 

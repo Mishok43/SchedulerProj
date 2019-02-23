@@ -194,6 +194,7 @@ namespace Scheduler {
 			this->buttonAddTag->TabIndex = 12;
 			this->buttonAddTag->Text = L"Добавить тег";
 			this->buttonAddTag->UseVisualStyleBackColor = true;
+			this->buttonAddTag->Click += gcnew System::EventHandler(this, &ClassroomsForm::buttonAddTag_Click);
 			// 
 			// buttonRemove
 			// 
@@ -382,12 +383,15 @@ namespace Scheduler {
 			 int pos = this->dataGridView->CurrentRow->Index;
 			 Classroom* obj = MainData.ClassroomsFormList[pos];
 
-			 MainData.Classrooms.erase(pos);
+			 MainData.Classrooms.erase(obj);
 			 MainData.ClassroomsFormList.erase(MainData.ClassroomsFormList.begin() + pos);
 			 this->dataGridView->Rows->RemoveAt(pos);
 
 
 		 }
+	}
+	System::Void buttonAddTag_Click(System::Object^  sender, System::EventArgs^  e) {
+	
 	}
 };
 }
