@@ -6,7 +6,7 @@ class GlobalData
 public:
 	GlobalData();
 
-	
+	string messageBoxInput;
 
 	//static vector<Classroom*> Classrooms;
 	ScheduleObjectContainer<Classroom> Classrooms;

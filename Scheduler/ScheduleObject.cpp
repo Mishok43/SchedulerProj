@@ -71,13 +71,22 @@ void ScheduleObject::setTagsFromString(string value)
 			temp.insert(value.substr(i, j - i));
 			i = j + 2;
 		}
-
-	temp.insert(value.substr(i, value.size() - i));
+	if (!value.empty())
+		temp.insert(value.substr(i, value.size() - i));
 	
 	tags = temp;
 }
 
 
+void ScheduleObject::addTag(string value)
+{
+	tags.insert(value);
+}
+
+void ScheduleObject::removeTag(string value)
+{
+	tags.erase(value);
+}
 std::ostream& operator<<(std::ostream& os, ScheduleObject& obj)
 {
 	obj.ostreamF(os);

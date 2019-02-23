@@ -23,6 +23,9 @@ public:
 	std::string getTagsAsString();
 	void setTagsFromString(string value);
 
+	void addTag(string value);
+	void removeTag(string value);
+
 	virtual std::string getParam(int i) = 0;
 	virtual int getParamNum() = 0;
 
@@ -64,6 +67,10 @@ public:
 		return val;
 	}
 	
+	void add(T* obj)
+	{
+		values.push_back(dynamic_cast<ScheduleObject*>(obj));
+	}
 
 	void erase(T* obj)
 	{

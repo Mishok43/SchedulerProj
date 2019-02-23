@@ -140,6 +140,7 @@
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
     <ClCompile Include="GlobalData.cpp" />
+    <ClCompile Include="HelpRules.cpp" />
     <ClCompile Include="ScheduleObject.cpp" />
     <ClCompile Include="GroupInfoForm.cpp" />
     <ClCompile Include="GroupsForm.cpp" />
@@ -147,6 +148,7 @@
     <ClCompile Include="ParametersForm.cpp" />
     <ClCompile Include="ScheduleForm.cpp" />
     <ClCompile Include="StudentsForm.cpp" />
+    <ClCompile Include="TagTextBox.cpp" />
     <ClCompile Include="TeacherInfoForm.cpp" />
     <ClCompile Include="TeachersForm.cpp" />
   </ItemGroup>
@@ -163,6 +165,9 @@
     <ClInclude Include="Excel\BasicExcel.hpp" />
     <ClInclude Include="Excel\ExcelFormat.h" />
     <ClInclude Include="GlobalData.h" />
+    <ClInclude Include="HelpRules.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ScheduleObject.h" />
     <ClInclude Include="GroupInfoForm.h">
       <FileType>CppForm</FileType>
@@ -180,6 +185,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="StudentsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="TagTextBox.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="TeacherInfoForm.h">
@@ -210,6 +218,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StudentsForm.resx">
       <DependentUpon>StudentsForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TagTextBox.resx">
+      <DependentUpon>TagTextBox.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TeacherInfoForm.resx">
       <DependentUpon>TeacherInfoForm.h</DependentUpon>
