@@ -5,7 +5,7 @@
 #include <set>
 #include <vector>
 #include <msclr\marshal_cppstd.h>
-
+#include "Rules.h"
 
 
 
@@ -31,6 +31,8 @@ public:
 
 	virtual void ostreamF(std::ostream& os) { std::cout << "oops"; };
 	virtual void istreamF(std::istream& is) {};
+
+	//Rules Rule;
 
 	friend std::ostream& operator<<(std::ostream& os, ScheduleObject& obj);
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);

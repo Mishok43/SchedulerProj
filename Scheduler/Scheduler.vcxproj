@@ -141,6 +141,7 @@
     <ClCompile Include="Excel\ExcelFormat.cpp" />
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="HelpRules.cpp" />
+    <ClCompile Include="Rules.cpp" />
     <ClCompile Include="ScheduleObject.cpp" />
     <ClCompile Include="GroupInfoForm.cpp" />
     <ClCompile Include="GroupsForm.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="HelpRules.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Rules.h" />
     <ClInclude Include="ScheduleObject.h" />
     <ClInclude Include="GroupInfoForm.h">
       <FileType>CppForm</FileType>
@@ -209,6 +211,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="GroupsForm.resx">
       <DependentUpon>GroupsForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpRules.resx">
+      <DependentUpon>HelpRules.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>

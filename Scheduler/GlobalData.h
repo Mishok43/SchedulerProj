@@ -14,6 +14,8 @@ public:
 
 	vector<Classroom*> ClassroomsFormList;
 
+	TagRules ClassroomTagRules;
+
 	friend ostream& operator<<(ostream& os, const GlobalData& gd);
 	friend istream& operator>>(istream& is, GlobalData& gd);
 };

@@ -2,6 +2,7 @@
 #include "GlobalData.h"
 #include "ClassroomInfoForm.h"
 #include "TagTextBox.h"
+#include "HelpRules.h"
 
 namespace Scheduler {
 
@@ -58,12 +59,13 @@ namespace Scheduler {
 
 
 	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Button^  buttonHelp;
 
 
 
 
 
-	private: System::Windows::Forms::Button^  button2;
+
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  capacity;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  description;
@@ -125,7 +127,7 @@ namespace Scheduler {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->button2 = (gcnew System::Windows::Forms::Button());
+			this->buttonHelp = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -209,6 +211,7 @@ namespace Scheduler {
 			this->buttonExport->TabIndex = 5;
 			this->buttonExport->Text = L"Экспорт";
 			this->buttonExport->UseVisualStyleBackColor = true;
+			this->buttonExport->Click += gcnew System::EventHandler(this, &ClassroomsForm::buttonExport_Click);
 			// 
 			// buttonImport
 			// 
@@ -308,22 +311,23 @@ namespace Scheduler {
 			this->label1->TabIndex = 16;
 			this->label1->Text = L"Ограничения по тегам";
 			// 
-			// button2
+			// buttonHelp
 			// 
-			this->button2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->button2->Location = System::Drawing::Point(175, 237);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(34, 21);
-			this->button2->TabIndex = 22;
-			this->button2->Text = L"\?";
-			this->button2->UseVisualStyleBackColor = true;
+			this->buttonHelp->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
+			this->buttonHelp->Location = System::Drawing::Point(175, 237);
+			this->buttonHelp->Name = L"buttonHelp";
+			this->buttonHelp->Size = System::Drawing::Size(34, 21);
+			this->buttonHelp->TabIndex = 22;
+			this->buttonHelp->Text = L"\?";
+			this->buttonHelp->UseVisualStyleBackColor = true;
+			this->buttonHelp->Click += gcnew System::EventHandler(this, &ClassroomsForm::buttonHelp_Click);
 			// 
 			// ClassroomsForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(672, 378);
-			this->Controls->Add(this->button2);
+			this->Controls->Add(this->buttonHelp);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label1);
@@ -338,6 +342,7 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonImport);
 			this->Name = L"ClassroomsForm";
 			this->Text = L"Аудитории";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &ClassroomsForm::ClassroomsForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &ClassroomsForm::ClassroomsForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->EndInit();
 			this->ResumeLayout(false);
@@ -442,6 +447,16 @@ namespace Scheduler {
 
 
 		this->updateGrid();
+	}
+	System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
+		HelpRules ^ form = gcnew HelpRules;
+		form->ShowDialog();
+	}
+	System::Void ClassroomsForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+
+	}
+	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
+
 	}
 };
 }
