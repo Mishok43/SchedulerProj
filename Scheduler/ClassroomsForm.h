@@ -360,6 +360,9 @@ namespace Scheduler {
 
 		this->updateGrid();
 	}
+	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
+		Classroom::ClassroomsToExcel(MainData.Classrooms.getVal(), "../TestData/classrooms.xls");
+	}
 
 
 	System::Void updateGrid()
@@ -474,8 +477,6 @@ namespace Scheduler {
 
 		MainData.ClassroomTagRules.setText(v);
 	}
-	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
-
-	}
+	
 };
 }

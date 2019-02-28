@@ -107,10 +107,8 @@ std::istream& operator>>(std::istream& is,  ScheduleObject& obj)
 std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 {
 	std::vector<Classroom*> v;
-	
 	ExcelFormat::BasicExcel xls(path);
-
-	ExcelFormat::XLSFormatManager fmt_mgr(xls);
+	//ExcelFormat::XLSFormatManager fmt_mgr(xls);
 	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
 	//ExcelFormat::CellFormat fmt(fmt_mgr);
 	//fmt.set_format_string(XLS_FORMAT_TEXT);
@@ -136,6 +134,32 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 	}
 		
 	return v;
+}
+
+void Classroom::ClassroomsToExcel(vector<Classroom*> v, const char * path)
+{
+	ExcelFormat::BasicExcel xls;
+	xls.New(1);
+	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+	sheet->Cell(0, 0)->SetValue("Идентификатор");
+	sheet->Cell(0, 1)->SetValue("Вместимость");
+	sheet->Cell(0, 2)->SetValue("Комментарии");
+	sheet->Cell(0, 3)->SetValue("Теги");
+
+	sheet->SetColWidth(0, 15*300);
+	sheet->SetColWidth(1, 13*300);
+	sheet->SetColWidth(2, 30*300);
+	sheet->SetColWidth(3, 35*300);
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		sheet->Cell(i + 1, 0)->SetValue(v[i]->getName());
+		sheet->Cell(i + 1, 1)->SetInteger(v[i]->getCapacity());
+		sheet->Cell(i + 1, 2)->SetValue(v[i]->getDescription());
+		sheet->Cell(i + 1, 3)->SetValue(v[i]->getTagsAsString());
+	}
+
+	xls.SaveAs(path);
 }
 
 

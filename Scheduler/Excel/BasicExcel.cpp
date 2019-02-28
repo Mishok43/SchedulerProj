@@ -6646,6 +6646,29 @@ string BasicExcelCell::GetValue()
 }
 
 
+void BasicExcelCell::SetValue(string value)
+{
+	/*
+	char* p;
+	int converted = strtol(value.c_str(), &p, 10);
+	if (!*p && !value.empty())
+	{
+		SetInteger(converted);
+		return;
+	}*/
+
+
+	wstring str;
+
+
+	for (char x : value)
+		str += (int(x) >= 0 && int(x) <= 128) ? x : wchar_t(int(x) + 1104);
+
+
+	SetWString(str.c_str());
+}
+
+
 // Get an Unicode string.
 // Returns NULL if cell does not contain an Unicode string.
 const wchar_t* BasicExcelCell::GetWString() const

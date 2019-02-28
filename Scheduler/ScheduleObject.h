@@ -134,6 +134,7 @@ public:
 
 
 	static std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path);
+	static void Classroom::ClassroomsToExcel(vector<Classroom*> v,const char * path);
 
 	Classroom();
 	Classroom(std::string name,std::string description, std::set<std::string> tags, int capacity);
