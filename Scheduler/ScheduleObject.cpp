@@ -119,18 +119,10 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 {
 	std::vector<Classroom*> v;
 	ExcelFormat::BasicExcel xls(path);
-	//ExcelFormat::XLSFormatManager fmt_mgr(xls);
 	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
-	//ExcelFormat::CellFormat fmt(fmt_mgr);
-	//fmt.set_format_string(XLS_FORMAT_TEXT);
-
-	//ExcelFormat::BasicExcelCell* cell;
-
 	int i = 1;
 	while (!sheet->Cell(i, 0)->GetValue().empty())
 	{
-		
-		
 		string name = sheet->Cell(i, 0)->GetValue();
 		int capacity = std::stoi(sheet->Cell(i, 1)->GetValue());
 		string description = sheet->Cell(i, 2)->GetValue();
@@ -140,8 +132,6 @@ std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path)
 		obj->setTagsFromString(tags);
 		v.push_back(obj);
 		++i;
-		
-		
 	}
 		
 	return v;
@@ -197,7 +187,6 @@ void Classroom::setCapacity(int value)
 
 std::string Classroom::getParam(int i)
 {
-
 	std::string s = "";
 	switch (i)
 	{
@@ -207,9 +196,6 @@ std::string Classroom::getParam(int i)
 	case 3: s = rules.isEmpty() ? "" : "+"; break;
 	case 4: s = getTagsAsString(); break;
 	}
-		
-
-
 	return s;
 }
 int Classroom::getParamNum()
@@ -244,3 +230,91 @@ void Classroom::istreamF(std::istream& is)
 	is >> rules;
 }
 
+std::vector<Teacher*> Teacher::ExcelToTeachers(const char * path)
+{
+	std::vector<Teacher*> v;
+	ExcelFormat::BasicExcel xls(path);
+	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+	int i = 1;
+	while (!sheet->Cell(i, 0)->GetValue().empty())
+	{
+		string name = sheet->Cell(i, 0)->GetValue();
+		string description = sheet->Cell(i, 1)->GetValue();
+		string tags = sheet->Cell(i, 2)->GetValue();
+
+		Teacher* obj = new Teacher(name, description, {});
+		obj->setTagsFromString(tags);
+		v.push_back(obj);
+		++i;
+	}
+	return v;
+}
+
+void Teacher::TeachersToExcel(vector<Teacher*> v, const char * path)
+{
+	ExcelFormat::BasicExcel xls;
+	xls.New(1);
+	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+	sheet->Cell(0, 0)->SetValue("Фамилия Имя Отчество");
+	sheet->Cell(0, 1)->SetValue("Комментарии");
+	sheet->Cell(0, 2)->SetValue("Теги");
+
+	sheet->SetColWidth(0, 35 * 300);
+	sheet->SetColWidth(1, 30 * 300);
+	sheet->SetColWidth(2, 35 * 300);
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		sheet->Cell(i + 1, 0)->SetValue(v[i]->getName());
+		sheet->Cell(i + 1, 1)->SetValue(v[i]->getDescription());
+		sheet->Cell(i + 1, 2)->SetValue(v[i]->getTagsAsString());
+	}
+
+	xls.SaveAs(path);
+}
+
+Teacher::Teacher() : ScheduleObject("?", "?", {})
+{
+}
+
+Teacher::Teacher(std::string name, std::string description, std::set<std::string> tags) : ScheduleObject(name, description, tags)
+{
+}
+
+void Teacher::ostreamF(std::ostream & os)
+{
+	string t = getTagsAsString();
+	os << name << endl;
+	os << descripton << endl;
+	os << t << endl;
+	os << rules;
+}
+
+void Teacher::istreamF(std::istream & is)
+{
+	string temp;
+
+	getline(is, name);
+	getline(is, descripton);
+	getline(is, temp);
+	setTagsFromString(temp);
+	is >> rules;
+}
+
+std::string Teacher::getParam(int i)
+{
+	std::string s = "";
+	switch (i)
+	{
+	case 0: s = name; break;
+	case 1: s = descripton;  break;
+	case 2: s = rules.isEmpty() ? "" : "+"; break;
+	case 3: s = getTagsAsString(); break;
+	}
+	return s;
+}
+
+int Teacher::getParamNum()
+{
+	return 4;
+}

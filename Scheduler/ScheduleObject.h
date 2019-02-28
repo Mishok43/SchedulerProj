@@ -134,8 +134,8 @@ class Classroom : public ScheduleObject
 public:
 
 
-	static std::vector<Classroom*> Classroom::ExcelToClassrooms(const char * path);
-	static void Classroom::ClassroomsToExcel(vector<Classroom*> v,const char * path);
+	static std::vector<Classroom*> ExcelToClassrooms(const char * path);
+	static void ClassroomsToExcel(vector<Classroom*> v,const char * path);
 
 	Classroom();
 	Classroom(std::string name,std::string description, std::set<std::string> tags, int capacity);
@@ -151,5 +151,23 @@ public:
 private:
 	int capacity;
 	
+};
+
+
+class Teacher : public ScheduleObject
+{
+public:
+
+	static std::vector<Teacher*> ExcelToTeachers(const char * path);
+	static void TeachersToExcel(vector<Teacher*> v, const char * path);
+
+	Teacher();
+	Teacher(std::string name, std::string description, std::set<std::string> tags);
+
+	virtual void ostreamF(std::ostream& os);
+	virtual void istreamF(std::istream& is);
+
+	virtual std::string getParam(int i);
+	virtual int getParamNum();
 };
 
