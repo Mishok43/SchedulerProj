@@ -160,5 +160,8 @@
     <EmbeddedResource Include="TagTextBox.resx">
       <Filter>Файлы ресурсов</Filter>
     </EmbeddedResource>
+    <EmbeddedResource Include="HelpRules.resx">
+      <Filter>Файлы ресурсов</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

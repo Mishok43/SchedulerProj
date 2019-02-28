@@ -10,15 +10,17 @@ GlobalData::GlobalData()
 	//Classroom * GlobalData::EditingClassroom = nullptr;
 }
 
-ostream& operator<<(ostream& os, const GlobalData& dt)
+ostream& operator<<(ostream& os, GlobalData& dt)
 {
 	os << dt.Classrooms;
+	os << dt.ClassroomTagRules;
 	return os;
 }
 
 istream& operator>>(istream & is, GlobalData& dt)
 {
 	is >> dt.Classrooms;
+	is >> dt.ClassroomTagRules;
 	return is;
 }
 

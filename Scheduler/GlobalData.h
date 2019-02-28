@@ -16,7 +16,7 @@ public:
 
 	TagRules ClassroomTagRules;
 
-	friend ostream& operator<<(ostream& os, const GlobalData& gd);
+	friend ostream& operator<<(ostream& os, GlobalData& gd);
 	friend istream& operator>>(istream& is, GlobalData& gd);
 };
 

@@ -4,6 +4,7 @@
 #include "TagTextBox.h"
 #include "HelpRules.h"
 
+
 namespace Scheduler {
 
 	using namespace System;
@@ -54,8 +55,9 @@ namespace Scheduler {
 	private: System::Windows::Forms::Button^  buttonEdit;
 	private: System::Windows::Forms::Button^  buttonAdd;
 	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::TextBox^  textBox;
 
-	private: System::Windows::Forms::TextBox^  textBox2;
+
 
 
 	private: System::Windows::Forms::Label^  label1;
@@ -125,7 +127,7 @@ namespace Scheduler {
 			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->buttonHelp = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
@@ -289,15 +291,15 @@ namespace Scheduler {
 			this->label5->Size = System::Drawing::Size(651, 2);
 			this->label5->TabIndex = 21;
 			// 
-			// textBox2
+			// textBox
 			// 
-			this->textBox2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
+			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
-			this->textBox2->Location = System::Drawing::Point(12, 259);
-			this->textBox2->Multiline = true;
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(647, 107);
-			this->textBox2->TabIndex = 19;
+			this->textBox->Location = System::Drawing::Point(12, 259);
+			this->textBox->Multiline = true;
+			this->textBox->Name = L"textBox";
+			this->textBox->Size = System::Drawing::Size(647, 107);
+			this->textBox->TabIndex = 19;
 			// 
 			// label1
 			// 
@@ -329,7 +331,7 @@ namespace Scheduler {
 			this->ClientSize = System::Drawing::Size(672, 378);
 			this->Controls->Add(this->buttonHelp);
 			this->Controls->Add(this->label5);
-			this->Controls->Add(this->textBox2);
+			this->Controls->Add(this->textBox);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonRemoveTag);
 			this->Controls->Add(this->buttonAddTag);
@@ -355,7 +357,7 @@ namespace Scheduler {
 	    
 		MainData.Classrooms.setVal(Classroom::ExcelToClassrooms("../TestData/classrooms.xls"));
 
-		updateGrid();
+		this->updateGrid();
 	}
 
 
@@ -371,6 +373,12 @@ namespace Scheduler {
 
 	System::Void ClassroomsForm_Load(System::Object^  sender, System::EventArgs^  e) {
 		updateGrid();
+
+		this->textBox->Text = "";
+		vector<string> txt = MainData.ClassroomTagRules.getText();
+		for (int i = 0; i < txt.size(); i++)
+			this->textBox->Text += gcnew System::String(txt[i].c_str())+"\r\n";
+
 	}
 	System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
 		if (this->dataGridView->CurrentRow)
@@ -453,7 +461,15 @@ namespace Scheduler {
 		form->ShowDialog();
 	}
 	System::Void ClassroomsForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+		vector<string> v;
 
+		cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n","\r","\r\n" }, StringSplitOptions::None);
+		
+
+		for (int i = 0; i < lines->Length; i++)
+			v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
+
+		MainData.ClassroomTagRules.setText(v);
 	}
 	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
 
