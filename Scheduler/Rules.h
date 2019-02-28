@@ -1,6 +1,8 @@
 #pragma once
-#include "ScheduleObject.h"
-
+#include <string>
+#include <vector>
+#include <map>
+using namespace std;
 
 
 class Rules

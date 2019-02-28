@@ -388,6 +388,8 @@ namespace Scheduler {
 			{
 				ClassroomInfoForm ^ form = gcnew ClassroomInfoForm;
 				form->ShowDialog();
+
+				this->updateGrid();
 			}
 		}
 	

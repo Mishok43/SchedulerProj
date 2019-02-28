@@ -33,6 +33,11 @@ std::string ScheduleObject::getDescription()
 	return descripton;
 }
 
+Rules& ScheduleObject::getRules()
+{
+	return rules;
+}
+
 
 cli::array<System::String^>^ ScheduleObject::getParamRow()
 {
@@ -164,7 +169,7 @@ std::string Classroom::getParam(int i)
 	case 0: s = name; break;
 	case 1: s = std::to_string(capacity); break;
 	case 2: s = descripton;  break;
-	case 3: s = stringRules.empty() ? "" : "+"; break;
+	case 3: s = rules.isEmpty() ? "" : "+"; break;
 	case 4: s = getTagsAsString(); break;
 	}
 		

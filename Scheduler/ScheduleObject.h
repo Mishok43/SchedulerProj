@@ -18,10 +18,13 @@ public:
 	std::string getName();
 	void setDescription(std::string value);
 	std::string getDescription();
+	Rules& getRules();
 	cli::array<System::String^>^ getParamRow();
 
 	std::string getTagsAsString();
 	void setTagsFromString(string value);
+
+	
 
 	void addTag(string value);
 	void removeTag(string value);
@@ -32,7 +35,7 @@ public:
 	virtual void ostreamF(std::ostream& os) { std::cout << "oops"; };
 	virtual void istreamF(std::istream& is) {};
 
-	//Rules Rule;
+	
 
 	friend std::ostream& operator<<(std::ostream& os, ScheduleObject& obj);
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
@@ -42,8 +45,7 @@ protected:
 	std::string name;
 	std::string descripton;
 	std::set<std::string> tags;
-	std::vector<std::string> stringRules;
-
+	Rules rules;
 	
 };
 
