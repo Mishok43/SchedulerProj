@@ -35,7 +35,8 @@ public:
 	virtual void ostreamF(std::ostream& os) { std::cout << "oops"; };
 	virtual void istreamF(std::istream& is) {};
 
-	
+	friend string setToString(set<string> list);
+	friend set<string> stringToSet(string str);
 
 	friend std::ostream& operator<<(std::ostream& os, ScheduleObject& obj);
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);

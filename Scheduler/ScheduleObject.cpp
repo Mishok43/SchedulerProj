@@ -51,35 +51,13 @@ cli::array<System::String^>^ ScheduleObject::getParamRow()
 
 std::string ScheduleObject::getTagsAsString()
 {
-	std::string s;
-
-	int i = 0;
-	for (auto const& e : tags)
-	{
-		if (i>0)
-			s += ", ";
-		s += e;
-		i++;
-		
-	}
-	return s;
+	return setToString(tags);
 }
 
 
 void ScheduleObject::setTagsFromString(string value)
 {
-	std::set<std::string> temp;
-	int i = 0;
-	for (int j = 0; j < value.size(); j++)
-		if (value[j] == ',')
-		{
-			temp.insert(value.substr(i, j - i));
-			i = j + 2;
-		}
-	if (!value.empty())
-		temp.insert(value.substr(i, value.size() - i));
-	
-	tags = temp;
+	tags = stringToSet(value);
 }
 
 
@@ -91,6 +69,39 @@ void ScheduleObject::addTag(string value)
 void ScheduleObject::removeTag(string value)
 {
 	tags.erase(value);
+}
+string setToString(set<string> list)
+{
+
+	std::string s;
+
+	int i = 0;
+	for (auto const& e : list)
+	{
+		if (i > 0)
+			s += ", ";
+		s += e;
+		i++;
+
+	}
+	return s;
+}
+set<string> stringToSet(string str)
+{
+
+	std::set<std::string> temp;
+	int i = 0;
+	for (int j = 0; j < str.size(); j++)
+		if (str[j] == ',')
+		{
+			temp.insert(str.substr(i, j - i));
+			i = j + 2;
+		}
+	if (!str.empty())
+		temp.insert(str.substr(i, str.size() - i));
+
+
+	return temp;
 }
 std::ostream& operator<<(std::ostream& os, ScheduleObject& obj)
 {
