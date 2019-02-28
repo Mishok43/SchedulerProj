@@ -46,7 +46,7 @@ ostream& operator<<(ostream& os, Rules& rules)
 
 	os << list.size() << endl;
 	for (int i = 0; i < list.size(); i++)
-		os << list[i];
+		os << list[i] << endl;
 	return os;
 }
 
@@ -121,7 +121,7 @@ ostream& operator<<(ostream& os, TagRules& tagRules)
 
 	os << list.size() << endl;
 	for (int i = 0; i < list.size(); i++)
-		os << list[i];
+		os << list[i] << endl;
 	return os;
 }
 

@@ -298,6 +298,7 @@ namespace Scheduler {
 			this->textBox->Location = System::Drawing::Point(12, 259);
 			this->textBox->Multiline = true;
 			this->textBox->Name = L"textBox";
+			this->textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox->Size = System::Drawing::Size(647, 107);
 			this->textBox->TabIndex = 19;
 			// 

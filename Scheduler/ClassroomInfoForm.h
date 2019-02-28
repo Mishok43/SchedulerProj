@@ -168,6 +168,8 @@ namespace Scheduler {
 			// 
 			// label5
 			// 
+			this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->label5->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->label5->Location = System::Drawing::Point(12, 171);
 			this->label5->Name = L"label5";
@@ -176,6 +178,9 @@ namespace Scheduler {
 			// 
 			// textBox
 			// 
+			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->textBox->Location = System::Drawing::Point(18, 196);
@@ -183,6 +188,7 @@ namespace Scheduler {
 			this->textBox->Name = L"textBox";
 			this->textBox->Size = System::Drawing::Size(635, 107);
 			this->textBox->TabIndex = 26;
+			this->textBox->WordWrap = false;
 			// 
 			// label6
 			// 

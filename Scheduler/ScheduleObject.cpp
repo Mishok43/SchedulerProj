@@ -190,6 +190,7 @@ void Classroom::ostreamF(std::ostream& os)
 	os << capacity << endl;
 	os << descripton << endl;
 	os << t << endl;
+	os << rules;
 
 	
 
@@ -205,5 +206,6 @@ void Classroom::istreamF(std::istream& is)
 	getline(is, descripton);
 	getline(is, temp);
 	setTagsFromString(temp);
+	is >> rules;
 }
 
