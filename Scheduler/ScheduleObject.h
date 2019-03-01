@@ -71,7 +71,14 @@ public:
 			val.push_back(dynamic_cast<T*>(v));
 		return val;
 	}
-	
+
+	T* getByName(string name)
+	{
+		for (auto v : values)
+			if (v->getName() == name)
+				return dynamic_cast<T*>(v);
+		return nullptr;
+	}
 	void add(T* obj)
 	{
 		values.push_back(dynamic_cast<ScheduleObject*>(obj));
@@ -164,6 +171,8 @@ public:
 	Teacher();
 	Teacher(std::string name, std::string description, std::set<std::string> tags);
 
+	std::string getShortName();
+
 	virtual void ostreamF(std::ostream& os);
 	virtual void istreamF(std::istream& is);
 
@@ -193,6 +202,42 @@ public:
 	virtual int getParamNum();
 private:
 	int size;
+
+};
+
+
+
+class Activity : public ScheduleObject
+{
+public:
+	static ScheduleObjectContainer<Teacher>& GlobalTeachers;
+	static ScheduleObjectContainer<Group>& GlobalGroups;
+
+	static std::vector<Activity*> ExcelToActivities(const char * path);
+	static void ActivitiesToExcel(vector<Activity*> v, const char * path);
+
+	Activity();
+	Activity(std::string name, std::string description, std::set<std::string> tags, string teacherName, std::set<string> groupNames, int hours);
+	int getHours();
+	void setHours(int value);
+	Teacher* getTeacher();
+	string getTeacherName();
+	string getTeacherShortName();
+	set<Group*> getGroups();
+	string getGroupsAsString();
+
+	virtual void ostreamF(std::ostream& os);
+	virtual void istreamF(std::istream& is);
+	
+
+
+	virtual std::string getParam(int i);
+	virtual int getParamNum();
+private:
+	Teacher* teacher;
+	set<Group*> groups;
+	int hours;
+
 
 };
 

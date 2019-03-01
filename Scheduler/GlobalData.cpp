@@ -18,6 +18,8 @@ ostream& operator<<(ostream& os, GlobalData& dt)
 	os << dt.TeacherTagRules;
 	os << dt.Groups;
 	os << dt.GroupTagRules;
+	os << dt.Activities;
+	os << dt.ActivityTagRules;
 	return os;
 }
 
@@ -29,7 +31,11 @@ istream& operator>>(istream & is, GlobalData& dt)
 	is >> dt.TeacherTagRules;
 	is >> dt.Groups;
 	is >> dt.GroupTagRules;
+	is >> dt.Activities;
+	is >> dt.ActivityTagRules;
 	return is;
 }
 
 GlobalData MainData;
+ScheduleObjectContainer<Group>& Activity::GlobalGroups = MainData.Groups;
+ScheduleObjectContainer<Teacher>& Activity::GlobalTeachers = MainData.Teachers;
