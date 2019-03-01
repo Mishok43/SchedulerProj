@@ -209,6 +209,9 @@
     <EmbeddedResource Include="ClassroomsForm.resx">
       <DependentUpon>ClassroomsForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="GroupInfoForm.resx">
+      <DependentUpon>GroupInfoForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GroupsForm.resx">
       <DependentUpon>GroupsForm.h</DependentUpon>
     </EmbeddedResource>
