@@ -16,6 +16,8 @@ ostream& operator<<(ostream& os, GlobalData& dt)
 	os << dt.ClassroomTagRules;
 	os << dt.Teachers;
 	os << dt.TeacherTagRules;
+	os << dt.Groups;
+	os << dt.GroupTagRules;
 	return os;
 }
 
@@ -25,6 +27,8 @@ istream& operator>>(istream & is, GlobalData& dt)
 	is >> dt.ClassroomTagRules;
 	is >> dt.Teachers;
 	is >> dt.TeacherTagRules;
+	is >> dt.Groups;
+	is >> dt.GroupTagRules;
 	return is;
 }
 

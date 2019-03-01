@@ -1,6 +1,7 @@
 #pragma once
 #include "ParametersForm.h"
 #include "StudentsForm.h"
+#include "GroupsForm.h"
 #include "TeachersForm.h"
 #include "ClassroomsForm.h"
 #include "ActivitiesForm.h"
@@ -121,7 +122,7 @@ namespace Scheduler {
 			this->buttonStudents->Name = L"buttonStudents";
 			this->buttonStudents->Size = System::Drawing::Size(260, 30);
 			this->buttonStudents->TabIndex = 2;
-			this->buttonStudents->Text = L"Студенты/Группы";
+			this->buttonStudents->Text = L"Группы";
 			this->buttonStudents->UseVisualStyleBackColor = true;
 			this->buttonStudents->Click += gcnew System::EventHandler(this, &MainForm::buttonStudents_Click);
 			// 
@@ -189,28 +190,28 @@ namespace Scheduler {
 			// newToolStripMenuItem
 			// 
 			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
-			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->newToolStripMenuItem->Size = System::Drawing::Size(162, 22);
 			this->newToolStripMenuItem->Text = L"Создать";
 			this->newToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::newToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(162, 22);
 			this->openToolStripMenuItem->Text = L"Открыть";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(162, 22);
 			this->saveToolStripMenuItem->Text = L"Сохранить";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem1
 			// 
 			this->saveAsToolStripMenuItem1->Name = L"saveAsToolStripMenuItem1";
-			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
+			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(162, 22);
 			this->saveAsToolStripMenuItem1->Text = L"Сохранить как...";
 			// 
 			// MainForm
@@ -242,7 +243,7 @@ private: System::Void buttonParameters_Click(System::Object^  sender, System::Ev
 	form->ShowDialog();
 }
 private: System::Void buttonStudents_Click(System::Object^  sender, System::EventArgs^  e) {
-	StudentsForm ^ form = gcnew StudentsForm;
+	GroupsForm ^ form = gcnew GroupsForm;
 	form->ShowDialog();
 }
 private: System::Void buttonTeachers_Click(System::Object^  sender, System::EventArgs^  e) {

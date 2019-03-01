@@ -171,3 +171,28 @@ public:
 	virtual int getParamNum();
 };
 
+
+class Group : public ScheduleObject
+{
+public:
+
+
+	static std::vector<Group*> ExcelToGroups(const char * path);
+	static void GroupsToExcel(vector<Group*> v, const char * path);
+
+	Group();
+	Group(std::string name, std::string description, std::set<std::string> tags, int size);
+	int getSize();
+	void setSize(int value);
+
+
+	virtual void ostreamF(std::ostream& os);
+	virtual void istreamF(std::istream& is);
+
+	virtual std::string getParam(int i);
+	virtual int getParamNum();
+private:
+	int size;
+
+};
+

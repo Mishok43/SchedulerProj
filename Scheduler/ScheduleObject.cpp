@@ -318,3 +318,120 @@ int Teacher::getParamNum()
 {
 	return 4;
 }
+
+
+std::vector<Group*> Group::ExcelToGroups(const char * path)
+{
+	std::vector<Group*> v;
+	ExcelFormat::BasicExcel xls(path);
+	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+	int i = 1;
+	while (!sheet->Cell(i, 0)->GetValue().empty())
+	{
+		string name = sheet->Cell(i, 0)->GetValue();
+		int capacity = std::stoi(sheet->Cell(i, 1)->GetValue());
+		string description = sheet->Cell(i, 2)->GetValue();
+		string tags = sheet->Cell(i, 3)->GetValue();
+
+		Group* obj = new Group(name, description, {}, capacity);
+		obj->setTagsFromString(tags);
+		v.push_back(obj);
+		++i;
+	}
+
+	return v;
+}
+
+void Group::GroupsToExcel(vector<Group*> v, const char * path)
+{
+	ExcelFormat::BasicExcel xls;
+	xls.New(1);
+	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+	sheet->Cell(0, 0)->SetValue("Идентификатор");
+	sheet->Cell(0, 1)->SetValue("Размер");
+	sheet->Cell(0, 2)->SetValue("Комментарии");
+	sheet->Cell(0, 3)->SetValue("Теги");
+
+	sheet->SetColWidth(0, 15 * 300);
+	sheet->SetColWidth(1, 13 * 300);
+	sheet->SetColWidth(2, 30 * 300);
+	sheet->SetColWidth(3, 35 * 300);
+
+	for (int i = 0; i < v.size(); i++)
+	{
+		sheet->Cell(i + 1, 0)->SetValue(v[i]->getName());
+		sheet->Cell(i + 1, 1)->SetInteger(v[i]->getSize());
+		sheet->Cell(i + 1, 2)->SetValue(v[i]->getDescription());
+		sheet->Cell(i + 1, 3)->SetValue(v[i]->getTagsAsString());
+	}
+
+	xls.SaveAs(path);
+}
+
+
+Group::Group() : ScheduleObject("?", "?", {})
+{
+	this->size = 0;
+}
+
+Group::Group(std::string name, std::string description, std::set<std::string> tags, int size) : ScheduleObject(name, description, tags)
+{
+	this->size = size;
+}
+
+int Group::getSize()
+{
+	return size;
+}
+
+void Group::setSize(int value)
+{
+	size = value;
+}
+
+
+std::string Group::getParam(int i)
+{
+	std::string s = "";
+	switch (i)
+	{
+	case 0: s = name; break;
+	case 1: s = std::to_string(size); break;
+	case 2: s = descripton;  break;
+	case 3: s = rules.isEmpty() ? "" : "+"; break;
+	case 4: s = getTagsAsString(); break;
+	}
+	return s;
+}
+int Group::getParamNum()
+{
+	return 5;
+}
+
+void Group::ostreamF(std::ostream& os)
+{
+
+	string t = getTagsAsString();
+	os << name << endl;
+	os << size << endl;
+	os << descripton << endl;
+	os << t << endl;
+	os << rules;
+
+
+
+}
+
+void Group::istreamF(std::istream& is)
+{
+	string temp;
+
+	getline(is, name);
+	getline(is, temp);
+	size = atoi(temp.c_str());
+	getline(is, descripton);
+	getline(is, temp);
+	setTagsFromString(temp);
+	is >> rules;
+}
+
