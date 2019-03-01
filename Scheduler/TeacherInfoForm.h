@@ -1,4 +1,5 @@
 #pragma once
+#include "GlobalData.h"
 
 namespace Scheduler {
 
@@ -34,21 +35,33 @@ namespace Scheduler {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Label^  label1;
-	protected:
-	private: System::Windows::Forms::TextBox^  textBox1;
-	private: System::Windows::Forms::TextBox^  textBox2;
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::TextBox^  textBox3;
-	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::TextBox^  textBox4;
-	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::Label^  label5;
-	private: System::Windows::Forms::TextBox^  textBox5;
+	protected:
+	private: System::Windows::Forms::TextBox^  textBox;
 	private: System::Windows::Forms::Label^  label6;
-	private: System::Windows::Forms::Button^  button1;
-	private: System::Windows::Forms::TextBox^  textBox6;
-	private: System::Windows::Forms::Label^  label7;
+	private: System::Windows::Forms::TextBox^  textBoxTags;
+	private: System::Windows::Forms::TextBox^  textBoxDescription;
+
+	private: System::Windows::Forms::TextBox^  textBoxName;
+	private: System::Windows::Forms::Label^  labelTags;
+	private: System::Windows::Forms::Label^  labelDescription;
+
+	private: System::Windows::Forms::Label^  labelName;
+
+	protected:
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -63,176 +76,164 @@ namespace Scheduler {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox = (gcnew System::Windows::Forms::TextBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
-			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->textBoxTags = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxDescription = (gcnew System::Windows::Forms::TextBox());
+			this->textBoxName = (gcnew System::Windows::Forms::TextBox());
+			this->labelTags = (gcnew System::Windows::Forms::Label());
+			this->labelDescription = (gcnew System::Windows::Forms::Label());
+			this->labelName = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(12, 26);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(90, 13);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"Идентификатор:";
-			this->label1->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(108, 23);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 1;
-			this->textBox1->Text = L"emgrinkrug";
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(108, 49);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(100, 20);
-			this->textBox2->TabIndex = 3;
-			this->textBox2->Text = L"Гринкруг";
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(12, 52);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(59, 13);
-			this->label2->TabIndex = 2;
-			this->label2->Text = L"Фамилия:";
-			this->label2->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(108, 101);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(100, 20);
-			this->textBox3->TabIndex = 7;
-			this->textBox3->Text = L"Михайлович";
-			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(12, 104);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(57, 13);
-			this->label3->TabIndex = 6;
-			this->label3->Text = L"Отчество:";
-			this->label3->TextAlign = System::Drawing::ContentAlignment::TopRight;
-			// 
-			// textBox4
-			// 
-			this->textBox4->Location = System::Drawing::Point(108, 75);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(100, 20);
-			this->textBox4->TabIndex = 5;
-			this->textBox4->Text = L"Ефим";
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(12, 78);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(32, 13);
-			this->label4->TabIndex = 4;
-			this->label4->Text = L"Имя:";
-			this->label4->TextAlign = System::Drawing::ContentAlignment::TopRight;
 			// 
 			// label5
 			// 
+			this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
 			this->label5->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
-			this->label5->Location = System::Drawing::Point(9, 138);
+			this->label5->Location = System::Drawing::Point(12, 141);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(651, 2);
-			this->label5->TabIndex = 24;
+			this->label5->Size = System::Drawing::Size(649, 2);
+			this->label5->TabIndex = 38;
 			// 
-			// textBox5
+			// textBox
 			// 
-			this->textBox5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->textBox5->Location = System::Drawing::Point(15, 163);
-			this->textBox5->Multiline = true;
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(635, 107);
-			this->textBox5->TabIndex = 23;
-			this->textBox5->Text = L"ВРЕМЯ(14:00-21:00)\r\nНЕ АУДИТОРИЯ(407)";
+			this->textBox->Location = System::Drawing::Point(18, 166);
+			this->textBox->Multiline = true;
+			this->textBox->Name = L"textBox";
+			this->textBox->Size = System::Drawing::Size(633, 138);
+			this->textBox->TabIndex = 37;
+			this->textBox->WordWrap = false;
 			// 
 			// label6
 			// 
 			this->label6->AutoSize = true;
 			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label6->Location = System::Drawing::Point(12, 143);
+			this->label6->Location = System::Drawing::Point(15, 146);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(210, 17);
-			this->label6->TabIndex = 22;
+			this->label6->TabIndex = 36;
 			this->label6->Text = L"Индивидуальные ограничения";
 			// 
-			// button1
+			// textBoxTags
 			// 
-			this->button1->Location = System::Drawing::Point(362, 47);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(194, 23);
-			this->button1->TabIndex = 25;
-			this->button1->Text = L"Список занятий";
-			this->button1->UseVisualStyleBackColor = true;
+			this->textBoxTags->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBoxTags->Location = System::Drawing::Point(138, 100);
+			this->textBoxTags->Name = L"textBoxTags";
+			this->textBoxTags->Size = System::Drawing::Size(400, 23);
+			this->textBoxTags->TabIndex = 35;
 			// 
-			// textBox6
+			// textBoxDescription
 			// 
-			this->textBox6->Location = System::Drawing::Point(304, 101);
-			this->textBox6->Name = L"textBox6";
-			this->textBox6->Size = System::Drawing::Size(346, 20);
-			this->textBox6->TabIndex = 27;
-			this->textBox6->Text = L"только_будни";
+			this->textBoxDescription->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBoxDescription->Location = System::Drawing::Point(138, 70);
+			this->textBoxDescription->Name = L"textBoxDescription";
+			this->textBoxDescription->Size = System::Drawing::Size(400, 23);
+			this->textBoxDescription->TabIndex = 34;
 			// 
-			// label7
+			// textBoxName
 			// 
-			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(264, 104);
-			this->label7->Name = L"label7";
-			this->label7->Size = System::Drawing::Size(34, 13);
-			this->label7->TabIndex = 26;
-			this->label7->Text = L"Теги:";
-			this->label7->TextAlign = System::Drawing::ContentAlignment::TopRight;
+			this->textBoxName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->textBoxName->Location = System::Drawing::Point(138, 30);
+			this->textBoxName->Name = L"textBoxName";
+			this->textBoxName->Size = System::Drawing::Size(400, 23);
+			this->textBoxName->TabIndex = 32;
+			// 
+			// labelTags
+			// 
+			this->labelTags->AutoSize = true;
+			this->labelTags->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labelTags->Location = System::Drawing::Point(14, 100);
+			this->labelTags->Name = L"labelTags";
+			this->labelTags->Size = System::Drawing::Size(42, 17);
+			this->labelTags->TabIndex = 31;
+			this->labelTags->Text = L"Теги:";
+			// 
+			// labelDescription
+			// 
+			this->labelDescription->AutoSize = true;
+			this->labelDescription->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labelDescription->Location = System::Drawing::Point(14, 70);
+			this->labelDescription->Name = L"labelDescription";
+			this->labelDescription->Size = System::Drawing::Size(93, 17);
+			this->labelDescription->TabIndex = 30;
+			this->labelDescription->Text = L"Коментарии:";
+			// 
+			// labelName
+			// 
+			this->labelName->AutoSize = true;
+			this->labelName->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->labelName->Location = System::Drawing::Point(14, 30);
+			this->labelName->Name = L"labelName";
+			this->labelName->Size = System::Drawing::Size(46, 17);
+			this->labelName->TabIndex = 28;
+			this->labelName->Text = L"ФИО:";
 			// 
 			// TeacherInfoForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(672, 284);
-			this->Controls->Add(this->textBox6);
-			this->Controls->Add(this->label7);
-			this->Controls->Add(this->button1);
+			this->ClientSize = System::Drawing::Size(670, 315);
 			this->Controls->Add(this->label5);
-			this->Controls->Add(this->textBox5);
+			this->Controls->Add(this->textBox);
 			this->Controls->Add(this->label6);
-			this->Controls->Add(this->textBox3);
-			this->Controls->Add(this->label3);
-			this->Controls->Add(this->textBox4);
-			this->Controls->Add(this->label4);
-			this->Controls->Add(this->textBox2);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->textBox1);
-			this->Controls->Add(this->label1);
+			this->Controls->Add(this->textBoxTags);
+			this->Controls->Add(this->textBoxDescription);
+			this->Controls->Add(this->textBoxName);
+			this->Controls->Add(this->labelTags);
+			this->Controls->Add(this->labelDescription);
+			this->Controls->Add(this->labelName);
 			this->Name = L"TeacherInfoForm";
-			this->Text = L"Гринкруг Е.М.";
+			this->Text = L"TeacherInfoForm";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &TeacherInfoForm::TeacherInfoForm_FormClosing);
+			this->Load += gcnew System::EventHandler(this, &TeacherInfoForm::TeacherInfoForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	};
+	
+private: System::Void TeacherInfoForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	this->textBoxName->Text =
+		gcnew System::String(MainData.EditingTeacher->getName().c_str());
+	this->textBoxDescription->Text =
+		gcnew System::String(MainData.EditingTeacher->getDescription().c_str());
+	this->textBoxTags->Text =
+		gcnew System::String(MainData.EditingTeacher->getTagsAsString().c_str());
+
+	this->textBox->Text = "";
+	vector<string> txt = MainData.EditingTeacher->getRules().getText();
+	for (int i = 0; i < txt.size(); i++)
+		this->textBox->Text += gcnew System::String(txt[i].c_str()) + "\r\n";
+
+}
+
+	private: System::Void TeacherInfoForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+
+
+		MainData.EditingTeacher->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
+		MainData.EditingTeacher->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
+		MainData.EditingTeacher->setTagsFromString(msclr::interop::marshal_as<std::string>(textBoxTags->Text));
+
+
+		vector<string> v;
+		cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
+		for (int i = 0; i < lines->Length; i++)
+			v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
+		MainData.EditingTeacher->getRules().setText(v);
+	}
+};
 }

@@ -154,7 +154,7 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxDescription->Location = System::Drawing::Point(138, 100);
 			this->textBoxDescription->Name = L"textBoxDescription";
-			this->textBoxDescription->Size = System::Drawing::Size(271, 23);
+			this->textBoxDescription->Size = System::Drawing::Size(400, 23);
 			this->textBoxDescription->TabIndex = 6;
 			// 
 			// textBoxTags
@@ -163,7 +163,7 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxTags->Location = System::Drawing::Point(138, 130);
 			this->textBoxTags->Name = L"textBoxTags";
-			this->textBoxTags->Size = System::Drawing::Size(271, 23);
+			this->textBoxTags->Size = System::Drawing::Size(400, 23);
 			this->textBoxTags->TabIndex = 7;
 			// 
 			// label5

@@ -18,6 +18,9 @@ void Rules::update()
 
 void Rules::setText(vector<string> text)
 {
+
+	if (text[0].empty())
+		return;
 	this->text = text;
 }
 
