@@ -1,10 +1,15 @@
 #pragma once
 #include "ScheduleObject.h"
+#include "ctime"
 
 class GlobalData
 {
 public:
 	GlobalData();
+	
+
+	tm StartDate;
+	int Days;
 
 	string messageBoxInput;
 

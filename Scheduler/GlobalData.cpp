@@ -6,6 +6,10 @@
 
 GlobalData::GlobalData()
 {
+	std::time_t t = std::time(0);
+	StartDate = *std::localtime(&t);
+	Days = 100;
+
 	//ScheduleObjectContainer<Classroom> GlobalData::Classrooms;
 	//Classroom * GlobalData::EditingClassroom = nullptr;
 }
