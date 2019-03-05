@@ -6,6 +6,7 @@
 #include "ClassroomsForm.h"
 #include "ActivitiesForm.h"
 #include "ScheduleForm.h"
+#include "GeneratedSchedule.h"
 
 
 
@@ -261,8 +262,13 @@ private: System::Void buttonActivities_Click(System::Object^  sender, System::Ev
 	form->ShowDialog();
 }
 private: System::Void buttonSchedule_Click(System::Object^  sender, System::EventArgs^  e) {
-	ScheduleForm ^ form = gcnew ScheduleForm;
-	form->ShowDialog();
+	//ScheduleForm ^ form = gcnew ScheduleForm;
+	//form->ShowDialog();
+	GeneratedSchedule gs = GeneratedSchedule(MainData);
+
+	ofstream out("../TestData/output.txt");
+	out << gs;
+	out.close();
 }
 private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	ofstream out("../TestData/data.txt");

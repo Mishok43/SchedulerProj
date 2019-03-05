@@ -139,6 +139,7 @@
     <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
+    <ClCompile Include="GeneratedSchedule.cpp" />
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="HelpRules.cpp" />
     <ClCompile Include="Rules.cpp" />
@@ -165,6 +166,7 @@
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp" />
     <ClInclude Include="Excel\ExcelFormat.h" />
+    <ClInclude Include="GeneratedSchedule.h" />
     <ClInclude Include="GlobalData.h" />
     <ClInclude Include="HelpRules.h">
       <FileType>CppForm</FileType>
