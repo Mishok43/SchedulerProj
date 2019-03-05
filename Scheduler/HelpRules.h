@@ -50,6 +50,7 @@ namespace Scheduler {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			System::ComponentModel::ComponentResourceManager^  resources = (gcnew System::ComponentModel::ComponentResourceManager(HelpRules::typeid));
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
@@ -57,9 +58,9 @@ namespace Scheduler {
 			// 
 			this->label1->Location = System::Drawing::Point(17, 15);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(243, 283);
+			this->label1->Size = System::Drawing::Size(243, 332);
 			this->label1->TabIndex = 0;
-			this->label1->Text = L"Справка\r\nинформация\r\nвсякая\r\nа\r\nа\r\nа\r\nя\r\nя\r\nя\r\nя";
+			this->label1->Text = resources->GetString(L"label1.Text");
 			// 
 			// HelpRules
 			// 
