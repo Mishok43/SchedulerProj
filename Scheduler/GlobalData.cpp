@@ -6,16 +6,35 @@
 
 GlobalData::GlobalData()
 {
+	Title = "Учебное заведение: 1 Семестр";
+
 	std::time_t t = std::time(0);
-	StartDate = *std::localtime(&t);
-	Days = 100;
+	Rules::Settings.StartDate = *std::localtime(&t);
+	Rules::Settings.Days = 70;
+
+	Rules::Settings.ActivitiesPerDay = 9;
+
+	for (int i = 0; i < 20; i++)
+		Rules::Settings.ActivityStartTime[i] = 9 * 60 + (45 + 10) * i ;
+	for (int i = 0; i < 20; i++)
+		Rules::Settings.ActivityEndTime[i] = 9 * 60 + (45 + 10) * i + 45;
+
+	for (int i = 0; i < 20; i++)
+		if (Rules::Settings.ActivityStartTime[i] > (60 * 23 + 59))
+			Rules::Settings.ActivityStartTime[i] = 60 * 23 + 59;
+	for (int i = 0; i < 20; i++)
+		if (Rules::Settings.ActivityEndTime[i] > (60 * 23 + 59))
+			Rules::Settings.ActivityEndTime[i] = 60 * 23 + 59;
 
 	//ScheduleObjectContainer<Classroom> GlobalData::Classrooms;
 	//Classroom * GlobalData::EditingClassroom = nullptr;
 }
 
+
 ostream& operator<<(ostream& os, GlobalData& dt)
 {
+	os << dt.Title << endl;
+	os << Rules::Settings;
 	os << dt.Classrooms;
 	os << dt.ClassroomTagRules;
 	os << dt.Teachers;
@@ -29,6 +48,8 @@ ostream& operator<<(ostream& os, GlobalData& dt)
 
 istream& operator>>(istream & is, GlobalData& dt)
 {
+	getline(is, dt.Title);
+	is >> Rules::Settings;
 	is >> dt.Classrooms;
 	is >> dt.ClassroomTagRules;
 	is >> dt.Teachers;

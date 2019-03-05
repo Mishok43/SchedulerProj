@@ -2,19 +2,74 @@
 
 
 
+
+
+
+
+ostream& operator<<(ostream& os, RulesSettings& settings)
+{
+
+	os << settings.StartDate.tm_year << endl;
+	os << settings.StartDate.tm_mon << endl;
+	os << settings.StartDate.tm_mday << endl;
+	os << settings.Days << endl;
+	os << settings.ActivitiesPerDay << endl;
+
+	for (int i = 0; i < 20; i++)
+	{
+		os << settings.ActivityStartTime[i] << endl;
+		os << settings.ActivityEndTime[i] << endl;
+	}
+		
+	return os;
+}
+
+istream& operator>>(istream& is, RulesSettings& settings)
+{
+
+	string temp;
+	getline(is, temp);
+	settings.StartDate.tm_year = atoi(temp.c_str());
+	getline(is, temp);
+	settings.StartDate.tm_mon = atoi(temp.c_str());
+	getline(is, temp);
+	settings.StartDate.tm_mday = atoi(temp.c_str());
+	getline(is, temp);
+	settings.Days = atoi(temp.c_str());
+	getline(is, temp);
+	settings.ActivitiesPerDay = atoi(temp.c_str());
+
+
+	for (int i = 0; i < 20; i++)
+	{
+		getline(is, temp);
+		settings.ActivityStartTime[i]=(atoi(temp.c_str()));
+		getline(is, temp);
+		settings.ActivityEndTime[i] = (atoi(temp.c_str()));
+	}
+
+
+	return is;
+}
+
+RulesSettings Rules::Settings;
+
+string Rules::activityHourToStringDebug(int i)
+{
+	tm time = Rules::Settings.StartDate;
+
+	int day = i / Rules::Settings.ActivitiesPerDay;
+	int activity = i % Rules::Settings.ActivitiesPerDay;
+
+	return "Hour: "+to_string(i)+" Day:"+to_string(day) +" Activity:" +to_string(activity);
+}
+
+
 Rules::Rules()
 {
 	
 }
 
-void Rules::update()
-{
-	if (isEmpty())
-		return;
-
-
-
-}
 
 void Rules::setText(vector<string> text)
 {
@@ -33,6 +88,11 @@ vector<string>& Rules::getText()
 string Rules::getErrorMessage()
 {
 	return errorMessage;
+}
+
+void Rules::update(tm startDate, int dayNum)
+{
+
 }
 
 bool Rules::isEmpty()

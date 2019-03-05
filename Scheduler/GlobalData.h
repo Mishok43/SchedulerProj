@@ -7,9 +7,8 @@ class GlobalData
 public:
 	GlobalData();
 	
+	string Title;
 
-	tm StartDate;
-	int Days;
 
 	string messageBoxInput;
 
