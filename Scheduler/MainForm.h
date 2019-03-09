@@ -6,7 +6,6 @@
 #include "ClassroomsForm.h"
 #include "ActivitiesForm.h"
 #include "ScheduleForm.h"
-#include "GeneratedSchedule.h"
 
 
 
@@ -109,6 +108,8 @@ namespace Scheduler {
 			// 
 			// buttonParameters
 			// 
+			this->buttonParameters->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->buttonParameters->Location = System::Drawing::Point(12, 48);
 			this->buttonParameters->Name = L"buttonParameters";
 			this->buttonParameters->Size = System::Drawing::Size(260, 30);
@@ -119,6 +120,8 @@ namespace Scheduler {
 			// 
 			// buttonStudents
 			// 
+			this->buttonStudents->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->buttonStudents->Location = System::Drawing::Point(12, 84);
 			this->buttonStudents->Name = L"buttonStudents";
 			this->buttonStudents->Size = System::Drawing::Size(260, 30);
@@ -129,6 +132,8 @@ namespace Scheduler {
 			// 
 			// buttonTeachers
 			// 
+			this->buttonTeachers->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->buttonTeachers->Location = System::Drawing::Point(12, 120);
 			this->buttonTeachers->Name = L"buttonTeachers";
 			this->buttonTeachers->Size = System::Drawing::Size(260, 30);
@@ -139,7 +144,9 @@ namespace Scheduler {
 			// 
 			// buttonClassrooms
 			// 
-			this->buttonClassrooms->Location = System::Drawing::Point(12, 156);
+			this->buttonClassrooms->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->buttonClassrooms->Location = System::Drawing::Point(12, 192);
 			this->buttonClassrooms->Name = L"buttonClassrooms";
 			this->buttonClassrooms->Size = System::Drawing::Size(260, 30);
 			this->buttonClassrooms->TabIndex = 4;
@@ -149,7 +156,9 @@ namespace Scheduler {
 			// 
 			// buttonActivities
 			// 
-			this->buttonActivities->Location = System::Drawing::Point(12, 192);
+			this->buttonActivities->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 11, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->buttonActivities->Location = System::Drawing::Point(12, 156);
 			this->buttonActivities->Name = L"buttonActivities";
 			this->buttonActivities->Size = System::Drawing::Size(260, 30);
 			this->buttonActivities->TabIndex = 5;
@@ -262,22 +271,20 @@ private: System::Void buttonActivities_Click(System::Object^  sender, System::Ev
 	form->ShowDialog();
 }
 private: System::Void buttonSchedule_Click(System::Object^  sender, System::EventArgs^  e) {
-	//ScheduleForm ^ form = gcnew ScheduleForm;
-	//form->ShowDialog();
-	GeneratedSchedule gs = GeneratedSchedule(MainData);
-
-	ofstream out("../TestData/output.txt");
-	out << gs;
-	out.close();
+	ScheduleForm ^ form = gcnew ScheduleForm;
+	form->ShowDialog();
+	
 }
 private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	ofstream out("../TestData/data.txt");
 	out << MainData;
+	out << Schedule;
 	out.close();
 }
 private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	ifstream in("../TestData/data.txt");
 	in >> MainData;
+	in >> Schedule;
 	in.close();
 }
 };
