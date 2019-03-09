@@ -14,6 +14,8 @@ class ScheduleObject
 {
 public:
 	ScheduleObject(std::string name,std::string description, std::set<std::string> tags);
+	void setId(int value);
+	int getId();
 	void setName(std::string value);
 	std::string getName();
 	void setDescription(std::string value);
@@ -21,6 +23,7 @@ public:
 	Rules& getRules();
 	cli::array<System::String^>^ getParamRow();
 
+	set<string> getTags();
 	std::string getTagsAsString();
 	void setTagsFromString(string value);
 
@@ -42,7 +45,7 @@ public:
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
 
 protected:
-
+	int id;
 	std::string name;
 	std::string descripton;
 	std::set<std::string> tags;
@@ -55,6 +58,72 @@ template <class T>
 class ScheduleObjectContainer
 {
 public:
+
+	void updateIds()
+	{
+		for (int i = 0; i < values.size(); i++)
+		{
+			values[i]->setId(i);
+		}
+	}
+
+	map<string, vector<int>> getNameMap()
+	{
+		map<string, vector<int>> m;
+
+
+		m.insert(pair<string, vector<int>>("бяе", vector<int>()));
+
+		for (auto v: values)
+		{
+			string s = v->getName();
+			int id = v->getId();
+
+			m["бяе"].push_back(id);
+
+			if (m.find(s) == m.end())
+				m.insert(pair < string, vector<int>>(s, vector<int>{ id }));
+			else
+				m[s].push_back(id);
+
+
+			for (auto tag : v->getTags())
+			{
+				if (m.find(tag) == m.end())
+					m.insert(pair < string, vector<int>>(tag, vector<int>{ id }));
+				else
+					m[tag].push_back(id);
+			}
+		}
+
+
+		return m;
+	}
+
+	void updateRules()
+	{
+		for (auto v : values)
+			v->getRules().update();
+	}
+
+
+	void uniteWithTagRules(TagRules& t)
+	{
+		map<string, Rules> m = t.getMap();
+		for (auto v : values)
+		{
+			if (!(m.find("бяе")==m.end()))
+				v->getRules().getData().and(m["бяе"].getData());
+			for (auto tag : v->getTags())
+			{
+				if (!(m.find(tag) == m.end()))
+					v->getRules().getData().and(m[tag].getData());
+			}
+		}
+			
+				
+	}
+
 	void setVal(vector<T*> newValues)
 	{
 		values = vector<ScheduleObject*>();
@@ -70,6 +139,24 @@ public:
 		for (auto v : values)
 			val.push_back(dynamic_cast<T*>(v));
 		return val;
+	}
+
+	T* getByPos(int pos)
+	{
+		return dynamic_cast<T*>(values[pos]);
+	}
+
+	int getPos(T* obj)
+	{
+		int i = 0;
+		for (auto v : values)
+		{
+			if (v == obj)
+				return i;
+			i++;
+		}
+		
+		return -1;
 	}
 
 	T* getByName(string name)
@@ -116,7 +203,7 @@ public:
 		soc.values.clear();
 
 		getline(is,temp);
-		n = atoi(temp.c_str());
+		n = stoi(temp);
 
 		T* obj;
 		for (int i = 0; i < n; i++) 

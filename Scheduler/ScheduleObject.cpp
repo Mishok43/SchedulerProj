@@ -11,6 +11,15 @@ ScheduleObject::ScheduleObject(std::string name,std::string description, std::se
 }
 
 
+void ScheduleObject::setId(int value)
+{
+	id = value;
+}
+
+int ScheduleObject::getId()
+{
+	return id;
+}
 
 
 void ScheduleObject::setName(std::string value)
@@ -48,6 +57,11 @@ cli::array<System::String^>^ ScheduleObject::getParamRow()
 		a[i] = gcnew System::String(getParam(i).c_str());
 
 	return a;
+}
+
+set<string> ScheduleObject::getTags()
+{
+	return tags;
 }
 
 std::string ScheduleObject::getTagsAsString()
