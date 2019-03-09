@@ -226,6 +226,9 @@
     <EmbeddedResource Include="ParametersForm.resx">
       <DependentUpon>ParametersForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ScheduleForm.resx">
+      <DependentUpon>ScheduleForm.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StudentsForm.resx">
       <DependentUpon>StudentsForm.h</DependentUpon>
     </EmbeddedResource>
