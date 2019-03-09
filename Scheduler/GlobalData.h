@@ -33,6 +33,8 @@ public:
 	TagRules GroupTagRules;
 	TagRules ActivityTagRules;
 
+
+
 	friend ostream& operator<<(ostream& os, GlobalData& gd);
 	friend istream& operator>>(istream& is, GlobalData& gd);
 };
