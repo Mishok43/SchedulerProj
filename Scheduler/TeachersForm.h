@@ -139,7 +139,7 @@ namespace Scheduler {
 			this->label5->BorderStyle = System::Windows::Forms::BorderStyle::Fixed3D;
 			this->label5->Location = System::Drawing::Point(9, 234);
 			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(651, 2);
+			this->label5->Size = System::Drawing::Size(763, 2);
 			this->label5->TabIndex = 34;
 			// 
 			// textBox
@@ -152,7 +152,7 @@ namespace Scheduler {
 			this->textBox->Multiline = true;
 			this->textBox->Name = L"textBox";
 			this->textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
-			this->textBox->Size = System::Drawing::Size(647, 107);
+			this->textBox->Size = System::Drawing::Size(759, 107);
 			this->textBox->TabIndex = 33;
 			this->textBox->TextChanged += gcnew System::EventHandler(this, &TeachersForm::textBox_TextChanged);
 			// 
@@ -171,7 +171,7 @@ namespace Scheduler {
 			// buttonRemoveTag
 			// 
 			this->buttonRemoveTag->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonRemoveTag->Location = System::Drawing::Point(549, 201);
+			this->buttonRemoveTag->Location = System::Drawing::Point(661, 201);
 			this->buttonRemoveTag->Name = L"buttonRemoveTag";
 			this->buttonRemoveTag->Size = System::Drawing::Size(111, 23);
 			this->buttonRemoveTag->TabIndex = 31;
@@ -182,7 +182,7 @@ namespace Scheduler {
 			// buttonAddTag
 			// 
 			this->buttonAddTag->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonAddTag->Location = System::Drawing::Point(433, 201);
+			this->buttonAddTag->Location = System::Drawing::Point(545, 201);
 			this->buttonAddTag->Name = L"buttonAddTag";
 			this->buttonAddTag->Size = System::Drawing::Size(110, 23);
 			this->buttonAddTag->TabIndex = 30;
@@ -239,7 +239,7 @@ namespace Scheduler {
 			this->dataGridView->Name = L"dataGridView";
 			this->dataGridView->RowHeadersVisible = false;
 			this->dataGridView->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-			this->dataGridView->Size = System::Drawing::Size(647, 157);
+			this->dataGridView->Size = System::Drawing::Size(759, 157);
 			this->dataGridView->TabIndex = 26;
 			// 
 			// name
@@ -289,7 +289,7 @@ namespace Scheduler {
 			// buttonExport
 			// 
 			this->buttonExport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonExport->Location = System::Drawing::Point(566, 9);
+			this->buttonExport->Location = System::Drawing::Point(678, 9);
 			this->buttonExport->Name = L"buttonExport";
 			this->buttonExport->Size = System::Drawing::Size(94, 23);
 			this->buttonExport->TabIndex = 24;
@@ -300,7 +300,7 @@ namespace Scheduler {
 			// buttonImport
 			// 
 			this->buttonImport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonImport->Location = System::Drawing::Point(466, 9);
+			this->buttonImport->Location = System::Drawing::Point(578, 9);
 			this->buttonImport->Name = L"buttonImport";
 			this->buttonImport->Size = System::Drawing::Size(94, 23);
 			this->buttonImport->TabIndex = 23;
@@ -312,7 +312,7 @@ namespace Scheduler {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(672, 378);
+			this->ClientSize = System::Drawing::Size(784, 378);
 			this->Controls->Add(this->buttonHelp);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->textBox);
