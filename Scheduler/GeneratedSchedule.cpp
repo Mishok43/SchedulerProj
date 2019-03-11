@@ -55,7 +55,59 @@ GeneratedSchedule::GeneratedSchedule()
 
 void GeneratedSchedule::initRules()
 {
+	//Задать ID для всех объектов
+	MainData.Groups.updateIds();
+	MainData.Teachers.updateIds();
+	MainData.Activities.updateIds();
+	MainData.Classrooms.updateIds();
 	
+	//Создать мапы [ИМЯ]->[id1,id2...]
+
+	map<string, vector<int>> groupNameMap = MainData.Groups.getNameMap();
+	map<string, vector<int>> teacherNameMap = MainData.Teachers.getNameMap();
+	map<string, vector<int>> activityNameMap = MainData.Activities.getNameMap();
+	map<string, vector<int>> classroomNameMap = MainData.Classrooms.getNameMap();
+
+	Rules::Settings.nameMap 
+		= array<map<string, vector<int>>, 4>
+	{groupNameMap, teacherNameMap, activityNameMap, classroomNameMap};
+
+	Rules::Settings.nameMapSize = array<int, 4>
+	{(int)groupNameMap["ВСЕ"].size(), (int)teacherNameMap["ВСЕ"].size(), (int)activityNameMap["ВСЕ"].size(), (int)classroomNameMap["ВСЕ"].size()};
+
+	//Обновить правила для всех объектов
+
+	MainData.Groups.updateRules();
+	MainData.Teachers.updateRules();
+	MainData.Activities.updateRules();
+	MainData.Classrooms.updateRules();
+
+	//Обновить правила для всех тегов
+
+	MainData.GroupTagRules.update();
+	MainData.TeacherTagRules.update();
+	MainData.ActivityTagRules.update();
+	MainData.ClassroomTagRules.update();
+
+	//Добавить к правилам для объектов правила для тегов
+
+	MainData.Groups.uniteWithTagRules(MainData.GroupTagRules);
+	MainData.Teachers.uniteWithTagRules(MainData.TeacherTagRules);
+	MainData.Activities.uniteWithTagRules(MainData.ActivityTagRules);
+	MainData.Classrooms.uniteWithTagRules(MainData.ClassroomTagRules);
+
+
+	//Добавить к правилам для занятий правила соотв. преподов и групп
+
+	vector<Activity*> activities = MainData.Activities.getVal();
+	for (auto activity : activities)
+	{
+		activity->getRules().getData().and(activity->getTeacher()->getRules().getData());
+
+		for (auto group : activity->getGroups())
+			activity->getRules().getData().and(group->getRules().getData());
+	}
+
 
 
 }
