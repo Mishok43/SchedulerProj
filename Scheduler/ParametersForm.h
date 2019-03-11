@@ -1,5 +1,6 @@
 #pragma once
 #include "GlobalData.h"
+#include "GeneratedSchedule.h"
 
 namespace Scheduler {
 
@@ -199,6 +200,7 @@ namespace Scheduler {
 			this->Controls->Add(this->dateTimePicker2);
 			this->Controls->Add(this->dateTimePicker1);
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MaximizeBox = false;
 			this->Name = L"ParametersForm";
 			this->Text = L"Параметры";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &ParametersForm::ParametersForm_FormClosing);
@@ -283,6 +285,9 @@ namespace Scheduler {
 				this->dateTimePickerEnd[i]->Value.Hour * 60 +
 				this->dateTimePickerEnd[i]->Value.Minute;
 		}
+
+
+		Schedule.reset();
 	}
 	private: System::Void numericUpDown_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->updateSize();

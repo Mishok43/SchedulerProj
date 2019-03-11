@@ -236,7 +236,9 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonStudents);
 			this->Controls->Add(this->buttonParameters);
 			this->Controls->Add(this->menuStrip);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MainMenuStrip = this->menuStrip;
+			this->MaximizeBox = false;
 			this->Name = L"MainForm";
 			this->Text = L"Scheduler";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
