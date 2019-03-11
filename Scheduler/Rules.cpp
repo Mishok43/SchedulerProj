@@ -504,20 +504,22 @@ void RuleData:: and (RuleData& other)
 
 	if (other.type == HWEEKT || other.type == FULLT)
 		if (other.maxPerWeek < maxPerWeek)
-			maxPerWeek;
+			maxPerWeek = other.maxPerWeek;
 }
 void RuleData:: or (RuleData& other)
 {
-	for (int i = 0; i < Rules::Settings.Days; i++)
-		for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
-			m[i][j] = m[i][j] || other.m[i][j];
+	if (other.type == TIMET || other.type == FULLT)
+		for (int i = 0; i < Rules::Settings.Days; i++)
+			for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+				m[i][j] = m[i][j] || other.m[i][j];
 
 	for (int i = 0; i < 4; i++)
-		for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
-			obj[i][j] = obj[i][j] || other.obj[i][j];
+		if (other.type == i + 2 || other.type == FULLT)
+			for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+				obj[i][j] = obj[i][j] || other.obj[i][j];
 
 	if (other.maxPerWeek > maxPerWeek)
-		maxPerWeek;
+		maxPerWeek = other.maxPerWeek;
 }
 void RuleData::not()
 {
