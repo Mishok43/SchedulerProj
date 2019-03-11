@@ -66,6 +66,469 @@ istream& operator>>(istream& is, RulesSettings& settings)
 RulesSettings Rules::Settings;
 
 
+void RuleData::init()
+{
+	m = new bool*[Rules::Settings.Days];
+	for (int i = 0; i < Rules::Settings.Days; i++)
+	{
+		m[i] = new bool[Rules::Settings.ActivitiesPerDay];
+		for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+			m[i][j] = true;
+	}
+
+	obj = new bool*[4];
+	for (int i = 0; i < 4; i++)
+	{
+		obj[i] = new bool[Rules::Settings.nameMapSize[i]];
+		for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+			obj[i][j] = true;
+	}
+
+	maxPerWeek = Rules::Settings.ActivitiesPerDay * 7;
+
+	type = FULLT;
+}
+
+RuleData::RuleData()
+{
+	init();
+}
+
+
+void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
+{
+	st = EQUAL;
+
+
+	int i = 0;
+	while (s[i] != '(')
+		i++;
+
+	string nm = s.substr(0, i);
+
+	if (nm == "Не")
+		ft = NOT;
+	if (nm == "И")
+		ft = AND;
+	if (nm == "Или")
+		ft = OR;
+	if (nm == "Пара")
+		ft = HOUR;
+	if (nm == "Время")
+		ft = TIME;
+	if (nm == "ДеньНед")
+		ft = WEEKDAY;
+	if (nm == "Дата")
+		ft = DATE;
+	if (nm == "Группа")
+		ft = GROUP;
+	if (nm == "Препод")
+		ft = TEACHER;
+	if (nm == "Дисцип")
+		ft = ACTIVITY;
+	if (nm == "Ауд")
+		ft = CLASSROOM;
+	if (nm == "МаксВНеделю")
+		ft = HPERWEEK;
+
+	i++;
+
+	if (s[i] == '=')
+		i += 1;
+	else
+	{
+		if (s[i] == '<')
+		{
+			i += 1;
+			st = LESS;
+			if (s[i] == '=')
+			{
+				i += 1;
+				st = ELESS;
+			}
+		}
+		else if (s[i] == '>')
+		{
+			i += 1;
+			st = GREATER;
+			if (s[i] == '=')
+			{
+				i += 1;
+				st = EGREATER;
+			}
+
+		}
+	}
+
+	int bracketnum = 1;
+	string news = "";
+	while (bracketnum > 0)
+	{
+
+
+		if (s[i] == ')') bracketnum -= 1;
+		if (s[i] == '(') bracketnum += 1;
+
+		if (s[i] == ',' && bracketnum == 1
+			|| s[i] == ')' && bracketnum == 0)
+		{
+			arg.push_back(news);
+			news = "";
+		}
+		else
+		{
+			news += s[i];
+		}
+
+
+
+		i++;
+	}
+
+}
+
+RuleData::RuleData(string s) : RuleData()
+{
+
+	signtype st = EQUAL;
+	functype ft = UNKNOWN;
+	vector<string> arg = vector<string>();
+	parse(s, st, ft, arg);
+
+	RuleData rd;
+	int hour, min, k, from, to, time;
+	switch (ft)
+	{
+	case NOT: //Не
+		rd = RuleData(arg[0]);
+		rd.not();
+		and (rd);
+		type = rd.type;
+
+		break;
+	case AND: //И
+		for (auto a : arg)
+		{
+			rd = RuleData(a);
+			and (rd);
+			type = rd.type;
+		}
+
+		break;
+	case OR: //Или
+		k = 0;
+		for (auto a : arg)
+		{
+			rd = RuleData(a);
+			if (k == 0)
+				and (rd);
+			else
+				or (rd);
+			type = rd.type;
+			k++;
+		}
+		break;
+	case HOUR: //Пара
+		type = TIMET;
+		k = stoi(arg[0]) - 1;
+		switch (st)
+		{
+		case LESS:
+			from = 0; to = k - 1;
+			break;
+		case ELESS:
+			from = 0; to = k;
+			break;
+		case EQUAL:
+			from = k; to = k;
+			break;
+		case GREATER:
+			from = k + 1; to = Rules::Settings.ActivitiesPerDay - 1;
+			break;
+		case EGREATER:
+			from = k; to = Rules::Settings.ActivitiesPerDay - 1;
+			break;
+		}
+
+		for (int i = 0; i < Rules::Settings.ActivitiesPerDay; i++)
+			if (i < from || i > to)
+				for (int j = 0; j < Rules::Settings.Days; j++)
+					m[j][i] = false;
+		break;
+	case TIME: //Время
+		type = TIMET;
+		k = arg[0].find(":");
+		hour = stoi(arg[0].substr(0, k));;
+		min = stoi(arg[0].substr(k + 1, arg[0].length() - k - 1));
+		time = hour * 60 + min;
+
+		switch (st)
+		{
+		case LESS:
+			from = 0; to = time - 1;
+			break;
+		case ELESS:
+			from = 0; to = time;
+			break;
+		case EQUAL:
+			from = time; to = time;
+			break;
+		case GREATER:
+			from = time + 1; to = 24 * 60;
+			break;
+		case EGREATER:
+			from = time; to = 24 * 60;
+			break;
+		}
+
+		for (int i = 0; i < Rules::Settings.ActivitiesPerDay; i++)
+			if (!(Rules::Settings.ActivityStartTime[i] >= from &&
+				Rules::Settings.ActivityEndTime[i] <= to))
+				for (int j = 0; j < Rules::Settings.Days; j++)
+					m[j][i] = false;
+
+		break;
+	case WEEKDAY: //ДеньНед
+
+		type = TIMET;
+
+		if (arg[0] == "Понедельник")
+			k = 0;
+		if (arg[0] == "Вторник")
+			k = 1;
+		if (arg[0] == "Среда")
+			k = 2;
+		if (arg[0] == "Четверг")
+			k = 3;
+		if (arg[0] == "Пятница")
+			k = 4;
+		if (arg[0] == "Суббота")
+			k = 5;
+		if (arg[0] == "Воскресенье")
+			k = 6;
+
+		switch (st)
+		{
+		case LESS:
+			from = 0; to = k - 1;
+			break;
+		case ELESS:
+			from = 0; to = k;
+			break;
+		case EQUAL:
+			from = k; to = k;
+			break;
+		case GREATER:
+			from = k + 1; to = 6;
+			break;
+		case EGREATER:
+			from = k; to = 6;
+			break;
+		}
+
+		for (int i = 0; i < Rules::Settings.Days; i++)
+			if (Rules::dayToWeekday(i) < from || Rules::dayToWeekday(i) > to)
+				for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+					m[i][j] = false;
+
+		break;
+	case MONTH: //Месяц
+
+		type = TIMET;
+
+		if (arg[0] == "Январь")
+			k = 0;
+		if (arg[0] == "Февраль")
+			k = 1;
+		if (arg[0] == "Март")
+			k = 2;
+		if (arg[0] == "Апрель")
+			k = 3;
+		if (arg[0] == "Май")
+			k = 4;
+		if (arg[0] == "Июнь")
+			k = 5;
+		if (arg[0] == "Июль")
+			k = 6;
+		if (arg[0] == "Август")
+			k = 7;
+		if (arg[0] == "Сентябрь")
+			k = 8;
+		if (arg[0] == "Октябрь")
+			k = 9;
+		if (arg[0] == "Ноябрь")
+			k = 10;
+		if (arg[0] == "Декабрь")
+			k = 11;
+
+		switch (st)
+		{
+		case LESS:
+			from = 0; to = k - 1;
+			break;
+		case ELESS:
+			from = 0; to = k;
+			break;
+		case EQUAL:
+			from = k; to = k;
+			break;
+		case GREATER:
+			from = k + 1; to = 11;
+			break;
+		case EGREATER:
+			from = k; to = 11;
+			break;
+		}
+
+		for (int i = 0; i < Rules::Settings.Days; i++)
+			if (Rules::dayToMonth(i) < from || Rules::dayToMonth(i) > to)
+				for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+					m[i][j] = false;
+
+
+		break;
+	case DATE: //Дата
+
+		type = TIMET;
+
+		tm date = Rules::Settings.StartDate;
+		date.tm_year = 2019 - 1900;
+		date.tm_mon = 3 - 1;
+		date.tm_mday = 20;
+
+		k = Rules::dateToDay(date);
+
+
+		switch (st)
+		{
+		case LESS:
+			from = 0; to = k - 1;
+			break;
+		case ELESS:
+			from = 0; to = k;
+			break;
+		case EQUAL:
+			from = k; to = k;
+			break;
+		case GREATER:
+			from = k + 1; to = 99999;
+			break;
+		case EGREATER:
+			from = k; to = 99999;
+			break;
+		}
+
+		for (int i = 0; i < Rules::Settings.Days; i++)
+			if (i < from || i > to)
+				for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+					m[i][j] = false;
+		break;
+	case GROUP: //Группа
+
+		type = GROUPT;
+
+		k = 0;
+		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
+			obj[k][i] = false;
+		for (auto e : Rules::Settings.nameMap[k][arg[0]])
+			obj[k][e] = true;
+
+		break;
+	case TEACHER: //Препод
+
+		type = TEACHERT;
+
+		k = 1;
+		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
+			obj[k][i] = false;
+		for (auto e : Rules::Settings.nameMap[k][arg[0]])
+			obj[k][e] = true;
+
+		break;
+	case ACTIVITY: //Дисцип
+
+		type = ACTIVITYT;
+
+		k = 2;
+		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
+			obj[k][i] = false;
+		for (auto e : Rules::Settings.nameMap[k][arg[0]])
+			obj[k][e] = true;
+
+		break;
+	case CLASSROOM: //Аудит
+
+		type = CLASSROOMT;
+
+		k = 3;
+		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
+			obj[k][i] = false;
+		for (auto e : Rules::Settings.nameMap[k][arg[0]])
+			obj[k][e] = true;
+
+
+		break;
+	case HPERWEEK: //МаксВНеделю
+
+		type = HWEEKT;
+
+		maxPerWeek = stoi(arg[0]);
+
+		break;
+	}
+
+
+}
+
+
+RuleData::~RuleData()
+{
+	//for (int i = 0; i < Rules::Settings.Days; i++)
+	//	delete[] m[i];
+	//delete[] m;
+}
+
+void RuleData:: and (RuleData& other)
+{
+	if (other.type == TIMET || other.type == FULLT)
+		for (int i = 0; i < Rules::Settings.Days; i++)
+			for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+				m[i][j] = m[i][j] && other.m[i][j];
+
+	for (int i = 0; i < 4; i++)
+		if (other.type == i + 2 || other.type == FULLT)
+			for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+				obj[i][j] = obj[i][j] && other.obj[i][j];
+
+	if (other.type == HWEEKT || other.type == FULLT)
+		if (other.maxPerWeek < maxPerWeek)
+			maxPerWeek;
+}
+void RuleData:: or (RuleData& other)
+{
+	for (int i = 0; i < Rules::Settings.Days; i++)
+		for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+			m[i][j] = m[i][j] || other.m[i][j];
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+			obj[i][j] = obj[i][j] || other.obj[i][j];
+
+	if (other.maxPerWeek > maxPerWeek)
+		maxPerWeek;
+}
+void RuleData::not()
+{
+	for (int i = 0; i < Rules::Settings.Days; i++)
+		for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+			m[i][j] = !m[i][j];
+
+	for (int i = 0; i < 4; i++)
+		for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+			obj[i][j] = !obj[i][j];
+}
+
+
 bool RuleData::canDayDaytime(int day, int daytime)
 {
 	return m[day][daytime];
