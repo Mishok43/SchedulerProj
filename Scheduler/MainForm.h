@@ -239,6 +239,7 @@ namespace Scheduler {
 			this->MainMenuStrip = this->menuStrip;
 			this->Name = L"MainForm";
 			this->Text = L"Scheduler";
+			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->menuStrip->ResumeLayout(false);
 			this->menuStrip->PerformLayout();
 			this->ResumeLayout(false);
@@ -255,25 +256,30 @@ private: System::Void buttonParameters_Click(System::Object^  sender, System::Ev
 private: System::Void buttonStudents_Click(System::Object^  sender, System::EventArgs^  e) {
 	GroupsForm ^ form = gcnew GroupsForm;
 	form->ShowDialog();
+
+	update();
 }
 private: System::Void buttonTeachers_Click(System::Object^  sender, System::EventArgs^  e) {
 	TeachersForm ^ form = gcnew TeachersForm;
 	form->ShowDialog();
+
+	update();
 }
 private: System::Void buttonClassrooms_Click(System::Object^  sender, System::EventArgs^  e) {
 	ClassroomsForm ^ form = gcnew ClassroomsForm;
 	form->ShowDialog();
 
-	 
+	update();
 }
 private: System::Void buttonActivities_Click(System::Object^  sender, System::EventArgs^  e) {
 	ActivitiesForm ^ form = gcnew ActivitiesForm;
 	form->ShowDialog();
+
+	update();
 }
 private: System::Void buttonSchedule_Click(System::Object^  sender, System::EventArgs^  e) {
 	ScheduleForm ^ form = gcnew ScheduleForm;
 	form->ShowDialog();
-	
 }
 private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	ofstream out("../TestData/data.txt");
@@ -286,6 +292,16 @@ private: System::Void openToolStripMenuItem_Click(System::Object^  sender, Syste
 	in >> MainData;
 	in >> Schedule;
 	in.close();
+
+	update();
+}
+private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	update();
+}
+private: System::Void update()
+{
+	this->buttonActivities->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty());
+	this->buttonSchedule->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty() && !MainData.Activities.isEmpty() && !MainData.Classrooms.isEmpty());
 }
 };
 }
