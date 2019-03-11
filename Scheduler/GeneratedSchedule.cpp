@@ -263,7 +263,7 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 			names.push_back(o->getName());
 		break;
 	}
-
+	sheet->SetColWidth(0, 14 * 300);
 	sheet->Cell(0, 0)->SetValue(MainData.Title);
 	sheet->Cell(1, 0)->SetValue(week ? "День" : "Дата/День");
 	sheet->Cell(1, 1)->SetValue("Пара");
@@ -306,21 +306,24 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 			if (teacher)
 				s += act->getTeacher()->getShortName() + "\n";
 			if (groups)
-				s += act->getGroupsAsString() + (classroom ? "\n" : "");
+				s += act->getGroupsAsString() + (classroom || (date && !classroom) ? "\n" : "");
 
 			bool mustAddLine = false;
 
-			if (classroom)
-				for (map<Classroom*, vector<tm>>::iterator it = cl.begin(); it != cl.end(); ++it)
+			
+				
+			for (map<Classroom*, vector<tm>>::iterator it = cl.begin(); it != cl.end(); ++it)
 				{
+					
 					if (mustAddLine)
 						s += "\n";
 					mustAddLine = true;
-					
+					if (classroom) {
 					s += it->first->getName();
+					}
 					if (date)
 					{
-						s += ": ";
+						if (classroom) s += ": ";
 						for (auto o : it->second)
 						{
 							string m1 = to_string(o.tm_mday);
@@ -360,48 +363,49 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 	}
 
 	for (int i = 0; i < Rules::Settings.Days*Rules::Settings.ActivitiesPerDay; i++)
-	{
-		int y = week ? Rules::dayToWeekday(i / Rules::Settings.ActivitiesPerDay)*Rules::Settings.ActivitiesPerDay
-			+ i % Rules::Settings.ActivitiesPerDay : i;
-		
-		tm time = Rules::dayToDate(i / Rules::Settings.ActivitiesPerDay);
-
-		for (int j = 0; j < hour[i].size(); j++)
+		if ((i / Rules::Settings.ActivitiesPerDay >=startDay) && (i / Rules::Settings.ActivitiesPerDay <=endDay))
 		{
-			vector<int> x;
-			switch (type)
+			int y = week ? Rules::dayToWeekday(i / Rules::Settings.ActivitiesPerDay)*Rules::Settings.ActivitiesPerDay
+				+ i % Rules::Settings.ActivitiesPerDay : i;
+		
+			tm time = Rules::dayToDate(i / Rules::Settings.ActivitiesPerDay);
+
+			for (int j = 0; j < hour[i].size(); j++)
 			{
-			case RuleData::GROUPOBJ:
-				for (auto g : hour[i][j].getActivity()->getGroups())
-					x.push_back(g->getId());
-				break;
-			case RuleData::TEACHEROBJ:
-				x.push_back(hour[i][j].getActivity()->getTeacher()->getId());
-				break;
-			case RuleData::ACTIVITYOBJ:
-				x.push_back(hour[i][j].getActivity()->getId());
-				break;
-			case RuleData::CLASSROOMOBJ:
-				x.push_back(hour[i][j].getClassroom()->getId());
-				break;
+				vector<int> x;
+				switch (type)
+				{
+				case RuleData::GROUPOBJ:
+					for (auto g : hour[i][j].getActivity()->getGroups())
+						x.push_back(g->getId());
+					break;
+				case RuleData::TEACHEROBJ:
+					x.push_back(hour[i][j].getActivity()->getTeacher()->getId());
+					break;
+				case RuleData::ACTIVITYOBJ:
+					x.push_back(hour[i][j].getActivity()->getId());
+					break;
+				case RuleData::CLASSROOMOBJ:
+					x.push_back(hour[i][j].getClassroom()->getId());
+					break;
+				}
+
+
+				for (auto xx : x)
+				{
+					bool found = false;
+					for (int k = 0; k<arr[y][xx].size();k++)
+						if (hour[i][j].getActivity() == arr[y][xx][k].act)
+						{
+							arr[y][xx][k].add(hour[i][j].getClassroom(), time);
+							found = true;
+						}
+					if (!found)
+						arr[y][xx].push_back(MyCell(hour[i][j].getActivity(), hour[i][j].getClassroom(), time));
+				}
+
 			}
-
-
-			for (auto xx : x)
-			{
-				bool found = false;
-				for (int k = 0; k<arr[y][xx].size();k++)
-					if (hour[i][j].getActivity() == arr[y][xx][k].act)
-					{
-						arr[y][xx][k].add(hour[i][j].getClassroom(), time);
-						found = true;
-					}
-				if (!found)
-					arr[y][xx].push_back(MyCell(hour[i][j].getActivity(), hour[i][j].getClassroom(), time));
-			}
-
 		}
-	}
 	
 
 	int posY = 2;
@@ -493,9 +497,12 @@ ostream& operator<<(ostream& os, GeneratedSchedule& generatedSchedule)
 
 istream& operator>>(istream& is, GeneratedSchedule& generatedSchedule)
 {
+	generatedSchedule.hour.clear();
+
 	string temp;
 	getline(is, temp);
 	int n = stoi(temp);
+
 	for (int i = 0; i < n; i++)
 	{
 		generatedSchedule.hour.push_back(vector<FinalScheduleObject>());
@@ -510,6 +517,11 @@ istream& operator>>(istream& is, GeneratedSchedule& generatedSchedule)
 
 		}
 	}
+
+
+	if (n != 0)
+		generatedSchedule.initRules();
+
 	return is;
 }
 
