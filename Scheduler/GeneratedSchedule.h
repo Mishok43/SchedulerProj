@@ -5,19 +5,17 @@
 class FinalScheduleObject
 {
 public:
-	FinalScheduleObject(Activity* activity, Classroom* classroom)
-	{
-		this->activity = activity;
-		this->classroom = classroom;
-	}
+	
+	FinalScheduleObject();
+	FinalScheduleObject(Activity* activity, Classroom* classroom);
+	string toString();
 
-	string toString()
-	{
-		string s = activity->getName();
-		s += " " + activity->getTeacher()->getName();
-		s += " " + classroom->getName();
-		return s;
-	}
+	Activity* getActivity();
+	Classroom* getClassroom();
+
+	friend std::ostream& operator<<(std::ostream& os, FinalScheduleObject& finalScheduleObject);
+	friend std::istream& operator>>(std::istream& is, FinalScheduleObject& finalScheduleObject);
+
 private:
 
 	Activity* activity;
@@ -28,13 +26,23 @@ class GeneratedSchedule
 {
 public:
 	GeneratedSchedule();
-	GeneratedSchedule(GlobalData mainData);
 
-
-	friend std::ostream& operator<<(std::ostream& is, GeneratedSchedule& schedule);
-
-	vector<vector<FinalScheduleObject>> hour;
-private:
+	void reset();
+	void generate();
+	void initRules();
 	
+	bool isGenerated();
+
+	void debugOutput(ScheduleObject* obj, const char * path);
+	void exportXls(RuleData::objtype type, bool week, int startDay, int endDay, const char * path);
+
+	friend std::ostream& operator<<(std::ostream& os, GeneratedSchedule& schedule);
+	friend std::istream& operator>>(std::istream& is, GeneratedSchedule& schedule);
+
+	
+private:
+	vector<vector<FinalScheduleObject>> hour;
 };
 
+
+extern GeneratedSchedule Schedule;
