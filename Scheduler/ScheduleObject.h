@@ -14,6 +14,9 @@ class ScheduleObject
 {
 public:
 	ScheduleObject(std::string name,std::string description, std::set<std::string> tags);
+	void kill();
+	bool isKilled();
+
 	void setId(int value);
 	int getId();
 	void setName(std::string value);
@@ -45,6 +48,7 @@ public:
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
 
 protected:
+	bool killed;
 	int id;
 	std::string name;
 	std::string descripton;
@@ -159,6 +163,12 @@ public:
 		return -1;
 	}
 
+
+	/*void removeByPos(int pos)
+	{
+		values[pos]->kill();
+	}*/
+
 	T* getByName(string name)
 	{
 		for (auto v : values)
@@ -179,10 +189,16 @@ public:
 		for (int i = 0; i < values.size(); i++)
 			if (casted == values[i])
 				pos = i;
+		values[pos]->kill();
 		values.erase(values.begin()+pos);
+
+		
 	}
 
-
+	bool isEmpty()
+	{
+		return values.size() == 0;
+	}
 	friend ostream& operator<<(ostream& os, const ScheduleObjectContainer& soc)
 	{
 		
@@ -307,9 +323,11 @@ public:
 	Activity(std::string name, std::string description, std::set<std::string> tags, string teacherName, std::set<string> groupNames, int hours);
 	int getHours();
 	void setHours(int value);
+	void setTeacher(string teacherName);
 	Teacher* getTeacher();
 	string getTeacherName();
 	string getTeacherShortName();
+	void setGroups(set<string> groupNames);
 	set<Group*> getGroups();
 	string getGroupsAsString();
 

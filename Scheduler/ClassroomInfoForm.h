@@ -1,5 +1,8 @@
 #pragma once
 #include "GlobalData.h"
+#include "HelpRules.h"
+#include "GeneratedSchedule.h"
+
 namespace Scheduler {
 
 
@@ -52,6 +55,8 @@ namespace Scheduler {
 	private: System::Windows::Forms::TextBox^  textBox;
 
 	private: System::Windows::Forms::Label^  label6;
+	private: System::Windows::Forms::Button^  buttonDebug;
+	private: System::Windows::Forms::Button^  buttonHelp;
 
 	protected:
 
@@ -84,6 +89,8 @@ namespace Scheduler {
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox = (gcnew System::Windows::Forms::TextBox());
 			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->buttonDebug = (gcnew System::Windows::Forms::Button());
+			this->buttonHelp = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// labelName
@@ -201,11 +208,33 @@ namespace Scheduler {
 			this->label6->TabIndex = 25;
 			this->label6->Text = L"Индивидуальные ограничения";
 			// 
+			// buttonDebug
+			// 
+			this->buttonDebug->Location = System::Drawing::Point(267, 174);
+			this->buttonDebug->Name = L"buttonDebug";
+			this->buttonDebug->Size = System::Drawing::Size(81, 21);
+			this->buttonDebug->TabIndex = 42;
+			this->buttonDebug->Text = L"DEBUG INFO";
+			this->buttonDebug->UseVisualStyleBackColor = true;
+			this->buttonDebug->Click += gcnew System::EventHandler(this, &ClassroomInfoForm::buttonDebug_Click);
+			// 
+			// buttonHelp
+			// 
+			this->buttonHelp->Location = System::Drawing::Point(227, 174);
+			this->buttonHelp->Name = L"buttonHelp";
+			this->buttonHelp->Size = System::Drawing::Size(34, 21);
+			this->buttonHelp->TabIndex = 41;
+			this->buttonHelp->Text = L"\?";
+			this->buttonHelp->UseVisualStyleBackColor = true;
+			this->buttonHelp->Click += gcnew System::EventHandler(this, &ClassroomInfoForm::buttonHelp_Click);
+			// 
 			// ClassroomInfoForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(670, 315);
+			this->Controls->Add(this->buttonDebug);
+			this->Controls->Add(this->buttonHelp);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->textBox);
 			this->Controls->Add(this->label6);
@@ -246,17 +275,30 @@ namespace Scheduler {
 	private: System::Void ClassroomInfoForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 		
 
-		MainData.EditingClassroom->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
-		MainData.EditingClassroom->setCapacity(std::stoi(msclr::interop::marshal_as<std::string>(textBoxCapacity->Text)));
-		MainData.EditingClassroom->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
-		MainData.EditingClassroom->setTagsFromString(msclr::interop::marshal_as<std::string>(textBoxTags->Text));
-
-
-		vector<string> v;
-		cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
-		for (int i = 0; i < lines->Length; i++)
-			v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
-		MainData.EditingClassroom->getRules().setText(v);
+		trySave();
 	}
+private: System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
+	HelpRules ^ form = gcnew HelpRules;
+	form->ShowDialog();
+}
+private: System::Void buttonDebug_Click(System::Object^  sender, System::EventArgs^  e) {
+	trySave();
+	Schedule.initRules();
+	Schedule.debugOutput(dynamic_cast<ScheduleObject*>(MainData.EditingClassroom), "../TestData/debug.xls");
+}
+System::Void trySave()
+{
+	MainData.EditingClassroom->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
+	MainData.EditingClassroom->setCapacity(std::stoi(msclr::interop::marshal_as<std::string>(textBoxCapacity->Text)));
+	MainData.EditingClassroom->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
+	MainData.EditingClassroom->setTagsFromString(msclr::interop::marshal_as<std::string>(textBoxTags->Text));
+
+
+	vector<string> v;
+	cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
+	for (int i = 0; i < lines->Length; i++)
+		v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
+	MainData.EditingClassroom->getRules().setText(v);
+}
 };
 }

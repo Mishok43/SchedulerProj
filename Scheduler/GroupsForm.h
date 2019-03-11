@@ -110,14 +110,14 @@ namespace Scheduler {
 			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->buttonExport = (gcnew System::Windows::Forms::Button());
-			this->buttonImport = (gcnew System::Windows::Forms::Button());
 			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->size = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->description = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->buttonExport = (gcnew System::Windows::Forms::Button());
+			this->buttonImport = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
@@ -155,12 +155,15 @@ namespace Scheduler {
 			// 
 			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox->Location = System::Drawing::Point(12, 259);
 			this->textBox->Multiline = true;
 			this->textBox->Name = L"textBox";
 			this->textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox->Size = System::Drawing::Size(647, 107);
 			this->textBox->TabIndex = 33;
+			this->textBox->TextChanged += gcnew System::EventHandler(this, &GroupsForm::textBox_TextChanged);
 			// 
 			// label1
 			// 
@@ -248,36 +251,6 @@ namespace Scheduler {
 			this->dataGridView->Size = System::Drawing::Size(647, 157);
 			this->dataGridView->TabIndex = 26;
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(12, 12);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 25;
-			this->textBox1->Text = L"Фильтр...";
-			// 
-			// buttonExport
-			// 
-			this->buttonExport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonExport->Location = System::Drawing::Point(566, 9);
-			this->buttonExport->Name = L"buttonExport";
-			this->buttonExport->Size = System::Drawing::Size(94, 23);
-			this->buttonExport->TabIndex = 24;
-			this->buttonExport->Text = L"Экспорт";
-			this->buttonExport->UseVisualStyleBackColor = true;
-			this->buttonExport->Click += gcnew System::EventHandler(this, &GroupsForm::buttonExport_Click);
-			// 
-			// buttonImport
-			// 
-			this->buttonImport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-			this->buttonImport->Location = System::Drawing::Point(466, 9);
-			this->buttonImport->Name = L"buttonImport";
-			this->buttonImport->Size = System::Drawing::Size(94, 23);
-			this->buttonImport->TabIndex = 23;
-			this->buttonImport->Text = L"Импорт";
-			this->buttonImport->UseVisualStyleBackColor = true;
-			this->buttonImport->Click += gcnew System::EventHandler(this, &GroupsForm::buttonImport_Click);
-			// 
 			// name
 			// 
 			this->name->Frozen = true;
@@ -321,6 +294,36 @@ namespace Scheduler {
 			this->tags->ReadOnly = true;
 			this->tags->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			this->tags->Width = 1000;
+			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(12, 12);
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(100, 20);
+			this->textBox1->TabIndex = 25;
+			this->textBox1->Text = L"Фильтр...";
+			// 
+			// buttonExport
+			// 
+			this->buttonExport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonExport->Location = System::Drawing::Point(566, 9);
+			this->buttonExport->Name = L"buttonExport";
+			this->buttonExport->Size = System::Drawing::Size(94, 23);
+			this->buttonExport->TabIndex = 24;
+			this->buttonExport->Text = L"Экспорт";
+			this->buttonExport->UseVisualStyleBackColor = true;
+			this->buttonExport->Click += gcnew System::EventHandler(this, &GroupsForm::buttonExport_Click);
+			// 
+			// buttonImport
+			// 
+			this->buttonImport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+			this->buttonImport->Location = System::Drawing::Point(466, 9);
+			this->buttonImport->Name = L"buttonImport";
+			this->buttonImport->Size = System::Drawing::Size(94, 23);
+			this->buttonImport->TabIndex = 23;
+			this->buttonImport->Text = L"Импорт";
+			this->buttonImport->UseVisualStyleBackColor = true;
+			this->buttonImport->Click += gcnew System::EventHandler(this, &GroupsForm::buttonImport_Click);
 			// 
 			// GroupsForm
 			// 
@@ -383,6 +386,7 @@ namespace Scheduler {
 
 		}
 		System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+			trySave();
 			if (this->dataGridView->CurrentRow)
 			{
 				MainData.EditingGroup = MainData.GroupsFormList[this->dataGridView->CurrentRow->Index];
@@ -393,6 +397,7 @@ namespace Scheduler {
 
 					this->updateGrid();
 				}
+				Schedule.reset();
 			}
 
 
@@ -408,7 +413,7 @@ namespace Scheduler {
 				MainData.GroupsFormList.erase(MainData.GroupsFormList.begin() + pos);
 				this->dataGridView->Rows->RemoveAt(pos);
 
-
+				Schedule.reset();
 			}
 		}
 		System::Void buttonAddTag_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -459,12 +464,20 @@ namespace Scheduler {
 
 
 			this->updateGrid();
+			Schedule.reset();
 		}
 		System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
 			HelpRules ^ form = gcnew HelpRules;
 			form->ShowDialog();
 		}
 		System::Void GroupsForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+			
+			trySave();
+		}
+
+
+		System::Void trySave()
+		{
 			vector<string> v;
 
 			cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
@@ -475,5 +488,8 @@ namespace Scheduler {
 
 			MainData.GroupTagRules.setText(v);
 		}
+private: System::Void textBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	Schedule.reset();
+}
 };
 }

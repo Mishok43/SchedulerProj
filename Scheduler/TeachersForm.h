@@ -146,12 +146,15 @@ namespace Scheduler {
 			// 
 			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox->Location = System::Drawing::Point(12, 259);
 			this->textBox->Multiline = true;
 			this->textBox->Name = L"textBox";
 			this->textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox->Size = System::Drawing::Size(647, 107);
 			this->textBox->TabIndex = 33;
+			this->textBox->TextChanged += gcnew System::EventHandler(this, &TeachersForm::textBox_TextChanged);
 			// 
 			// label1
 			// 
@@ -366,6 +369,7 @@ private:
 
 	}
 	System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+		trySave();
 		if (this->dataGridView->CurrentRow)
 		{
 			MainData.EditingTeacher = MainData.TeachersFormList[this->dataGridView->CurrentRow->Index];
@@ -376,6 +380,8 @@ private:
 
 				this->updateGrid();
 			}
+
+			Schedule.reset();
 		}
 
 
@@ -391,7 +397,7 @@ private:
 			MainData.TeachersFormList.erase(MainData.TeachersFormList.begin() + pos);
 			this->dataGridView->Rows->RemoveAt(pos);
 
-
+			Schedule.reset();
 		}
 	}
 	System::Void buttonAddTag_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -442,12 +448,20 @@ private:
 
 
 		this->updateGrid();
+
+		Schedule.reset();
 	}
 	System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
 		HelpRules ^ form = gcnew HelpRules;
 		form->ShowDialog();
 	}
 	System::Void TeachersForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+		trySave();
+	}
+
+
+	System::Void trySave()
+	{
 		vector<string> v;
 
 		cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
@@ -458,5 +472,8 @@ private:
 
 		MainData.TeacherTagRules.setText(v);
 	}
+private: System::Void textBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	Schedule.reset();
+}
 };
 }

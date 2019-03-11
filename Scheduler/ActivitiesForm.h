@@ -1,6 +1,6 @@
 #pragma once
 #include "GlobalData.h"
-//#include "ActivityInfoForm.h"
+#include "ActivityInfoForm.h"
 #include "TagTextBox.h"
 #include "HelpRules.h"
 
@@ -61,10 +61,24 @@ namespace Scheduler {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  teacherName;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  groupNames;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  capacity;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  hours;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  description;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  areRules;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  tags;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -139,7 +153,7 @@ namespace Scheduler {
 			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->teacherName = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->groupNames = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->capacity = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->hours = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->description = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
@@ -171,12 +185,15 @@ namespace Scheduler {
 			// 
 			this->textBox->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left)
 				| System::Windows::Forms::AnchorStyles::Right));
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox->Location = System::Drawing::Point(12, 259);
 			this->textBox->Multiline = true;
 			this->textBox->Name = L"textBox";
 			this->textBox->ScrollBars = System::Windows::Forms::ScrollBars::Vertical;
 			this->textBox->Size = System::Drawing::Size(647, 107);
 			this->textBox->TabIndex = 33;
+			this->textBox->TextChanged += gcnew System::EventHandler(this, &ActivitiesForm::textBox_TextChanged);
 			// 
 			// label1
 			// 
@@ -285,7 +302,7 @@ namespace Scheduler {
 			this->dataGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(7) {
 				this->name, this->teacherName,
-					this->groupNames, this->capacity, this->description, this->areRules, this->tags
+					this->groupNames, this->hours, this->description, this->areRules, this->tags
 			});
 			this->dataGridView->Location = System::Drawing::Point(12, 38);
 			this->dataGridView->Name = L"dataGridView";
@@ -297,7 +314,7 @@ namespace Scheduler {
 			// name
 			// 
 			this->name->Frozen = true;
-			this->name->HeaderText = L"Дисциплина";
+			this->name->HeaderText = L"Название";
 			this->name->Name = L"name";
 			this->name->ReadOnly = true;
 			this->name->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
@@ -317,14 +334,14 @@ namespace Scheduler {
 			this->groupNames->HeaderText = L"Группы";
 			this->groupNames->Name = L"groupNames";
 			// 
-			// capacity
+			// hours
 			// 
-			this->capacity->Frozen = true;
-			this->capacity->HeaderText = L"Вместимость";
-			this->capacity->Name = L"capacity";
-			this->capacity->ReadOnly = true;
-			this->capacity->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
-			this->capacity->Width = 80;
+			this->hours->Frozen = true;
+			this->hours->HeaderText = L"Часы";
+			this->hours->Name = L"hours";
+			this->hours->ReadOnly = true;
+			this->hours->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->hours->Width = 80;
 			// 
 			// description
 			// 
@@ -412,16 +429,18 @@ private:
 
 	}
 	System::Void buttonEdit_Click(System::Object^  sender, System::EventArgs^  e) {
+		trySave();
 		if (this->dataGridView->CurrentRow)
 		{
 			MainData.EditingActivity = MainData.ActivitiesFormList[this->dataGridView->CurrentRow->Index];
 			if (MainData.EditingActivity != nullptr)
 			{
-				//ActivityInfoForm ^ form = gcnew ActivityInfoForm;
-				//form->ShowDialog();
+				ActivityInfoForm ^ form = gcnew ActivityInfoForm;
+				form->ShowDialog();
 
 				this->updateGrid();
 			}
+			Schedule.reset();
 		}
 
 
@@ -437,7 +456,7 @@ private:
 			MainData.ActivitiesFormList.erase(MainData.ActivitiesFormList.begin() + pos);
 			this->dataGridView->Rows->RemoveAt(pos);
 
-
+			Schedule.reset();
 		}
 	}
 	System::Void buttonAddTag_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -483,17 +502,25 @@ private:
 		MainData.ActivitiesFormList.push_back(MainData.EditingActivity);
 		MainData.Activities.add(MainData.EditingActivity);
 
-		//ActivityInfoForm ^ form = gcnew ActivityInfoForm;
-		//form->ShowDialog();
+		ActivityInfoForm ^ form = gcnew ActivityInfoForm;
+		form->ShowDialog();
 
 
 		this->updateGrid();
+		Schedule.reset();
 	}
 	System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
 		HelpRules ^ form = gcnew HelpRules;
 		form->ShowDialog();
 	}
 	System::Void ActivitiesForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+		
+		trySave();
+	}
+
+
+	System::Void trySave()
+	{
 		vector<string> v;
 
 		cli::array<String^>^ lines = this->textBox->Text->Split(gcnew cli::array<String^> {"\n", "\r", "\r\n" }, StringSplitOptions::None);
@@ -505,5 +532,8 @@ private:
 		MainData.ActivityTagRules.setText(v);
 	}
 
+private: System::Void textBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+	Schedule.reset();
+}
 };
 }

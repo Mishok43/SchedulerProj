@@ -7,7 +7,18 @@ ScheduleObject::ScheduleObject(std::string name,std::string description, std::se
 	setName(name);
 	setDescription(description);
 	this->tags = tags;
+	this->killed = false;
 
+}
+
+void ScheduleObject::kill()
+{
+	killed = true;
+}
+
+bool ScheduleObject::isKilled()
+{
+	return killed;
 }
 
 
@@ -29,7 +40,7 @@ void ScheduleObject::setName(std::string value)
 
 std::string ScheduleObject::getName()
 {
-	return name;
+	return killed ? "!!!" : name;
 }
 
 
@@ -309,11 +320,16 @@ string Teacher::getShortName()
 		if (name[z] == ' ')
 		{
 			s += name[z + 1];
+			s += '.';
 		}
 		else if (name[z] == '.')
 		{
 			if (name[z + 1] != ' ')
+			{
 				s += name[z + 1];
+				s += '.';
+			}
+				
 		}
 
 		z++;
@@ -548,15 +564,8 @@ Activity::Activity() : ScheduleObject("?", "?", {})
 Activity::Activity(std::string name, std::string description, std::set<std::string> tags, string teacherName,set<string> groupNames,int hours) : ScheduleObject(name, description, tags)
 {
 	this->hours = hours;
-	this->teacher = Activity::GlobalTeachers.getByName(teacherName);
-
-	this->groups.clear();
-	for (auto s : groupNames)
-	{
-		Group* p = Activity::GlobalGroups.getByName(s);
-		this->groups.insert(p);
-		
-	}
+	setTeacher(teacherName);
+	setGroups(groupNames);
 }
 
 int Activity::getHours()
@@ -567,6 +576,12 @@ int Activity::getHours()
 void Activity::setHours(int value)
 {
 	hours = value;
+}
+
+void Activity::setTeacher(string teacherName)
+{
+	this->teacher = Activity::GlobalTeachers.getByName(teacherName);
+
 }
 
 Teacher * Activity::getTeacher()
@@ -582,6 +597,17 @@ string Activity::getTeacherName()
 string Activity::getTeacherShortName()
 {
 	return teacher ? teacher->getShortName() : "???";
+}
+
+void Activity::setGroups(set<string> groupNames)
+{
+	this->groups.clear();
+	for (auto s : groupNames)
+	{
+		Group* p = Activity::GlobalGroups.getByName(s);
+		this->groups.insert(p);
+
+	}
 }
 
 set<Group*> Activity::getGroups()
@@ -607,7 +633,7 @@ std::string Activity::getParam(int i)
 	switch (i)
 	{
 	case 0: s = name; break;
-	case 1: s = getTeacherName(); break;
+	case 1: s = getTeacherShortName(); break;
 	case 2: s = getGroupsAsString();  break;
 	case 3: s = to_string(hours); break;
 	case 4: s = descripton;  break;
