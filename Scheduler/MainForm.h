@@ -250,6 +250,10 @@ namespace Scheduler {
 		}
 #pragma endregion
 	private: System::Void newToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+		MainData = GlobalData();
+		Schedule = GeneratedSchedule();
+		
+		update();
 	}
 private: System::Void buttonParameters_Click(System::Object^  sender, System::EventArgs^  e) {
 	ParametersForm ^ form = gcnew ParametersForm;
@@ -292,6 +296,8 @@ private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, Syste
 private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 	ifstream in("../TestData/data.txt");
 	in >> MainData;
+	Activity::GlobalGroups = MainData.Groups;
+	Activity::GlobalTeachers = MainData.Teachers;
 	in >> Schedule;
 	in.close();
 

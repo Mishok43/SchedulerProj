@@ -360,6 +360,9 @@ namespace Scheduler {
 			MainData.Groups.setVal(Group::ExcelToGroups("../TestData/groups.xls"));
 
 			this->updateGrid();
+
+
+			MainData.Activities.clear();
 		}
 		System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
 			Group::GroupsToExcel(MainData.Groups.getVal(), "../TestData/groups.xls");

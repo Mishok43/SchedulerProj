@@ -114,7 +114,7 @@ namespace Scheduler {
 			this->comboBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
 			this->comboBox->FormattingEnabled = true;
-			this->comboBox->Items->AddRange(gcnew cli::array< System::Object^  >(4) { L"Группы", L"Преподаватели", L"Дисциплины", L"Аудитории" });
+			this->comboBox->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Группы", L"Преподаватели", L"Аудитории" });
 			this->comboBox->Location = System::Drawing::Point(124, 105);
 			this->comboBox->Name = L"comboBox";
 			this->comboBox->Size = System::Drawing::Size(178, 24);
@@ -265,9 +265,15 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	to.tm_mon = this->dateTimePicker2->Value.Month - 1;
 	to.tm_mday = this->dateTimePicker2->Value.Day;
 
-	
+	int k;
+	switch (this->comboBox->SelectedIndex)
+	{
+	case 0: k = 0; break;
+	case 1: k = 1; break;
+	case 2: k = 3; break;
+	}
 
-	Schedule.exportXls((RuleData::objtype)this->comboBox->SelectedIndex, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
+	Schedule.exportXls((RuleData::objtype)k, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
 }
 };
 }

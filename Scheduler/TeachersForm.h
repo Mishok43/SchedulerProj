@@ -343,6 +343,9 @@ private:
 		MainData.Teachers.setVal(Teacher::ExcelToTeachers("../TestData/professors.xls"));
 
 		this->updateGrid();
+
+
+		MainData.Activities.clear();
 	}
 	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
 		Teacher::TeachersToExcel(MainData.Teachers.getVal(), "../TestData/professors.xls");

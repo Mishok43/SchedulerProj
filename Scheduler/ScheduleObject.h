@@ -195,6 +195,17 @@ public:
 		
 	}
 
+	void clear()
+	{
+		for (int i = 0; i < values.size(); i++)
+		{
+			values[i]->kill();
+			
+		}
+		values.clear();
+		
+	}
+
 	bool isEmpty()
 	{
 		return values.size() == 0;
