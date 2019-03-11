@@ -1,0 +1,133 @@
+﻿  ActivitiesForm.cpp
+e:\c\cpp\schedulerproj\scheduler\activityinfoform.h(320): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\activitiesform.h(435): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(189): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(185): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\activitiesform.h(463): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::erase(T *)"
+          with
+          [
+              T=Activity
+          ]
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(19): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Activity>"
+  ActivityInfoForm.cpp
+e:\c\cpp\schedulerproj\scheduler\activityinfoform.h(320): warning C4018: <: несоответствие типов со знаком и без знака
+  ClassroomInfoForm.cpp
+e:\c\cpp\schedulerproj\scheduler\classroominfoform.h(270): warning C4018: <: несоответствие типов со знаком и без знака
+  ClassroomsForm.cpp
+e:\c\cpp\schedulerproj\scheduler\classroominfoform.h(270): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\classroomsform.h(386): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(189): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(185): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\classroomsform.h(415): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Classroom>::erase(T *)"
+          with
+          [
+              T=Classroom
+          ]
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(16): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Classroom>"
+  BasicExcel.cpp
+  ExcelFormat.cpp
+  GeneratedSchedule.cpp
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(141): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(193): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(202): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(211): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(220): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(272): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(361): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(373): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(397): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(420): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(422): warning C4018: >: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(425): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(487): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(490): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(68): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(67): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\generatedschedule.cpp(61): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::updateIds(void)"
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(19): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Activity>"
+  GlobalData.cpp
+  HelpRules.cpp
+  Rules.cpp
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(607): warning C4244: return: преобразование "double" в "int", возможна потеря данных
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(622): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(642): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(664): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(696): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(729): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\rules.cpp(756): warning C4018: <: несоответствие типов со знаком и без знака
+  ScheduleObject.cpp
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(120): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(181): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(292): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(318): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(420): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.cpp(545): warning C4018: <: несоответствие типов со знаком и без знака
+  GroupInfoForm.cpp
+e:\c\cpp\schedulerproj\scheduler\groupinfoform.h(259): warning C4018: <: несоответствие типов со знаком и без знака
+  GroupsForm.cpp
+e:\c\cpp\schedulerproj\scheduler\groupinfoform.h(259): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\groupsform.h(387): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(200): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(199): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\groupsform.h(365): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::clear(void)"
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(19): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Activity>"
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(189): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(185): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\groupsform.h(415): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Group>::erase(T *)"
+          with
+          [
+              T=Group
+          ]
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(18): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Group>"
+  MainForm.cpp
+e:\c\cpp\schedulerproj\scheduler\parametersform.h(273): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+e:\c\cpp\schedulerproj\scheduler\groupinfoform.h(259): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\groupsform.h(387): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\teacherinfoform.h(247): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\teachersform.h(370): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\classroominfoform.h(270): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\classroomsform.h(386): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\activityinfoform.h(320): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\activitiesform.h(435): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(200): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(199): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\groupsform.h(365): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::clear(void)"
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(19): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Activity>"
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(189): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(185): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\activitiesform.h(463): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::erase(T *)"
+          with
+          [
+              T=Activity
+          ]
+  ParametersForm.cpp
+e:\c\cpp\schedulerproj\scheduler\parametersform.h(273): warning C4244: =: преобразование "double" в "int", возможна потеря данных
+  ScheduleForm.cpp
+  StudentsForm.cpp
+  TagTextBox.cpp
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+  TeacherInfoForm.cpp
+e:\c\cpp\schedulerproj\scheduler\teacherinfoform.h(247): warning C4018: <: несоответствие типов со знаком и без знака
+  TeachersForm.cpp
+e:\c\cpp\schedulerproj\scheduler\teacherinfoform.h(247): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\tagtextbox.h(121): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\teachersform.h(370): warning C4018: <: несоответствие типов со знаком и без знака
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(200): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(199): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\teachersform.h(348): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Activity>::clear(void)"
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(19): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Activity>"
+e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(189): warning C4018: <: несоответствие типов со знаком и без знака
+  e:\c\cpp\schedulerproj\scheduler\scheduleobject.h(185): note: при компиляции функции-члена "<Нет данных>" класса класс <Нет данных>
+  e:\c\cpp\schedulerproj\scheduler\teachersform.h(399): note: выполняется компиляция ссылки на экземпляр шаблон функции "void ScheduleObjectContainer<Teacher>::erase(T *)"
+          with
+          [
+              T=Teacher
+          ]
+  e:\c\cpp\schedulerproj\scheduler\globaldata.h(17): note: выполняется компиляция ссылки на экземпляр шаблон класс "ScheduleObjectContainer<Teacher>"
+  Создание кода...
+  .NETFramework,Version=v4.6.1.AssemblyAttributes.cpp
+  Scheduler.vcxproj -> E:\c\cpp\SchedulerProj\Release\Scheduler.exe
