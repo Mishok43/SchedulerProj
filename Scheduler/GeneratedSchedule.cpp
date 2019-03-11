@@ -173,7 +173,7 @@ void GeneratedSchedule::debugOutput(ScheduleObject* obj, const char * path)
 
 	for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
 	{
-		sheet->Cell(1 + j, 0)->SetValue(to_string(j));
+		sheet->Cell(1 + j, 0)->SetValue(to_string(j+1));
 	}
 
 

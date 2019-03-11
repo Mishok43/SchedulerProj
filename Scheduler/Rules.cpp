@@ -391,10 +391,12 @@ RuleData::RuleData(string s) : RuleData()
 
 		type = TIMET;
 
+
+
 		tm date = Rules::Settings.StartDate;
-		date.tm_year = 2019 - 1900;
-		date.tm_mon = 3 - 1;
-		date.tm_mday = 20;
+		date.tm_year = 2000 + stoi(arg[0].substr(6, 2)) - 1900;
+		date.tm_mon = stoi(arg[0].substr(3,2)) - 1;
+		date.tm_mday = stoi(arg[0].substr(0, 2));
 
 		k = Rules::dateToDay(date);
 
@@ -554,7 +556,7 @@ string Rules::activityHourToStringDebug(int i)
 	mktime(&time);
 	int activity = i % Rules::Settings.ActivitiesPerDay;
 
-	return "Hour: " + to_string(i) + " Day:" + to_string(day) + " WEEKDAY:" + to_string(getTmWday(time) + 1) + " Activity:" + to_string(activity);
+	return "Hour: " + to_string(i) + " WEEKDAY:" + to_string(getTmWday(time) + 1) + " Activity:" + to_string(activity);
 }
 
 string Rules::dayToStringDebug(int i)
@@ -563,7 +565,7 @@ string Rules::dayToStringDebug(int i)
 
 	time.tm_mday += i;
 	mktime(&time);
-	return " Day:" + to_string(i) + " WEEKDAY:" + to_string(getTmWday(time) + 1);
+	return " Day:" + to_string(i) + "\nDate:" + to_string(time.tm_mday) + "/" + to_string(time.tm_mon + 1) + "\nweekDay:" + to_string(getTmWday(time) + 1);
 
 }
 
