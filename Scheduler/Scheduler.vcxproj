@@ -147,8 +147,6 @@
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
     <ClCompile Include="ExtraScheduleForm.cpp" />
-    <ClCompile Include="GeneratedSchedule.cpp" />
-    <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="GeneratedSchedule.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsManaged>
