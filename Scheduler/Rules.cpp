@@ -791,6 +791,16 @@ vector<string>& Rules::getText()
 }
 
 
+bool** RuleData::getObjData() const 
+{
+	return obj;
+}
+
+bool** RuleData::getMData() const
+{
+	return m;
+}
+
 string Rules::getErrorMessage()
 {
 

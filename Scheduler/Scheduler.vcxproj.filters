@@ -78,10 +78,7 @@
     <ClCompile Include="ActivityInfoForm.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="CheckPasswordBox.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="SetPasswordBox.cpp">
+    <ClCompile Include="generating.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="ErrorListForm.cpp">
@@ -152,10 +149,10 @@
     <ClInclude Include="ActivityInfoForm.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="CheckPasswordBox.h">
+    <ClInclude Include="own_mutex.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="SetPasswordBox.h">
+    <ClInclude Include="generating.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ErrorListForm.h">

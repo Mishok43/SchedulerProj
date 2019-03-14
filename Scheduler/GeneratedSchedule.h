@@ -1,6 +1,6 @@
 #pragma once
 #include "GlobalData.h"
-
+#include "generating.h"
 
 class FinalScheduleObject
 {

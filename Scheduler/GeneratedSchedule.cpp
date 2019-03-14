@@ -1,5 +1,7 @@
 #include "GeneratedSchedule.h"
+#include "generating.h"
 #include <random>
+
 
 FinalScheduleObject::FinalScheduleObject()
 {
@@ -43,13 +45,13 @@ std::istream & operator>>(std::istream & is, FinalScheduleObject & finalSchedule
 	getline(is, temp);
 	finalScheduleObject.classroom = MainData.Classrooms.getByPos(stoi(temp));
 	return is;
-	
+
 }
 
 GeneratedSchedule::GeneratedSchedule()
 {
-	
-	
+
+
 }
 
 
@@ -60,7 +62,7 @@ void GeneratedSchedule::initRules()
 	MainData.Teachers.updateIds();
 	MainData.Activities.updateIds();
 	MainData.Classrooms.updateIds();
-	
+
 	//—оздать мапы [»ћя]->[id1,id2...]
 
 	map<string, vector<int>> groupNameMap = MainData.Groups.getNameMap();
@@ -68,7 +70,7 @@ void GeneratedSchedule::initRules()
 	map<string, vector<int>> activityNameMap = MainData.Activities.getNameMap();
 	map<string, vector<int>> classroomNameMap = MainData.Classrooms.getNameMap();
 
-	Rules::Settings.nameMap 
+	Rules::Settings.nameMap
 		= array<map<string, vector<int>>, 4>
 	{groupNameMap, teacherNameMap, activityNameMap, classroomNameMap};
 
@@ -156,12 +158,73 @@ void GeneratedSchedule::reset()
 
 void GeneratedSchedule::generate()
 {
+	std::vector<std::pair<bool**, bool**>> activities(MainData.Activities.getVal().size());
+	std::vector<uint32_t> maxPerWeekActivities(MainData.Activities.getVal().size());
+	for (std::size_t i = 0; i < MainData.Activities.getVal().size(); ++i)
+	{
+		auto val = MainData.Activities.getVal();
+
+
+		activities[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekActivities[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+
+	std::vector<std::pair<bool**, bool**>> classrooms(MainData.Classrooms.getVal().size());
+	std::vector<uint32_t> maxPerWeekClassrooms(MainData.Classrooms.getVal().size());
+	for (std::size_t i = 0; i < MainData.Classrooms.getVal().size(); ++i)
+	{
+		auto val = MainData.Classrooms.getVal();
+
+
+		classrooms[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekClassrooms[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+
+	std::vector<std::pair<bool**, bool**>> groups(MainData.Groups.getVal().size());
+	std::vector<uint32_t> maxPerWeekGroups(MainData.Groups.getVal().size());
+	for (std::size_t i = 0; i < MainData.Groups.getVal().size(); ++i)
+	{
+		auto val = MainData.Groups.getVal();
+
+
+		groups[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekGroups[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+
+	std::vector<uint32_t> numHoursPerActivitity(MainData.Activities.Count());
+	for (std::size_t i = 0; i < numHoursPerActivitity.size(); ++i)
+	{
+		numHoursPerActivitity[i] = MainData.Activities.getByPos(i)->getHours();
+	}
+
+	int**** res = UnmanagedGenerator::generate(
+		Rules::Settings.Days,
+		Rules::Settings.ActivitiesPerDay,
+		MainData.Groups.getVal().size(),
+		MainData.Activities.getVal().size(),
+		MainData.Classrooms.getVal().size(),
+		activities,
+		classrooms,
+		groups,
+		maxPerWeekActivities,
+		maxPerWeekClassrooms,
+		maxPerWeekGroups,
+		numHoursPerActivitity
+	);
+	assert(res != nullptr);
 
 	reset();
 
 	vector<Activity*> act = MainData.Activities.getVal();
-
-
 
 	vector<Classroom*> cls = MainData.Classrooms.getVal();
 	int n = Rules::Settings.Days * Rules::Settings.ActivitiesPerDay;
@@ -171,18 +234,47 @@ void GeneratedSchedule::generate()
 		hour.push_back(vector<FinalScheduleObject>());
 	}
 
-	
+	for (std::size_t d = 0, ah = 0; d < Rules::Settings.Days; ++d)
+	{
+		for (std::size_t h = 0; h < Rules::Settings.ActivitiesPerDay; ++h, ++ah)
+		{
+			for (std::size_t g = 0; g < MainData.Groups.getVal().size(); ++g)
+			{
+				for (std::size_t a = 0; a < MainData.Activities.getVal().size(); ++a)
+				{
+					if (res[g][d][h][a] != -1)
+					{
+						FinalScheduleObject f = FinalScheduleObject(act[a], cls[res[g][d][h][a]]);
+						bool can = true;
+						for (std::size_t k = 0; k < hour[ah].size(); ++k)
+						{
+							if (hour[ah][k].getActivity() == act[a] || hour[ah][k].getClassroom() == cls[res[g][d][h][a]])
+							{
+								can = false;
+								break;
+							}
+
+						}
+						if (can)
+							hour[ah].push_back(f);
+					}
+
+				}
+			}
+		}
+	}
+
+
+	/*
 	for (int i = 0; i < act.size(); i++)
 	{
-
-
-		for (int j = 0; j < act[i]->getHours(); j++)
-		{
-			FinalScheduleObject f = FinalScheduleObject(act[i], cls[rand() % cls.size()]);
-			hour[rand() % n].push_back(f);
-		}
-
+	for (int j = 0; j < act[i]->getHours(); j++)
+	{
+	FinalScheduleObject f = FinalScheduleObject(act[i], cls[rand() % cls.size()]);
+	hour[rand() % n].push_back(f);
 	}
+
+	}*/
 }
 
 
@@ -207,7 +299,7 @@ void GeneratedSchedule::debugOutput(ScheduleObject* obj, const char * path)
 
 	for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
 	{
-		sheet->Cell(1 + j, 0)->SetValue(to_string(j+1));
+		sheet->Cell(1 + j, 0)->SetValue(to_string(j + 1));
 	}
 
 
@@ -280,22 +372,22 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 	switch (type)
 	{
-	case RuleData::GROUPOBJ :
-		for (auto o : MainData.Groups.getVal())
-			names.push_back(o->getName());
-		break;
-	case RuleData::TEACHEROBJ:
-		for (auto o : MainData.Teachers.getVal())
-			names.push_back(o->getName());
-		break;
-	case RuleData::ACTIVITYOBJ:
-		for (auto o : MainData.Activities.getVal())
-			names.push_back(o->getName());
-		break;
-	case RuleData::CLASSROOMOBJ:
-		for (auto o : MainData.Classrooms.getVal())
-			names.push_back(o->getName());
-		break;
+		case RuleData::GROUPOBJ:
+			for (auto o : MainData.Groups.getVal())
+				names.push_back(o->getName());
+			break;
+		case RuleData::TEACHEROBJ:
+			for (auto o : MainData.Teachers.getVal())
+				names.push_back(o->getName());
+			break;
+		case RuleData::ACTIVITYOBJ:
+			for (auto o : MainData.Activities.getVal())
+				names.push_back(o->getName());
+			break;
+		case RuleData::CLASSROOMOBJ:
+			for (auto o : MainData.Classrooms.getVal())
+				names.push_back(o->getName());
+			break;
 	}
 	sheet->SetColWidth(0, 14 * 300);
 	sheet->Cell(0, 0)->SetValue(MainData.Title);
@@ -308,9 +400,10 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 		sheet->Cell(1, i + 3)->SetValue(names[i]);
 		sheet->SetColWidth(i + 3, 21 * 300);
 	}
-		
 
-	struct MyCell {
+
+	struct MyCell
+	{
 	public:
 		MyCell(Activity* a, Classroom* c, tm t)
 		{
@@ -344,41 +437,42 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 			bool mustAddLine = false;
 
-			
-				
+
+
 			for (map<Classroom*, vector<tm>>::iterator it = cl.begin(); it != cl.end(); ++it)
+			{
+
+				if (mustAddLine)
+					s += "\n";
+				mustAddLine = true;
+				if (classroom)
 				{
-					
-					if (mustAddLine)
-						s += "\n";
-					mustAddLine = true;
-					if (classroom) {
 					s += it->first->getName();
-					}
-					if (date)
-					{
-						if (classroom) s += ": ";
-						for (auto o : it->second)
-						{
-							string m1 = to_string(o.tm_mday);
-							if (m1.length() == 1)
-								m1 = "0" + m1;
-							string m2 = to_string(o.tm_mon + 1);
-							if (m2.length() == 1)
-								m2 = "0" + m2;
-							s += m1 + "." + m2 + " ";
-						}
-					}
-					
-				
 				}
+				if (date)
+				{
+					if (classroom) s += ": ";
+					for (auto o : it->second)
+					{
+						string m1 = to_string(o.tm_mday);
+						if (m1.length() == 1)
+							m1 = "0" + m1;
+						string m2 = to_string(o.tm_mon + 1);
+						if (m2.length() == 1)
+							m2 = "0" + m2;
+						s += m1 + "." + m2 + " ";
+					}
+				}
+
+
+			}
 			return s;
 		}
 
 		Activity* act;
-		map<Classroom*,vector<tm>> cl;
+		map<Classroom*, vector<tm>> cl;
 		tm time;
-		
+
 	};
 
 	int n = week ? 7 * Rules::Settings.ActivitiesPerDay : Rules::Settings.Days*Rules::Settings.ActivitiesPerDay;
@@ -419,7 +513,7 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 			showObj[3][MainData.Classrooms.getByPos(o)->getId()] = true;
 
 	vector<vector<vector<MyCell>>> arr;
-	
+
 	for (int i = 0; i < n; i++)
 	{
 		arr.push_back(vector<vector<MyCell>>());
@@ -428,11 +522,11 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 	}
 
 	for (int i = 0; i < Rules::Settings.Days*Rules::Settings.ActivitiesPerDay; i++)
-		if ((i / Rules::Settings.ActivitiesPerDay >=startDay) && (i / Rules::Settings.ActivitiesPerDay <=endDay))
+		if ((i / Rules::Settings.ActivitiesPerDay >= startDay) && (i / Rules::Settings.ActivitiesPerDay <= endDay))
 		{
 			int y = week ? Rules::dayToWeekday(i / Rules::Settings.ActivitiesPerDay)*Rules::Settings.ActivitiesPerDay
 				+ i % Rules::Settings.ActivitiesPerDay : i;
-		
+
 			tm time = Rules::dayToDate(i / Rules::Settings.ActivitiesPerDay);
 
 			for (int j = 0; j < hour[i].size(); j++)
@@ -454,26 +548,26 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 				vector<int> x;
 				switch (type)
 				{
-				case RuleData::GROUPOBJ:
-					for (auto g : hour[i][j].getActivity()->getGroups())
-						x.push_back(g->getId());
-					break;
-				case RuleData::TEACHEROBJ:
-					x.push_back(hour[i][j].getActivity()->getTeacher()->getId());
-					break;
-				case RuleData::ACTIVITYOBJ:
-					x.push_back(hour[i][j].getActivity()->getId());
-					break;
-				case RuleData::CLASSROOMOBJ:
-					x.push_back(hour[i][j].getClassroom()->getId());
-					break;
+					case RuleData::GROUPOBJ:
+						for (auto g : hour[i][j].getActivity()->getGroups())
+							x.push_back(g->getId());
+						break;
+					case RuleData::TEACHEROBJ:
+						x.push_back(hour[i][j].getActivity()->getTeacher()->getId());
+						break;
+					case RuleData::ACTIVITYOBJ:
+						x.push_back(hour[i][j].getActivity()->getId());
+						break;
+					case RuleData::CLASSROOMOBJ:
+						x.push_back(hour[i][j].getClassroom()->getId());
+						break;
 				}
 
 
 				for (auto xx : x)
 				{
 					bool found = false;
-					for (int k = 0; k<arr[y][xx].size();k++)
+					for (int k = 0; k<arr[y][xx].size(); k++)
 						if (hour[i][j].getActivity() == arr[y][xx][k].act)
 						{
 							arr[y][xx][k].add(hour[i][j].getClassroom(), time);
@@ -485,7 +579,7 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 			}
 		}
-	
+
 
 	int posY = 2;
 	for (int i = 0; i < n; i++)
@@ -506,18 +600,18 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 				string s = "...";
 				switch (type)
 				{
-				case RuleData::GROUPOBJ:
-					s = arr[i][j][k].toString(true,true,false,true,week);
-					break;
-				case RuleData::TEACHEROBJ:
-					s = arr[i][j][k].toString(true, false, true, true, week);
-					break;
-				case RuleData::ACTIVITYOBJ:
-					s = arr[i][j][k].toString(false, true, true, true, week);
-					break;
-				case RuleData::CLASSROOMOBJ:
-					s = arr[i][j][k].toString(true, true, true, false, week);
-					break;
+					case RuleData::GROUPOBJ:
+						s = arr[i][j][k].toString(true, true, false, true, week);
+						break;
+					case RuleData::TEACHEROBJ:
+						s = arr[i][j][k].toString(true, false, true, true, week);
+						break;
+					case RuleData::ACTIVITYOBJ:
+						s = arr[i][j][k].toString(false, true, true, true, week);
+						break;
+					case RuleData::CLASSROOMOBJ:
+						s = arr[i][j][k].toString(true, true, true, false, week);
+						break;
 				}
 
 				sheet->Cell(posY + k, 3 + j)->SetValue(s);
@@ -537,10 +631,10 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 			if (m2.length() == 1)
 				m2 = "0" + m2;
 
-			sheet->Cell(posY, 0)->SetValue((week ? "" : m1+"."+m2+"\n") + weekDayNames[week ? i / Rules::Settings.ActivitiesPerDay : getTmWday(time)]);
+			sheet->Cell(posY, 0)->SetValue((week ? "" : m1 + "." + m2 + "\n") + weekDayNames[week ? i / Rules::Settings.ActivitiesPerDay : getTmWday(time)]);
 			sheet->Cell(posY, 0)->SetFormat(fmt);
 			sheet->Cell(posY, 1)->SetValue(to_string(1 + i % Rules::Settings.ActivitiesPerDay));
-			
+
 			int k = Rules::Settings.ActivityStartTime[i % Rules::Settings.ActivitiesPerDay];
 			m1 = to_string(k / 60);
 			m2 = to_string(k % 60);
@@ -550,7 +644,7 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 			if (m2.length() == 1)
 				m2 = "0" + m2;
 
-			sheet->Cell(posY, 2)->SetValue(m1+":"+m2);
+			sheet->Cell(posY, 2)->SetValue(m1 + ":" + m2);
 
 		}
 		posY += maxSz;
@@ -561,7 +655,7 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 ostream& operator<<(ostream& os, GeneratedSchedule& generatedSchedule)
 {
-	
+
 	os << generatedSchedule.hour.size() << endl;
 	for (int i = 0; i < generatedSchedule.hour.size(); i++)
 	{
