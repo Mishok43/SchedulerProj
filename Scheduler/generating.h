@@ -5,7 +5,7 @@
 class UnmanagedGenerator
 {
 public:
-	static bool***** UnmanagedGenerator::generate(
+	static int**** UnmanagedGenerator::generate(
 		std::size_t numDays,
 		std::size_t numActivitiesPerDay,
 		std::size_t numGroups,
@@ -16,7 +16,8 @@ public:
 		const std::vector<std::pair<bool**, bool**>>& groups,
 		const std::vector<uint32_t>& maxPerWeekActivities,
 		const std::vector<uint32_t>& maxPerWeekClassrooms,
-		const std::vector<uint32_t>& maxPerWeekGroups
+		const std::vector<uint32_t>& maxPerWeekGroups,
+		const std::vector<uint32_t>& numHoursPerActivity
 	);
 
 };
