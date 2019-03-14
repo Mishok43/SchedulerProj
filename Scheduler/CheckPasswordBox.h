@@ -131,7 +131,8 @@ namespace Scheduler {
 		}
 #pragma endregion
 private: System::Void buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
-	string p = msclr::interop::marshal_as<string>(textBox->Text);
+	int p = GlobalData::computeHash(msclr::interop::marshal_as<string>(textBox->Text).c_str());
+
 	if (p == MainData.PassManager)
 	{
 		GlobalData::Access = GlobalData::MANAGER;

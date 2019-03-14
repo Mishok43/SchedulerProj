@@ -157,8 +157,8 @@ namespace Scheduler {
 #pragma endregion
 private: System::Void buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
 	GlobalData::MessageBoxBool = true;
-	MainData.PassManager = msclr::interop::marshal_as<string>(textBox1->Text);
-	MainData.PassTeacher = msclr::interop::marshal_as<string>(textBox2->Text);
+	MainData.PassManager = GlobalData::computeHash(msclr::interop::marshal_as<string>(textBox1->Text).c_str());
+	MainData.PassTeacher = GlobalData::computeHash(msclr::interop::marshal_as<string>(textBox2->Text).c_str());
 
 	this->Close();
 }

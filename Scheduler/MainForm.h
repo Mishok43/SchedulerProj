@@ -353,8 +353,8 @@ private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, Syste
 private: System::Void saveAsToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
 
 
-	string oldManagerPass = MainData.PassManager;
-	string oldTeacherPass = MainData.PassTeacher;
+	int oldManagerPass = MainData.PassManager;
+	int oldTeacherPass = MainData.PassTeacher;
 	if (GlobalData::Access == GlobalData::MANAGER)
 	{
 		SetPasswordForm ^ saveBox = gcnew SetPasswordForm;

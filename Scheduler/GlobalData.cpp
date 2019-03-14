@@ -29,7 +29,15 @@ GlobalData::GlobalData()
 	//ScheduleObjectContainer<Classroom> GlobalData::Classrooms;
 	//Classroom * GlobalData::EditingClassroom = nullptr;
 }
-
+int GlobalData::computeHash(const char* w)
+{
+	unsigned h = 37;
+	while (*w) {
+		h = (h * 54059) ^ (w[0] * 76963);
+		w++;
+	}
+	return h;
+}
 
 ostream& operator<<(ostream& os, GlobalData& dt)
 {
@@ -51,8 +59,11 @@ ostream& operator<<(ostream& os, GlobalData& dt)
 istream& operator>>(istream & is, GlobalData& dt)
 {
 	getline(is, dt.Title);
-	getline(is, dt.PassManager);
-	getline(is, dt.PassTeacher);
+	string temp;
+	getline(is, temp);
+	dt.PassManager = stoi(temp);
+	getline(is, temp);
+	dt.PassTeacher = stoi(temp);
 	is >> Rules::Settings;
 	is >> dt.Classrooms;
 	is >> dt.ClassroomTagRules;

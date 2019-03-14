@@ -10,8 +10,8 @@ public:
 	static string Path;
 
 
-	string PassTeacher;
-	string PassManager;
+	int PassTeacher;
+	int PassManager;
 
 	GlobalData();
 	
@@ -43,7 +43,7 @@ public:
 	TagRules ActivityTagRules;
 
 
-
+	static int computeHash(const char* w);
 	friend ostream& operator<<(ostream& os, GlobalData& gd);
 	friend istream& operator>>(istream& is, GlobalData& gd);
 };
