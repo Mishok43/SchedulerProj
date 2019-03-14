@@ -235,6 +235,12 @@ namespace Scheduler {
 #pragma endregion
 	
 private: System::Void TeacherInfoForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+	this->textBoxName->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBoxDescription->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBoxTags->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBox->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+
 	this->textBoxName->Text =
 		gcnew System::String(MainData.EditingTeacher->getName().c_str());
 	this->textBoxDescription->Text =

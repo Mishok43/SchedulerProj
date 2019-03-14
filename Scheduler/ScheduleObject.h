@@ -339,7 +339,7 @@ public:
 	string getTeacherName();
 	string getTeacherShortName();
 	void setGroups(set<string> groupNames);
-	set<Group*> getGroups();
+	set<Group*>& getGroups();
 	string getGroupsAsString();
 
 	virtual void ostreamF(std::ostream& os);
