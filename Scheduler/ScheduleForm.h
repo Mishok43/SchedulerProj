@@ -232,6 +232,9 @@ namespace Scheduler {
 		}
 #pragma endregion
 	private: System::Void ScheduleForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+		this->buttonGenerate->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
 		this->comboBox->SelectedIndex = 0;
 		
 		this->dateTimePicker1->Value = DateTime(Rules::Settings.StartDate.tm_year + 1900, Rules::Settings.StartDate.tm_mon + 1, Rules::Settings.StartDate.tm_mday);

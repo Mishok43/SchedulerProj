@@ -136,6 +136,7 @@
   <ItemGroup>
     <ClCompile Include="ActivitiesForm.cpp" />
     <ClCompile Include="ActivityInfoForm.cpp" />
+    <ClCompile Include="CheckPasswordBox.cpp" />
     <ClCompile Include="ClassroomInfoForm.cpp" />
     <ClCompile Include="ClassroomsForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="ParametersForm.cpp" />
     <ClCompile Include="ScheduleForm.cpp" />
+    <ClCompile Include="SetPasswordBox.cpp" />
     <ClCompile Include="StudentsForm.cpp" />
     <ClCompile Include="TagTextBox.cpp" />
     <ClCompile Include="TeacherInfoForm.cpp" />
@@ -160,6 +162,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ActivityInfoForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="CheckPasswordBox.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ClassroomInfoForm.h">
@@ -192,6 +197,9 @@
     <ClInclude Include="ScheduleForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="SetPasswordBox.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="StudentsForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -211,6 +219,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ActivityInfoForm.resx">
       <DependentUpon>ActivityInfoForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckPasswordBox.resx">
+      <DependentUpon>CheckPasswordBox.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ClassroomInfoForm.resx">
       <DependentUpon>ClassroomInfoForm.h</DependentUpon>
@@ -235,6 +246,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ScheduleForm.resx">
       <DependentUpon>ScheduleForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetPasswordBox.resx">
+      <DependentUpon>SetPasswordBox.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StudentsForm.resx">
       <DependentUpon>StudentsForm.h</DependentUpon>

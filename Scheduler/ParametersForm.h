@@ -215,6 +215,7 @@ namespace Scheduler {
 
 
 
+
 		this->dateTimePickerStart = gcnew cli::array<System::Windows::Forms::DateTimePicker^>(20);
 		this->dateTimePickerEnd = gcnew cli::array<System::Windows::Forms::DateTimePicker^>(20);
 		this->labelN = gcnew cli::array<Label^>(20);
@@ -235,6 +236,8 @@ namespace Scheduler {
 			this->dateTimePickerStart[i]->Value = DateTime(2029, 5, 3, Rules::Settings.ActivityStartTime[i]/60, Rules::Settings.ActivityStartTime[i]%60, 0);
 			this->dateTimePickerStart[i]->ShowUpDown = true;
 
+			this->dateTimePickerStart[i]->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
 			this->dateTimePickerEnd[i] = gcnew System::Windows::Forms::DateTimePicker();
 			this->dateTimePickerEnd[i]->Location = System::Drawing::Point(12 + 300, 180 + i * 20);
 			this->dateTimePickerEnd[i]->Format = System::Windows::Forms::DateTimePickerFormat::Custom;
@@ -243,19 +246,32 @@ namespace Scheduler {
 			this->dateTimePickerEnd[i]->Value = DateTime(2019, 5, 3, Rules::Settings.ActivityEndTime[i] / 60, Rules::Settings.ActivityEndTime[i] % 60, 0);
 			this->dateTimePickerEnd[i]->ShowUpDown = true;
 
+			this->dateTimePickerEnd[i]->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
 			this->Controls->Add(dateTimePickerStart[i]);
 			this->Controls->Add(dateTimePickerEnd[i]);
 		}
 
 		this->textBoxTitle->Text = gcnew System::String(MainData.Title.c_str());
 
+		this->textBoxTitle->Enabled = GlobalData::Access == GlobalData::MANAGER;
 
 		this->dateTimePicker1->Value = DateTime(Rules::Settings.StartDate.tm_year + 1900, Rules::Settings.StartDate.tm_mon+1, Rules::Settings.StartDate.tm_mday);
 		this->dateTimePicker2->Value = DateTime(Rules::Settings.StartDate.tm_year + 1900, Rules::Settings.StartDate.tm_mon + 1, Rules::Settings.StartDate.tm_mday).AddDays(Rules::Settings.Days);
 
+		this->dateTimePicker1->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		this->dateTimePicker2->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
 		this->numericUpDown->Value = Rules::Settings.ActivitiesPerDay;
 
+		this->numericUpDown->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
 		this->updateSize();
+
+
+
+
+		
 
 	}
 	private: System::Void ParametersForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {

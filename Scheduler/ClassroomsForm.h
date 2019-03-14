@@ -313,14 +313,14 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->label1->Location = System::Drawing::Point(12, 239);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(157, 17);
+			this->label1->Size = System::Drawing::Size(310, 17);
 			this->label1->TabIndex = 16;
-			this->label1->Text = L"Ограничения по тегам";
+			this->label1->Text = L"Определение тегов и групповых ограничений";
 			// 
 			// buttonHelp
 			// 
 			this->buttonHelp->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Left));
-			this->buttonHelp->Location = System::Drawing::Point(175, 237);
+			this->buttonHelp->Location = System::Drawing::Point(324, 237);
 			this->buttonHelp->Name = L"buttonHelp";
 			this->buttonHelp->Size = System::Drawing::Size(34, 21);
 			this->buttonHelp->TabIndex = 22;
@@ -379,6 +379,16 @@ namespace Scheduler {
 	}
 
 	System::Void ClassroomsForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+		this->textBox->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+		this->buttonRemove->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		this->buttonAdd->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		this->buttonAddTag->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		this->buttonRemoveTag->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		this->buttonImport->Enabled = GlobalData::Access == GlobalData::MANAGER;
+		if (GlobalData::Access == GlobalData::TEACHER)
+			this->buttonEdit->Text = "Открыть";
+
 		updateGrid();
 
 		this->textBox->Text = "";
@@ -428,10 +438,10 @@ namespace Scheduler {
 			TagTextBox ^ box = gcnew TagTextBox;
 			box->ShowDialog();
 
-			if (!MainData.messageBoxInput.empty())
+			if (!GlobalData::MessageBoxInput.empty())
 			{
 				for (int i = 0; i < n; i++)
-					MainData.ClassroomsFormList[this->dataGridView->SelectedRows[i]->Index]->addTag(MainData.messageBoxInput);
+					MainData.ClassroomsFormList[this->dataGridView->SelectedRows[i]->Index]->addTag(GlobalData::MessageBoxInput);
 
 				this->updateGrid();
 			}
@@ -446,10 +456,10 @@ namespace Scheduler {
 			TagTextBox ^ box = gcnew TagTextBox;
 			box->ShowDialog();
 
-			if (!MainData.messageBoxInput.empty())
+			if (!GlobalData::MessageBoxInput.empty())
 			{
 				for (int i = 0; i < n; i++)
-					MainData.ClassroomsFormList[this->dataGridView->SelectedRows[i]->Index]->removeTag(MainData.messageBoxInput);
+					MainData.ClassroomsFormList[this->dataGridView->SelectedRows[i]->Index]->removeTag(GlobalData::MessageBoxInput);
 
 				this->updateGrid();
 			}

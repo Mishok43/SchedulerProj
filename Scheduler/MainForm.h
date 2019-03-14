@@ -6,7 +6,8 @@
 #include "ClassroomsForm.h"
 #include "ActivitiesForm.h"
 #include "ScheduleForm.h"
-
+#include "CheckPasswordBox.h"
+#include "SetPasswordBox.h"
 
 
 namespace Scheduler {
@@ -223,6 +224,7 @@ namespace Scheduler {
 			this->saveAsToolStripMenuItem1->Name = L"saveAsToolStripMenuItem1";
 			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(162, 22);
 			this->saveAsToolStripMenuItem1->Text = L"Сохранить как...";
+			this->saveAsToolStripMenuItem1->Click += gcnew System::EventHandler(this, &MainForm::saveAsToolStripMenuItem1_Click);
 			// 
 			// MainForm
 			// 
@@ -240,6 +242,7 @@ namespace Scheduler {
 			this->MainMenuStrip = this->menuStrip;
 			this->MaximizeBox = false;
 			this->Name = L"MainForm";
+			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Scheduler";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->menuStrip->ResumeLayout(false);
@@ -249,12 +252,7 @@ namespace Scheduler {
 
 		}
 #pragma endregion
-	private: System::Void newToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-		MainData = GlobalData();
-		Schedule = GeneratedSchedule();
-		
-		update();
-	}
+	
 private: System::Void buttonParameters_Click(System::Object^  sender, System::EventArgs^  e) {
 	ParametersForm ^ form = gcnew ParametersForm;
 	form->ShowDialog();
@@ -287,29 +285,141 @@ private: System::Void buttonSchedule_Click(System::Object^  sender, System::Even
 	ScheduleForm ^ form = gcnew ScheduleForm;
 	form->ShowDialog();
 }
-private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-	ofstream out("../TestData/data.txt");
-	out << MainData;
-	out << Schedule;
-	out.close();
-}
-private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-	ifstream in("../TestData/data.txt");
-	in >> MainData;
+
+
+private: System::Void newToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	GlobalData::Access = GlobalData::MANAGER;
+	GlobalData::Path = "";
+
+	MainData = GlobalData();
 	Activity::GlobalGroups = MainData.Groups;
 	Activity::GlobalTeachers = MainData.Teachers;
-	in >> Schedule;
-	in.close();
+	Schedule = GeneratedSchedule();
 
 	update();
 }
+
+private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	OpenFileDialog  ^ dialog = gcnew OpenFileDialog;
+	dialog->Filter = "schedule files (*.sch)|*.sch|All files (*.*)|*.*";
+	dialog->FilterIndex = 0;
+	dialog->RestoreDirectory = true;
+
+	if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+		GlobalData::Path = msclr::interop::marshal_as<string>(dialog->FileName);
+
+
+		ifstream in(GlobalData::Path);
+		in >> MainData;
+		Activity::GlobalGroups = MainData.Groups;
+		Activity::GlobalTeachers = MainData.Teachers;
+		in >> Schedule;
+		in.close();
+
+
+		CheckPasswordBox ^ check = gcnew CheckPasswordBox;
+		check->ShowDialog();
+
+		if (!GlobalData::MessageBoxBool)
+		{
+			MainData = GlobalData();
+			Schedule = GeneratedSchedule();
+			return;
+		}
+
+		update();
+	}
+
+
+	
+}
+
+private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+
+
+	if (GlobalData::Path.empty())
+		saveAsToolStripMenuItem1_Click(sender, e);
+	else
+	{
+		ofstream out(GlobalData::Path);
+		out << MainData;
+		out << Schedule;
+		out.close();
+	}
+	
+}
+
+private: System::Void saveAsToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+
+	string oldManagerPass = MainData.PassManager;
+	string oldTeacherPass = MainData.PassTeacher;
+	if (GlobalData::Access == GlobalData::MANAGER)
+	{
+		SetPasswordForm ^ saveBox = gcnew SetPasswordForm;
+		saveBox->ShowDialog();
+
+		if (!GlobalData::MessageBoxBool)
+			return;
+	}
+	
+
+	
+
+
+	SaveFileDialog  ^ dialog = gcnew SaveFileDialog;
+	dialog->Filter = "schedule files (*.sch)|*.sch|All files (*.*)|*.*";
+	dialog->FilterIndex = 0;
+	dialog->RestoreDirectory = true;
+
+	if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+		GlobalData::Path = msclr::interop::marshal_as<string>(dialog->FileName);
+
+		ofstream out(GlobalData::Path);
+		out << MainData;
+		out << Schedule;
+		out.close();
+
+	}
+	else
+	{
+		MainData.PassManager = oldManagerPass;
+		MainData.PassTeacher = oldTeacherPass;
+	}
+
+
+
+}
 private: System::Void MainForm_Load(System::Object^  sender, System::EventArgs^  e) {
+	GlobalData::Access = GlobalData::MANAGER;
 	update();
 }
 private: System::Void update()
 {
-	this->buttonActivities->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty());
-	this->buttonSchedule->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty() && !MainData.Activities.isEmpty() && !MainData.Classrooms.isEmpty());
+	if (GlobalData::Access == GlobalData::STUDENT)
+	{
+		this->buttonParameters->Enabled = false;
+		this->buttonStudents->Enabled = false;
+		this->buttonTeachers->Enabled = false;
+		this->buttonActivities->Enabled = false;
+		this->buttonClassrooms->Enabled = false;
+		this->buttonSchedule->Enabled = Schedule.isGenerated();
+		
+	}
+	else
+	{
+		this->buttonParameters->Enabled = true;
+		this->buttonStudents->Enabled = true;
+		this->buttonTeachers->Enabled = true;
+		this->buttonActivities->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty());
+		this->buttonClassrooms->Enabled = true;
+		this->buttonSchedule->Enabled = (!MainData.Groups.isEmpty() && !MainData.Teachers.isEmpty() && !MainData.Activities.isEmpty() && !MainData.Classrooms.isEmpty());
+	}
+	
+
+
 }
+
 };
 }

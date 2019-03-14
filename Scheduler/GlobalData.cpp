@@ -34,6 +34,8 @@ GlobalData::GlobalData()
 ostream& operator<<(ostream& os, GlobalData& dt)
 {
 	os << dt.Title << endl;
+	os << dt.PassManager << endl;
+	os << dt.PassTeacher << endl;
 	os << Rules::Settings;
 	os << dt.Classrooms;
 	os << dt.ClassroomTagRules;
@@ -49,6 +51,8 @@ ostream& operator<<(ostream& os, GlobalData& dt)
 istream& operator>>(istream & is, GlobalData& dt)
 {
 	getline(is, dt.Title);
+	getline(is, dt.PassManager);
+	getline(is, dt.PassTeacher);
 	is >> Rules::Settings;
 	is >> dt.Classrooms;
 	is >> dt.ClassroomTagRules;
@@ -60,6 +64,25 @@ istream& operator>>(istream & is, GlobalData& dt)
 	is >> dt.ActivityTagRules;
 	return is;
 }
+
+GlobalData::accesstype GlobalData::Access;
+ string GlobalData::Path;
+
+
+string GlobalData::MessageBoxInput;
+bool GlobalData::MessageBoxBool;
+
+Classroom* GlobalData::EditingClassroom;
+Teacher* GlobalData::EditingTeacher;
+Group* GlobalData::EditingGroup;
+Activity* GlobalData::EditingActivity;
+
+vector<Classroom*> GlobalData::ClassroomsFormList;
+vector<Teacher*> GlobalData::TeachersFormList;
+vector<Group*> GlobalData::GroupsFormList;
+vector<Activity*> GlobalData::ActivitiesFormList;
+
+
 
 GlobalData MainData;
 ScheduleObjectContainer<Group>& Activity::GlobalGroups = MainData.Groups;
