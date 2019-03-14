@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include "GlobalData.h"
 #include "HelpRules.h"
 #include "GeneratedSchedule.h"
@@ -14,7 +14,7 @@ namespace Scheduler {
 	using namespace System::Drawing;
 
 	/// <summary>
-	/// Сводка для ActivityInfoForm
+	/// РЎРІРѕРґРєР° РґР»СЏ ActivityInfoForm
 	/// </summary>
 	public ref class ActivityInfoForm : public System::Windows::Forms::Form
 	{
@@ -23,13 +23,13 @@ namespace Scheduler {
 		{
 			InitializeComponent();
 			//
-			//TODO: добавьте код конструктора
+			//TODO: РґРѕР±Р°РІСЊС‚Рµ РєРѕРґ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°
 			//
 		}
 
 	protected:
 		/// <summary>
-		/// Освободить все используемые ресурсы.
+		/// РћСЃРІРѕР±РѕРґРёС‚СЊ РІСЃРµ РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ СЂРµСЃСѓСЂСЃС‹.
 		/// </summary>
 		~ActivityInfoForm()
 		{
@@ -46,7 +46,7 @@ namespace Scheduler {
 	private: System::Windows::Forms::Label^  label6;
 	private: System::Windows::Forms::TextBox^  textBoxTags;
 	private: System::Windows::Forms::TextBox^  textBoxDescription;
-	private: System::Windows::Forms::TextBox^  textBoxTeacher;
+
 
 	private: System::Windows::Forms::TextBox^  textBoxName;
 	private: System::Windows::Forms::Label^  labelTags;
@@ -61,18 +61,23 @@ namespace Scheduler {
 
 
 	private: System::Windows::Forms::Label^  labelHours;
+	private: System::Windows::Forms::ComboBox^  comboBoxTeacher;
+	private: System::Windows::Forms::Button^  buttonArrow;
+	private: System::Windows::Forms::ComboBox^  comboBoxGroup;
+
+
 
 
 	private:
 		/// <summary>
-		/// Обязательная переменная конструктора.
+		/// РћР±СЏР·Р°С‚РµР»СЊРЅР°СЏ РїРµСЂРµРјРµРЅРЅР°СЏ РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР°.
 		/// </summary>
 		System::ComponentModel::Container ^components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// РўСЂРµР±СѓРµРјС‹Р№ РјРµС‚РѕРґ РґР»СЏ РїРѕРґРґРµСЂР¶РєРё РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° вЂ” РЅРµ РёР·РјРµРЅСЏР№С‚Рµ 
+		/// СЃРѕРґРµСЂР¶РёРјРѕРµ СЌС‚РѕРіРѕ РјРµС‚РѕРґР° СЃ РїРѕРјРѕС‰СЊСЋ СЂРµРґР°РєС‚РѕСЂР° РєРѕРґР°.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -83,7 +88,6 @@ namespace Scheduler {
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->textBoxTags = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxDescription = (gcnew System::Windows::Forms::TextBox());
-			this->textBoxTeacher = (gcnew System::Windows::Forms::TextBox());
 			this->textBoxName = (gcnew System::Windows::Forms::TextBox());
 			this->labelTags = (gcnew System::Windows::Forms::Label());
 			this->labelDescription = (gcnew System::Windows::Forms::Label());
@@ -93,6 +97,9 @@ namespace Scheduler {
 			this->labelGroups = (gcnew System::Windows::Forms::Label());
 			this->textBoxHours = (gcnew System::Windows::Forms::TextBox());
 			this->labelHours = (gcnew System::Windows::Forms::Label());
+			this->comboBoxTeacher = (gcnew System::Windows::Forms::ComboBox());
+			this->buttonArrow = (gcnew System::Windows::Forms::Button());
+			this->comboBoxGroup = (gcnew System::Windows::Forms::ComboBox());
 			this->SuspendLayout();
 			// 
 			// buttonDebug
@@ -148,7 +155,7 @@ namespace Scheduler {
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(210, 17);
 			this->label6->TabIndex = 51;
-			this->label6->Text = L"Индивидуальные ограничения";
+			this->label6->Text = L"РРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РѕРіСЂР°РЅРёС‡РµРЅРёСЏ";
 			// 
 			// textBoxTags
 			// 
@@ -156,7 +163,7 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxTags->Location = System::Drawing::Point(138, 189);
 			this->textBoxTags->Name = L"textBoxTags";
-			this->textBoxTags->Size = System::Drawing::Size(400, 23);
+			this->textBoxTags->Size = System::Drawing::Size(431, 23);
 			this->textBoxTags->TabIndex = 50;
 			// 
 			// textBoxDescription
@@ -165,17 +172,8 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxDescription->Location = System::Drawing::Point(138, 159);
 			this->textBoxDescription->Name = L"textBoxDescription";
-			this->textBoxDescription->Size = System::Drawing::Size(400, 23);
+			this->textBoxDescription->Size = System::Drawing::Size(431, 23);
 			this->textBoxDescription->TabIndex = 49;
-			// 
-			// textBoxTeacher
-			// 
-			this->textBoxTeacher->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(204)));
-			this->textBoxTeacher->Location = System::Drawing::Point(138, 60);
-			this->textBoxTeacher->Name = L"textBoxTeacher";
-			this->textBoxTeacher->Size = System::Drawing::Size(209, 23);
-			this->textBoxTeacher->TabIndex = 48;
 			// 
 			// textBoxName
 			// 
@@ -183,7 +181,7 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxName->Location = System::Drawing::Point(138, 30);
 			this->textBoxName->Name = L"textBoxName";
-			this->textBoxName->Size = System::Drawing::Size(134, 23);
+			this->textBoxName->Size = System::Drawing::Size(284, 23);
 			this->textBoxName->TabIndex = 47;
 			// 
 			// labelTags
@@ -195,7 +193,7 @@ namespace Scheduler {
 			this->labelTags->Name = L"labelTags";
 			this->labelTags->Size = System::Drawing::Size(42, 17);
 			this->labelTags->TabIndex = 46;
-			this->labelTags->Text = L"Теги:";
+			this->labelTags->Text = L"РўРµРіРё:";
 			// 
 			// labelDescription
 			// 
@@ -206,7 +204,7 @@ namespace Scheduler {
 			this->labelDescription->Name = L"labelDescription";
 			this->labelDescription->Size = System::Drawing::Size(93, 17);
 			this->labelDescription->TabIndex = 45;
-			this->labelDescription->Text = L"Коментарии:";
+			this->labelDescription->Text = L"РљРѕРјРµРЅС‚Р°СЂРёРё:";
 			// 
 			// labelTeacher
 			// 
@@ -217,7 +215,7 @@ namespace Scheduler {
 			this->labelTeacher->Name = L"labelTeacher";
 			this->labelTeacher->Size = System::Drawing::Size(115, 17);
 			this->labelTeacher->TabIndex = 44;
-			this->labelTeacher->Text = L"Преподаватель:";
+			this->labelTeacher->Text = L"РџСЂРµРїРѕРґР°РІР°С‚РµР»СЊ:";
 			// 
 			// labelName
 			// 
@@ -228,7 +226,7 @@ namespace Scheduler {
 			this->labelName->Name = L"labelName";
 			this->labelName->Size = System::Drawing::Size(76, 17);
 			this->labelName->TabIndex = 43;
-			this->labelName->Text = L"Название:";
+			this->labelName->Text = L"РќР°Р·РІР°РЅРёРµ:";
 			// 
 			// textBoxGroups
 			// 
@@ -236,7 +234,7 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->textBoxGroups->Location = System::Drawing::Point(138, 89);
 			this->textBoxGroups->Name = L"textBoxGroups";
-			this->textBoxGroups->Size = System::Drawing::Size(209, 23);
+			this->textBoxGroups->Size = System::Drawing::Size(284, 23);
 			this->textBoxGroups->TabIndex = 57;
 			// 
 			// labelGroups
@@ -248,7 +246,7 @@ namespace Scheduler {
 			this->labelGroups->Name = L"labelGroups";
 			this->labelGroups->Size = System::Drawing::Size(61, 17);
 			this->labelGroups->TabIndex = 56;
-			this->labelGroups->Text = L"Группы:";
+			this->labelGroups->Text = L"Р“СЂСѓРїРїС‹:";
 			// 
 			// textBoxHours
 			// 
@@ -268,13 +266,55 @@ namespace Scheduler {
 			this->labelHours->Name = L"labelHours";
 			this->labelHours->Size = System::Drawing::Size(47, 17);
 			this->labelHours->TabIndex = 58;
-			this->labelHours->Text = L"Часы:";
+			this->labelHours->Text = L"Р§Р°СЃС‹:";
+			// 
+			// comboBoxTeacher
+			// 
+			this->comboBoxTeacher->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::SuggestAppend;
+			this->comboBoxTeacher->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::ListItems;
+			this->comboBoxTeacher->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBoxTeacher->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->comboBoxTeacher->FormattingEnabled = true;
+			this->comboBoxTeacher->Location = System::Drawing::Point(138, 59);
+			this->comboBoxTeacher->Name = L"comboBoxTeacher";
+			this->comboBoxTeacher->Size = System::Drawing::Size(284, 24);
+			this->comboBoxTeacher->TabIndex = 60;
+			// 
+			// buttonArrow
+			// 
+			this->buttonArrow->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->buttonArrow->Location = System::Drawing::Point(428, 91);
+			this->buttonArrow->Name = L"buttonArrow";
+			this->buttonArrow->Size = System::Drawing::Size(34, 22);
+			this->buttonArrow->TabIndex = 61;
+			this->buttonArrow->Text = L"->";
+			this->buttonArrow->UseVisualStyleBackColor = true;
+			this->buttonArrow->Click += gcnew System::EventHandler(this, &ActivityInfoForm::buttonArrow_Click);
+			// 
+			// comboBoxGroup
+			// 
+			this->comboBoxGroup->AutoCompleteMode = System::Windows::Forms::AutoCompleteMode::SuggestAppend;
+			this->comboBoxGroup->AutoCompleteSource = System::Windows::Forms::AutoCompleteSource::ListItems;
+			this->comboBoxGroup->DropDownStyle = System::Windows::Forms::ComboBoxStyle::DropDownList;
+			this->comboBoxGroup->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->comboBoxGroup->FormattingEnabled = true;
+			this->comboBoxGroup->Location = System::Drawing::Point(468, 89);
+			this->comboBoxGroup->Name = L"comboBoxGroup";
+			this->comboBoxGroup->Size = System::Drawing::Size(101, 24);
+			this->comboBoxGroup->TabIndex = 62;
+			this->comboBoxGroup->SelectedIndexChanged += gcnew System::EventHandler(this, &ActivityInfoForm::comboBoxGroup_SelectedIndexChanged);
 			// 
 			// ActivityInfoForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(670, 374);
+			this->Controls->Add(this->comboBoxGroup);
+			this->Controls->Add(this->buttonArrow);
+			this->Controls->Add(this->comboBoxTeacher);
 			this->Controls->Add(this->textBoxHours);
 			this->Controls->Add(this->labelHours);
 			this->Controls->Add(this->textBoxGroups);
@@ -286,7 +326,6 @@ namespace Scheduler {
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->textBoxTags);
 			this->Controls->Add(this->textBoxDescription);
-			this->Controls->Add(this->textBoxTeacher);
 			this->Controls->Add(this->textBoxName);
 			this->Controls->Add(this->labelTags);
 			this->Controls->Add(this->labelDescription);
@@ -302,12 +341,39 @@ namespace Scheduler {
 		}
 #pragma endregion
 private: System::Void ActivityInfoForm_Load(System::Object^  sender, System::EventArgs^  e) {
+
+
+	this->textBoxName->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBoxDescription->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBoxHours->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBoxTags->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+	this->textBox->ReadOnly = GlobalData::Access == GlobalData::TEACHER;
+
+	this->comboBoxTeacher->Enabled = GlobalData::Access == GlobalData::MANAGER;
+	this->comboBoxGroup->Enabled = GlobalData::Access == GlobalData::MANAGER;
+	this->buttonArrow->Enabled = GlobalData::Access == GlobalData::MANAGER;
+
+	GlobalData::TeachersFormList = MainData.Teachers.getVal();
+	GlobalData::GroupsFormList = MainData.Groups.getVal();
+
+	for (auto t : GlobalData::TeachersFormList)
+		this->comboBoxTeacher->Items->Add(gcnew System::String(t->getName().c_str()));
+
+	for (auto g : GlobalData::GroupsFormList)
+		this->comboBoxGroup->Items->Add(gcnew System::String(g->getName().c_str()));
+
+
+
+
 	this->textBoxName->Text =
 		gcnew System::String(MainData.EditingActivity->getName().c_str());
-	this->textBoxTeacher->Text =
-		gcnew System::String(MainData.EditingActivity->getTeacher()->getName().c_str());
+	this->comboBoxTeacher->SelectedIndex = MainData.Teachers.getPos(MainData.EditingActivity->getTeacher());
+	//this->textBoxTeacher->Text =
+	//	gcnew System::String(MainData.EditingActivity->getTeacher()->getName().c_str());
 	this->textBoxGroups->Text =
 		gcnew System::String(MainData.EditingActivity->getGroupsAsString().c_str());
+	this->textBoxGroups->ReadOnly = true;
+	this->comboBoxGroup->SelectedIndex = 0;
 	this->textBoxHours->Text =
 		gcnew System::String(to_string(MainData.EditingActivity->getHours()).c_str());
 	this->textBoxDescription->Text =
@@ -319,6 +385,14 @@ private: System::Void ActivityInfoForm_Load(System::Object^  sender, System::Eve
 	vector<string> txt = MainData.EditingActivity->getRules().getText();
 	for (int i = 0; i < txt.size(); i++)
 		this->textBox->Text += gcnew System::String(txt[i].c_str()) + "\r\n";
+
+
+	if (MainData.EditingActivity->getGroups().find(GlobalData::GroupsFormList[comboBoxGroup->SelectedIndex]) !=
+		MainData.EditingActivity->getGroups().end())
+		buttonArrow->Text = "->";
+	else
+		buttonArrow->Text = "<-";
+
 
 }
 
@@ -339,8 +413,9 @@ private: System::Void buttonDebug_Click(System::Object^  sender, System::EventAr
 		 System::Void trySave()
 		 {
 			 MainData.EditingActivity->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
-			 MainData.EditingActivity->setTeacher(msclr::interop::marshal_as<std::string>(textBoxTeacher->Text));
-			 MainData.EditingActivity->setGroups(stringToSet(msclr::interop::marshal_as<std::string>(textBoxGroups->Text)));
+			 //MainData.EditingActivity->setTeacher(msclr::interop::marshal_as<std::string>(textBoxTeacher->Text));
+			 MainData.EditingActivity->setTeacher(msclr::interop::marshal_as<std::string>(comboBoxTeacher->Text));
+			 //MainData.EditingActivity->setGroups(stringToSet(msclr::interop::marshal_as<std::string>(textBoxGroups->Text)));
 			 MainData.EditingActivity->setHours(std::stoi(msclr::interop::marshal_as<std::string>(textBoxHours->Text)));
 			 MainData.EditingActivity->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
 			 MainData.EditingActivity->setTagsFromString(msclr::interop::marshal_as<std::string>(textBoxTags->Text));
@@ -352,5 +427,30 @@ private: System::Void buttonDebug_Click(System::Object^  sender, System::EventAr
 				 v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
 			 MainData.EditingActivity->getRules().setText(v);
 		 }
+private: System::Void buttonArrow_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (buttonArrow->Text == "->")
+	{
+		MainData.EditingActivity->getGroups().erase(GlobalData::GroupsFormList[comboBoxGroup->SelectedIndex]);
+		buttonArrow->Text = "<-";
+	}
+	else
+	{
+		MainData.EditingActivity->getGroups().insert(GlobalData::GroupsFormList[comboBoxGroup->SelectedIndex]);
+		buttonArrow->Text = "->";
+	}
+		
+
+	this->textBoxGroups->Text =
+		gcnew System::String(MainData.EditingActivity->getGroupsAsString().c_str());
+}
+
+		 
+private: System::Void comboBoxGroup_SelectedIndexChanged(System::Object^  sender, System::EventArgs^  e) {
+	if (MainData.EditingActivity->getGroups().find(GlobalData::GroupsFormList[comboBoxGroup->SelectedIndex]) !=
+		MainData.EditingActivity->getGroups().end())
+		buttonArrow->Text = "->";
+	else
+		buttonArrow->Text = "<-";
+}
 };
 }

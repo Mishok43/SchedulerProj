@@ -76,7 +76,7 @@ public:
 		map<string, vector<int>> m;
 
 
-		m.insert(pair<string, vector<int>>("ÂÑÅ", vector<int>()));
+		m.insert(pair<string, vector<int>>("Âñå", vector<int>()));
 
 		for (auto v: values)
 		{
@@ -116,8 +116,8 @@ public:
 		map<string, Rules> m = t.getMap();
 		for (auto v : values)
 		{
-			if (!(m.find("ÂÑÅ")==m.end()))
-				v->getRules().getData().and(m["ÂÑÅ"].getData());
+			if (!(m.find("Âñå")==m.end()))
+				v->getRules().getData().and(m["Âñå"].getData());
 			for (auto tag : v->getTags())
 			{
 				if (!(m.find(tag) == m.end()))
@@ -342,7 +342,7 @@ public:
 	string getTeacherName();
 	string getTeacherShortName();
 	void setGroups(set<string> groupNames);
-	set<Group*> getGroups();
+	set<Group*>& getGroups();
 	string getGroupsAsString();
 
 	virtual void ostreamF(std::ostream& os);

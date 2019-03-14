@@ -610,7 +610,7 @@ void Activity::setGroups(set<string> groupNames)
 	}
 }
 
-set<Group*> Activity::getGroups()
+set<Group*>& Activity::getGroups()
 {
 	return groups;
 }

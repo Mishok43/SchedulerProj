@@ -62,16 +62,20 @@ namespace Scheduler {
 			// 
 			// textBox
 			// 
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->textBox->Location = System::Drawing::Point(11, 39);
 			this->textBox->Name = L"textBox";
-			this->textBox->Size = System::Drawing::Size(239, 20);
+			this->textBox->Size = System::Drawing::Size(239, 23);
 			this->textBox->TabIndex = 0;
 			// 
 			// button1
 			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->button1->Location = System::Drawing::Point(95, 68);
 			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
+			this->button1->Size = System::Drawing::Size(75, 32);
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"ОК";
 			this->button1->UseVisualStyleBackColor = true;
@@ -79,9 +83,11 @@ namespace Scheduler {
 			// 
 			// button2
 			// 
+			this->button2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->button2->Location = System::Drawing::Point(176, 68);
 			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
+			this->button2->Size = System::Drawing::Size(75, 32);
 			this->button2->TabIndex = 2;
 			this->button2->Text = L"Отмена";
 			this->button2->UseVisualStyleBackColor = true;
@@ -90,9 +96,11 @@ namespace Scheduler {
 			// label1
 			// 
 			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
 			this->label1->Location = System::Drawing::Point(12, 17);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(155, 13);
+			this->label1->Size = System::Drawing::Size(203, 17);
 			this->label1->TabIndex = 3;
 			this->label1->Text = L"Введите идентификатор тега";
 			// 
@@ -100,7 +108,7 @@ namespace Scheduler {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(263, 103);
+			this->ClientSize = System::Drawing::Size(263, 112);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
@@ -120,7 +128,7 @@ namespace Scheduler {
 
 		for (int i = 0; i < s.size(); i++)
 			if (s[i] != ' ')
-				MainData.messageBoxInput += s[i];
+				GlobalData::MessageBoxInput += s[i];
 
 		this->Close();
 
@@ -132,7 +140,7 @@ namespace Scheduler {
 		this->Close();
 	}
 	private: System::Void TagTextBox_Load(System::Object^  sender, System::EventArgs^  e) {
-		MainData.messageBoxInput = "";
+		GlobalData::MessageBoxInput = "";
 	}
 };
 }
