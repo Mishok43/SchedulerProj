@@ -143,6 +143,7 @@
     <ClCompile Include="CheckPasswordBox.cpp" />
     <ClCompile Include="ClassroomInfoForm.cpp" />
     <ClCompile Include="ClassroomsForm.cpp" />
+    <ClCompile Include="ErrorListForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
     <ClCompile Include="GeneratedSchedule.cpp">
@@ -185,6 +186,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="ClassroomsForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="ErrorListForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp" />
@@ -244,6 +248,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ClassroomsForm.resx">
       <DependentUpon>ClassroomsForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorListForm.resx">
+      <DependentUpon>ErrorListForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroupInfoForm.resx">
       <DependentUpon>GroupInfoForm.h</DependentUpon>

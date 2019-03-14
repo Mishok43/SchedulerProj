@@ -31,6 +31,7 @@ public:
 	void generate();
 	void initRules();
 	
+	vector<pair<string,string>> getErrors();
 	bool isGenerated();
 
 	void debugOutput(ScheduleObject* obj, const char * path);

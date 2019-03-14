@@ -4,6 +4,7 @@
 #include "GlobalData.h"
 #include "GeneratedSchedule.h"
 #include "Excel/ExcelFormat.h"
+#include "ErrorListForm.h"
 
 namespace Scheduler {
 
@@ -244,15 +245,25 @@ namespace Scheduler {
 	}
 private: System::Void buttonGenerate_Click(System::Object^  sender, System::EventArgs^  e) {
 
-
+	Schedule.reset();
 	Schedule.initRules();
 	
 
-	Schedule.generate();
+	vector<pair<string,string>> errors = Schedule.getErrors();
 
+	if (errors.empty())
+		Schedule.generate();
+	else
+	{
+		ErrorListForm ^ box = gcnew ErrorListForm;
+		box->ShowDialog();
+	}
 
+	
+	if (Schedule.isGenerated())
+		this->buttonExport->Enabled = Schedule.isGenerated();
 
-	this->buttonExport->Enabled = Schedule.isGenerated();
+	
 }
 private: System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
 

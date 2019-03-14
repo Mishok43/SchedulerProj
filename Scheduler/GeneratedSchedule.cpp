@@ -104,15 +104,44 @@ void GeneratedSchedule::initRules()
 	vector<Activity*> activities = MainData.Activities.getVal();
 	for (auto activity : activities)
 	{
-		activity->getRules().getData(). and (activity->getTeacher()->getRules().getData());
+		if (activity->getTeacher()->getRules().getErrorMessage().empty())
+			activity->getRules().getData().and(activity->getTeacher()->getRules().getData());
 
 		for (auto group : activity->getGroups())
-			activity->getRules().getData(). and (group->getRules().getData());
+			if (group->getRules().getErrorMessage().empty())
+				activity->getRules().getData().and(group->getRules().getData());
 	}
 
 
 
 }
+
+vector<pair<string, string>> GeneratedSchedule::getErrors()
+{
+	vector<pair<string, string>> v;
+	
+	
+	for (auto o : MainData.Groups.getErrors("Группы"))
+		v.push_back(o);
+	for (auto o : MainData.Teachers.getErrors("Преподаватели"))
+		v.push_back(o);
+	for (auto o : MainData.Activities.getErrors("Дисциплины"))
+		v.push_back(o);
+	for (auto o : MainData.Classrooms.getErrors("Аудитории"))
+		v.push_back(o);
+
+	for (auto o : MainData.GroupTagRules.getErrors("Теги групп"))
+		v.push_back(o);
+	for (auto o : MainData.TeacherTagRules.getErrors("Теги преподавателей"))
+		v.push_back(o);
+	for (auto o : MainData.ActivityTagRules.getErrors("Теги дисциплин"))
+		v.push_back(o);
+	for (auto o : MainData.ClassroomTagRules.getErrors("Теги аудиторий"))
+		v.push_back(o);
+
+	return v;
+}
+
 bool GeneratedSchedule::isGenerated()
 {
 	return !hour.empty();
