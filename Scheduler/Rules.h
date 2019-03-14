@@ -54,12 +54,16 @@ public:
 	bool canObj(objtype type, int id);
 	int getMaxPerWeek();
 
+	string getErrorMessage();
+
 private:
-	static void parse(string& s, signtype& st, functype& ft, vector<string>& arg);
+	static void parse(string& errM, string& s, signtype& st, functype& ft, vector<string>& arg);
 	bool** m;
 	bool** obj;
 	int maxPerWeek;
 	ruletype type;
+
+	string errorMessage;
 };
 
 class Rules
@@ -92,7 +96,6 @@ public:
 private:
 
 	vector<string> text;
-	string errorMessage;
 	RuleData data;
 	
 };
@@ -109,7 +112,7 @@ public:
 	map<string, Rules>& getMap();
 	
 
-	vector<string> getErrorMessages();
+	vector<pair<string, string>> getErrors(string pre);
 
 
 	friend std::ostream& operator<<(std::ostream& os, TagRules& tagRules);

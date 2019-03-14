@@ -117,11 +117,13 @@ public:
 		for (auto v : values)
 		{
 			if (!(m.find("Все")==m.end()))
-				v->getRules().getData().and(m["Все"].getData());
+				if (m["Все"].getData().getErrorMessage().empty())
+					v->getRules().getData().and(m["Все"].getData());
 			for (auto tag : v->getTags())
 			{
 				if (!(m.find(tag) == m.end()))
-					v->getRules().getData().and(m[tag].getData());
+					if (m[tag].getData().getErrorMessage().empty())
+						v->getRules().getData().and(m[tag].getData());
 			}
 		}
 			
@@ -210,6 +212,22 @@ public:
 	{
 		return values.size() == 0;
 	}
+
+	vector<pair<string, string>> getErrors(string pre)
+	{
+		vector<pair<string, string>> v;
+
+		for (auto o : values)
+		{
+			if (!o->getRules().getErrorMessage().empty())
+			{
+				v.push_back(pair<string, string>(pre + ": " + o->getName(), o->getRules().getErrorMessage()));
+			}
+		}
+
+		return v;
+	}
+
 	friend ostream& operator<<(ostream& os, const ScheduleObjectContainer& soc)
 	{
 		

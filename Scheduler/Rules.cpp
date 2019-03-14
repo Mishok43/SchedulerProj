@@ -68,6 +68,7 @@ RulesSettings Rules::Settings;
 
 void RuleData::init()
 {
+	errorMessage = "";
 	m = new bool*[Rules::Settings.Days];
 	for (int i = 0; i < Rules::Settings.Days; i++)
 	{
@@ -95,7 +96,7 @@ RuleData::RuleData()
 }
 
 
-void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
+void RuleData::parse(string& errM, string& s, signtype& st, functype& ft, vector<string>& arg)
 {
 	st = EQUAL;
 
@@ -105,7 +106,7 @@ void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
 		i++;
 
 	string nm = s.substr(0, i);
-
+	ft = UNKNOWN;
 	if (nm == "Не")
 		ft = NOT;
 	if (nm == "И")
@@ -118,6 +119,8 @@ void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
 		ft = TIME;
 	if (nm == "ДеньНед")
 		ft = WEEKDAY;
+	if (nm == "Месяц")
+		ft = MONTH;
 	if (nm == "Дата")
 		ft = DATE;
 	if (nm == "Группа")
@@ -130,6 +133,13 @@ void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
 		ft = CLASSROOM;
 	if (nm == "МаксВНеделю")
 		ft = HPERWEEK;
+
+	if (ft == UNKNOWN)
+	{
+		errM = "Неизвестная функция: " + nm;
+		return;
+
+	}
 
 	i++;
 
@@ -189,17 +199,26 @@ void RuleData::parse(string& s, signtype& st, functype& ft, vector<string>& arg)
 
 RuleData::RuleData(string s) : RuleData()
 {
-
+	errorMessage = "";
 	signtype st = EQUAL;
 	functype ft = UNKNOWN;
 	vector<string> arg = vector<string>();
-	parse(s, st, ft, arg);
+	parse(errorMessage, s, st, ft, arg);
+	
+	if (!errorMessage.empty())
+		return;
 
 	RuleData rd;
 	int hour, min, k, from, to, time;
 	switch (ft)
 	{
 	case NOT: //Не
+		if (!arg.size() == 1)
+		{
+			errorMessage = "Неверное число аргументов функции: " + s;
+			return;
+		}
+
 		rd = RuleData(arg[0]);
 		rd.not();
 		and (rd);
@@ -207,6 +226,13 @@ RuleData::RuleData(string s) : RuleData()
 
 		break;
 	case AND: //И
+
+		if (arg.size() < 2)
+		{
+			errorMessage = "Неверное число аргументов функции: " + s;
+			return;
+		}
+
 		for (auto a : arg)
 		{
 			rd = RuleData(a);
@@ -216,6 +242,13 @@ RuleData::RuleData(string s) : RuleData()
 
 		break;
 	case OR: //Или
+
+		if (arg.size() < 2)
+		{
+			errorMessage = "Неверное число аргументов функции: " + s;
+			return;
+		}
+
 		k = 0;
 		for (auto a : arg)
 		{
@@ -230,7 +263,17 @@ RuleData::RuleData(string s) : RuleData()
 		break;
 	case HOUR: //Пара
 		type = TIMET;
-		k = stoi(arg[0]) - 1;
+		try {
+			k = stoi(arg[0]) - 1;
+			}
+		catch (...)
+		{
+			errorMessage = "Аргумент неверного формата: " + s;
+			return;
+		}
+
+
+
 		switch (st)
 		{
 		case LESS:
@@ -249,6 +292,13 @@ RuleData::RuleData(string s) : RuleData()
 			from = k; to = Rules::Settings.ActivitiesPerDay - 1;
 			break;
 		}
+
+		if (from < 0 || to > Rules::Settings.ActivitiesPerDay)
+		{
+			errorMessage = "Значение вне границ количества пар: " + s;
+			return;
+		}
+
 
 		for (int i = 0; i < Rules::Settings.ActivitiesPerDay; i++)
 			if (i < from || i > to)
@@ -294,18 +344,22 @@ RuleData::RuleData(string s) : RuleData()
 
 		if (arg[0] == "Понедельник")
 			k = 0;
-		if (arg[0] == "Вторник")
+		else if (arg[0] == "Вторник")
 			k = 1;
-		if (arg[0] == "Среда")
+		else if (arg[0] == "Среда")
 			k = 2;
-		if (arg[0] == "Четверг")
+		else if (arg[0] == "Четверг")
 			k = 3;
-		if (arg[0] == "Пятница")
+		else if (arg[0] == "Пятница")
 			k = 4;
-		if (arg[0] == "Суббота")
+		else if (arg[0] == "Суббота")
 			k = 5;
-		if (arg[0] == "Воскресенье")
+		else if (arg[0] == "Воскресенье")
 			k = 6;
+		else  {
+			errorMessage = "Неизестный тип дня недели: " + s;
+			return;
+		}
 
 		switch (st)
 		{
@@ -338,28 +392,33 @@ RuleData::RuleData(string s) : RuleData()
 
 		if (arg[0] == "Январь")
 			k = 0;
-		if (arg[0] == "Февраль")
+		else if (arg[0] == "Февраль")
 			k = 1;
-		if (arg[0] == "Март")
+		else if (arg[0] == "Март")
 			k = 2;
-		if (arg[0] == "Апрель")
+		else if (arg[0] == "Апрель")
 			k = 3;
-		if (arg[0] == "Май")
+		else if (arg[0] == "Май")
 			k = 4;
-		if (arg[0] == "Июнь")
+		else if (arg[0] == "Июнь")
 			k = 5;
-		if (arg[0] == "Июль")
+		else if (arg[0] == "Июль")
 			k = 6;
-		if (arg[0] == "Август")
+		else if (arg[0] == "Август")
 			k = 7;
-		if (arg[0] == "Сентябрь")
+		else if (arg[0] == "Сентябрь")
 			k = 8;
-		if (arg[0] == "Октябрь")
+		else if (arg[0] == "Октябрь")
 			k = 9;
-		if (arg[0] == "Ноябрь")
+		else if (arg[0] == "Ноябрь")
 			k = 10;
-		if (arg[0] == "Декабрь")
+		else if (arg[0] == "Декабрь")
 			k = 11;
+		else
+		{
+			errorMessage = "Неизестный тип месяца: " + s;
+			return;
+		}
 
 		switch (st)
 		{
@@ -391,12 +450,26 @@ RuleData::RuleData(string s) : RuleData()
 
 		type = TIMET;
 
-
+		if (arg[0].length()!=8)
+		{
+			errorMessage = "Дата неверного формата: " + s;
+			return;
+		}
 
 		tm date = Rules::Settings.StartDate;
-		date.tm_year = 2000 + stoi(arg[0].substr(6, 2)) - 1900;
-		date.tm_mon = stoi(arg[0].substr(3,2)) - 1;
-		date.tm_mday = stoi(arg[0].substr(0, 2));
+		try {
+			date.tm_year = 2000 + stoi(arg[0].substr(6, 2)) - 1900;
+			date.tm_mon = stoi(arg[0].substr(3, 2)) - 1;
+			date.tm_mday = stoi(arg[0].substr(0, 2));
+		}
+		catch (...)
+		{
+			errorMessage = "Дата неверного формата: " + s;
+			return;
+		}
+
+		
+		
 
 		k = Rules::dateToDay(date);
 
@@ -432,6 +505,13 @@ RuleData::RuleData(string s) : RuleData()
 		k = 0;
 		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
 			obj[k][i] = false;
+
+		if (Rules::Settings.nameMap[k].find(arg[0]) == Rules::Settings.nameMap[k].end())
+		{
+			errorMessage = "Неизвестный идентификатор: " + s;
+			return;
+		}
+
 		for (auto e : Rules::Settings.nameMap[k][arg[0]])
 			obj[k][e] = true;
 
@@ -443,6 +523,14 @@ RuleData::RuleData(string s) : RuleData()
 		k = 1;
 		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
 			obj[k][i] = false;
+
+		if (Rules::Settings.nameMap[k].find(arg[0]) == Rules::Settings.nameMap[k].end())
+		{
+			errorMessage = "Неизвестный идентификатор: " + s;
+			return;
+		}
+
+
 		for (auto e : Rules::Settings.nameMap[k][arg[0]])
 			obj[k][e] = true;
 
@@ -454,6 +542,13 @@ RuleData::RuleData(string s) : RuleData()
 		k = 2;
 		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
 			obj[k][i] = false;
+
+		if (Rules::Settings.nameMap[k].find(arg[0]) == Rules::Settings.nameMap[k].end())
+		{
+			errorMessage = "Неизвестный идентификатор: " + s;
+			return;
+		}
+
 		for (auto e : Rules::Settings.nameMap[k][arg[0]])
 			obj[k][e] = true;
 
@@ -465,6 +560,13 @@ RuleData::RuleData(string s) : RuleData()
 		k = 3;
 		for (int i = 0; i < Rules::Settings.nameMapSize[k]; i++)
 			obj[k][i] = false;
+
+		if (Rules::Settings.nameMap[k].find(arg[0]) == Rules::Settings.nameMap[k].end())
+		{
+			errorMessage = "Неизвестный идентификатор: " + s;
+			return;
+		}
+
 		for (auto e : Rules::Settings.nameMap[k][arg[0]])
 			obj[k][e] = true;
 
@@ -474,7 +576,20 @@ RuleData::RuleData(string s) : RuleData()
 
 		type = HWEEKT;
 
-		maxPerWeek = stoi(arg[0]);
+		
+
+		try {
+			maxPerWeek = stoi(arg[0]);
+		}
+		catch (...)
+		{
+			errorMessage = "Аргумент неверного формата: " + s;
+			return;
+		}
+
+		if (maxPerWeek<=0)
+			errorMessage = "Аргумент вне допустимого диапазона: " + s;
+
 
 		break;
 	}
@@ -492,6 +607,13 @@ RuleData::~RuleData()
 
 void RuleData:: and (RuleData& other)
 {
+	if (!errorMessage.empty())
+		return;
+	errorMessage = other.getErrorMessage();
+	if (!errorMessage.empty())
+		return;
+
+
 	if (other.type == TIMET || other.type == FULLT)
 		for (int i = 0; i < Rules::Settings.Days; i++)
 			for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
@@ -508,6 +630,12 @@ void RuleData:: and (RuleData& other)
 }
 void RuleData:: or (RuleData& other)
 {
+	if (!errorMessage.empty())
+		return;
+	errorMessage = other.getErrorMessage();
+	if (!errorMessage.empty())
+		return;
+
 	if (other.type == TIMET || other.type == FULLT)
 		for (int i = 0; i < Rules::Settings.Days; i++)
 			for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
@@ -545,6 +673,12 @@ bool RuleData::canObj(objtype type, int id)
 int RuleData::getMaxPerWeek()
 {
 	return maxPerWeek;
+}
+
+
+string RuleData::getErrorMessage()
+{
+	return errorMessage;
 }
 
 string Rules::activityHourToStringDebug(int i)
@@ -633,7 +767,7 @@ vector<string>& Rules::getText()
 
 string Rules::getErrorMessage()
 {
-	return errorMessage;
+	return data.getErrorMessage();
 }
 
 void Rules::update()
@@ -745,6 +879,22 @@ void TagRules::update()
 map<string, Rules>& TagRules::getMap()
 {
 	return m;
+}
+
+vector<pair<string, string>> TagRules::getErrors(string pre)
+{
+	vector<pair<string, string>> v;
+
+
+	for (map<string, Rules>::iterator it = m.begin(); it != m.end(); ++it)
+	{
+		if (!it->second.getErrorMessage().empty())
+		{
+			v.push_back(pair<string, string>(pre+": "+it->first,it->second.getErrorMessage()));
+		}
+	}
+
+	return v;
 }
 
 ostream& operator<<(ostream& os, TagRules& tagRules)
