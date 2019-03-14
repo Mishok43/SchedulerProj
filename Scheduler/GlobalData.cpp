@@ -93,7 +93,10 @@ vector<Teacher*> GlobalData::TeachersFormList;
 vector<Group*> GlobalData::GroupsFormList;
 vector<Activity*> GlobalData::ActivitiesFormList;
 
-
+set<string> GlobalData::ClassroomsToShow;
+set<string> GlobalData::TeachersToShow;
+set<string> GlobalData::GroupsToShow;
+set<string> GlobalData::ActivitiesToShow;
 
 GlobalData MainData;
 ScheduleObjectContainer<Group>& Activity::GlobalGroups = MainData.Groups;

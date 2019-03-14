@@ -73,7 +73,12 @@ void GeneratedSchedule::initRules()
 	{groupNameMap, teacherNameMap, activityNameMap, classroomNameMap};
 
 	Rules::Settings.nameMapSize = array<int, 4>
-	{(int)groupNameMap["ВСЕ"].size(), (int)teacherNameMap["ВСЕ"].size(), (int)activityNameMap["ВСЕ"].size(), (int)classroomNameMap["ВСЕ"].size()};
+	{(int)groupNameMap["Все"].size(), (int)teacherNameMap["Все"].size(), (int)activityNameMap["Все"].size(), (int)classroomNameMap["Все"].size()};
+
+	MainData.GroupsToShow = set<string>{ "Все" };
+	MainData.TeachersToShow = set<string>{ "Все" };
+	MainData.ActivitiesToShow = set<string>{ "Все" };
+	MainData.ClassroomsToShow = set<string>{ "Все" };
 
 	//Обновить правила для всех объектов
 
@@ -382,6 +387,37 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 
 
+	vector<vector<bool>> showObj;
+
+	for (int i = 0; i < 4; i++)
+		showObj.push_back(vector<bool>());
+	
+	for (auto k : MainData.Groups.getVal())
+		showObj[0].push_back(false);
+	for (auto k : MainData.Teachers.getVal())
+		showObj[1].push_back(false);
+	for (auto k : MainData.Activities.getVal())
+		showObj[2].push_back(false);
+	for (auto k : MainData.Classrooms.getVal())
+		showObj[3].push_back(false);
+
+
+	for (auto s : GlobalData::GroupsToShow)
+		for (auto o : Rules::Settings.nameMap[0][s])
+			showObj[0][MainData.Groups.getByPos(o)->getId()] = true;
+
+	for (auto s : GlobalData::TeachersToShow)
+		for (auto o : Rules::Settings.nameMap[1][s])
+			showObj[1][MainData.Teachers.getByPos(o)->getId()] = true;
+
+	for (auto s : GlobalData::ActivitiesToShow)
+		for (auto o : Rules::Settings.nameMap[2][s])
+			showObj[2][MainData.Activities.getByPos(o)->getId()] = true;
+
+	for (auto s : GlobalData::ClassroomsToShow)
+		for (auto o : Rules::Settings.nameMap[3][s])
+			showObj[3][MainData.Classrooms.getByPos(o)->getId()] = true;
+
 	vector<vector<vector<MyCell>>> arr;
 	
 	for (int i = 0; i < n; i++)
@@ -401,6 +437,20 @@ void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDa
 
 			for (int j = 0; j < hour[i].size(); j++)
 			{
+				bool show = true;
+
+				for (auto g : hour[i][j].getActivity()->getGroups())
+					if (!showObj[0][g->getId()])
+						show = false;
+				
+				if (!showObj[1][hour[i][j].getActivity()->getTeacher()->getId()]
+					|| !showObj[2][hour[i][j].getActivity()->getId()]
+					|| !showObj[3][hour[i][j].getClassroom()->getId()])
+					show = false;
+
+				if (!show)
+					continue;
+
 				vector<int> x;
 				switch (type)
 				{

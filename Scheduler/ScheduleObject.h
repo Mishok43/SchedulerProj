@@ -83,7 +83,7 @@ public:
 			string s = v->getName();
 			int id = v->getId();
 
-			m["ÂÑÅ"].push_back(id);
+			m["Âñå"].push_back(id);
 
 			if (m.find(s) == m.end())
 				m.insert(pair < string, vector<int>>(s, vector<int>{ id }));

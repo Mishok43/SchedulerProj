@@ -5,6 +5,7 @@
 #include "GeneratedSchedule.h"
 #include "Excel/ExcelFormat.h"
 #include "ErrorListForm.h"
+#include "ExtraScheduleForm.h"
 
 namespace Scheduler {
 
@@ -54,6 +55,7 @@ namespace Scheduler {
 	private: System::Windows::Forms::DateTimePicker^  dateTimePicker2;
 	private: System::Windows::Forms::DateTimePicker^  dateTimePicker1;
 	private: System::Windows::Forms::CheckBox^  checkBoxWeek;
+	private: System::Windows::Forms::Button^  button1;
 
 
 
@@ -84,6 +86,7 @@ namespace Scheduler {
 			this->dateTimePicker2 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->dateTimePicker1 = (gcnew System::Windows::Forms::DateTimePicker());
 			this->checkBoxWeek = (gcnew System::Windows::Forms::CheckBox());
+			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->SuspendLayout();
 			// 
 			// buttonGenerate
@@ -125,7 +128,7 @@ namespace Scheduler {
 			// 
 			this->buttonExport->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->buttonExport->Location = System::Drawing::Point(15, 284);
+			this->buttonExport->Location = System::Drawing::Point(15, 311);
 			this->buttonExport->Name = L"buttonExport";
 			this->buttonExport->Size = System::Drawing::Size(287, 31);
 			this->buttonExport->TabIndex = 3;
@@ -201,18 +204,31 @@ namespace Scheduler {
 			this->checkBoxWeek->CheckState = System::Windows::Forms::CheckState::Checked;
 			this->checkBoxWeek->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->checkBoxWeek->Location = System::Drawing::Point(15, 226);
+			this->checkBoxWeek->Location = System::Drawing::Point(15, 255);
 			this->checkBoxWeek->Name = L"checkBoxWeek";
 			this->checkBoxWeek->Size = System::Drawing::Size(234, 21);
 			this->checkBoxWeek->TabIndex = 45;
 			this->checkBoxWeek->Text = L"Сгруппировать по дням недели";
 			this->checkBoxWeek->UseVisualStyleBackColor = true;
 			// 
+			// button1
+			// 
+			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->button1->Location = System::Drawing::Point(15, 218);
+			this->button1->Name = L"button1";
+			this->button1->Size = System::Drawing::Size(287, 31);
+			this->button1->TabIndex = 46;
+			this->button1->Text = L"Дополнительно";
+			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &ScheduleForm::button1_Click);
+			// 
 			// ScheduleForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(314, 327);
+			this->ClientSize = System::Drawing::Size(314, 354);
+			this->Controls->Add(this->button1);
 			this->Controls->Add(this->checkBoxWeek);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label3);
@@ -288,6 +304,11 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	}
 
 	Schedule.exportXls((RuleData::objtype)k, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
+}
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+
+	ExtraScheduleForm ^ box = gcnew ExtraScheduleForm;
+	box->ShowDialog();
 }
 };
 }

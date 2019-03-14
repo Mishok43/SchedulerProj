@@ -37,6 +37,11 @@ public:
 	static vector<Group*> GroupsFormList;
 	static vector<Activity*> ActivitiesFormList;
 
+	static set<string> ClassroomsToShow;
+	static set<string> TeachersToShow;
+	static set<string> GroupsToShow;
+	static set<string> ActivitiesToShow;
+
 	TagRules ClassroomTagRules;
 	TagRules TeacherTagRules;
 	TagRules GroupTagRules;

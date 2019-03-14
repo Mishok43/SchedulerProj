@@ -142,6 +142,7 @@
     <ClCompile Include="ErrorListForm.cpp" />
     <ClCompile Include="Excel\BasicExcel.cpp" />
     <ClCompile Include="Excel\ExcelFormat.cpp" />
+    <ClCompile Include="ExtraScheduleForm.cpp" />
     <ClCompile Include="GeneratedSchedule.cpp" />
     <ClCompile Include="GlobalData.cpp" />
     <ClCompile Include="HelpRules.cpp" />
@@ -179,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="Excel\BasicExcel.hpp" />
     <ClInclude Include="Excel\ExcelFormat.h" />
+    <ClInclude Include="ExtraScheduleForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="GeneratedSchedule.h" />
     <ClInclude Include="GlobalData.h" />
     <ClInclude Include="HelpRules.h">
@@ -235,6 +239,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ErrorListForm.resx">
       <DependentUpon>ErrorListForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtraScheduleForm.resx">
+      <DependentUpon>ExtraScheduleForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroupInfoForm.resx">
       <DependentUpon>GroupInfoForm.h</DependentUpon>
