@@ -56,6 +56,9 @@ public:
 	bool canObj(objtype type, int id);
 	int getMaxPerWeek();
 
+	bool** getObjData() const;
+	bool** getMData() const;
+
 	string getErrorMessage();
 
 private:
