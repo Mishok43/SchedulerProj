@@ -54,6 +54,9 @@ public:
 	bool canObj(objtype type, int id);
 	int getMaxPerWeek();
 
+
+	bool** getObjData() const;
+	bool** getMData() const;
 private:
 	static void parse(string& s, signtype& st, functype& ft, vector<string>& arg);
 	bool** m;

@@ -243,7 +243,10 @@ public:
 		return is;
 	}
 
-
+	std::size_t Count() const
+	{
+		return values.size();
+	}
 
 private:
 	vector<ScheduleObject*> values;

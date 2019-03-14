@@ -1,5 +1,7 @@
 #include "GeneratedSchedule.h"
+#include "generating.h"
 #include <random>
+
 
 FinalScheduleObject::FinalScheduleObject()
 {
@@ -122,7 +124,61 @@ void GeneratedSchedule::reset()
 
 void GeneratedSchedule::generate()
 {
+	std::vector<std::pair<bool**, bool**>> activities(MainData.Activities.getVal().size());
+	std::vector<uint32_t> maxPerWeekActivities(MainData.Activities.getVal().size());
+	for (std::size_t i = 0; i < MainData.Activities.getVal().size(); ++i)
+	{
+		auto val = MainData.Activities.getVal();
 
+
+		activities[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekActivities[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+	
+	std::vector<std::pair<bool**, bool**>> classrooms(MainData.Classrooms.getVal().size());
+	std::vector<uint32_t> maxPerWeekClassrooms(MainData.Classrooms.getVal().size());
+	for (std::size_t i = 0; i < MainData.Classrooms.getVal().size(); ++i)
+	{
+		auto val = MainData.Classrooms.getVal();
+
+
+		classrooms[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekClassrooms[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+
+	std::vector<std::pair<bool**, bool**>> groups(MainData.Groups.getVal().size());
+	std::vector<uint32_t> maxPerWeekGroups(MainData.Groups.getVal().size());
+	for (std::size_t i = 0; i < MainData.Groups.getVal().size(); ++i)
+	{
+		auto val = MainData.Groups.getVal();
+
+
+		groups[i] = std::make_pair(
+			val[i]->getRules().getData().getObjData(),
+			val[i]->getRules().getData().getMData()
+		);
+		maxPerWeekGroups[i] = val[i]->getRules().getData().getMaxPerWeek();
+	}
+
+
+	UnmanagedGenerator::generate(
+		Rules::Settings.Days,
+		Rules::Settings.ActivitiesPerDay,
+		MainData.Groups.getVal().size(),
+		MainData.Activities.getVal().size(),
+		MainData.Classrooms.getVal().size(),
+		activities,
+		classrooms,
+		groups,
+		maxPerWeekActivities,
+		maxPerWeekClassrooms,
+		maxPerWeekGroups);
 	reset();
 
 	vector<Activity*> act = MainData.Activities.getVal();
