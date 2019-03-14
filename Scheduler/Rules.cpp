@@ -661,6 +661,32 @@ void RuleData::not()
 }
 
 
+bool RuleData::hasFullyEmptyRegion()
+{
+	bool hasTrue = false;
+	for (int i = 0; i < Rules::Settings.Days; i++)
+		for (int j = 0; j < Rules::Settings.ActivitiesPerDay; j++)
+			if (m[i][j])
+				hasTrue = true;
+
+	
+
+	for (int i = 0; i < 4; i++)
+	{
+		if (!hasTrue)
+			return !hasTrue;
+
+		hasTrue = false;
+
+		for (int j = 0; j < Rules::Settings.nameMapSize[i]; j++)
+			if (obj[i][j])
+				hasTrue = true;
+	}
+		
+
+	return !hasTrue;
+}
+
 bool RuleData::canDayDaytime(int day, int daytime)
 {
 	return m[day][daytime];
@@ -767,6 +793,10 @@ vector<string>& Rules::getText()
 
 string Rules::getErrorMessage()
 {
+
+	if (data.hasFullyEmptyRegion())
+		return "¬ ограничени€х присутствует пустое множество";
+
 	return data.getErrorMessage();
 }
 

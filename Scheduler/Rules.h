@@ -50,6 +50,8 @@ public:
 	void or(RuleData& other);
 	void not();
 
+	bool hasFullyEmptyRegion();
+
 	bool canDayDaytime(int day, int daytime);
 	bool canObj(objtype type, int id);
 	int getMaxPerWeek();
