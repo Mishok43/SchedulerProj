@@ -1,13 +1,17 @@
   Scheduler.ActivitiesForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.ActivityInfoForm.resources - Embedded, ContainedInManifestFile, 
+  Scheduler.CheckPasswordBox.resources - Embedded, ContainedInManifestFile, 
   Scheduler.ClassroomInfoForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.ClassroomsForm.resources - Embedded, ContainedInManifestFile, 
+  Scheduler.ErrorListForm.resources - Embedded, ContainedInManifestFile, 
+  Scheduler.ExtraScheduleForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.GroupInfoForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.GroupsForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.HelpRules.resources - Embedded, ContainedInManifestFile, 
   Scheduler.MainForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.ParametersForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.ScheduleForm.resources - Embedded, ContainedInManifestFile, 
+  Scheduler.SetPasswordBox.resources - Embedded, ContainedInManifestFile, 
   Scheduler.StudentsForm.resources - Embedded, ContainedInManifestFile, 
   Scheduler.TagTextBox.resources - Embedded, ContainedInManifestFile, 
   Scheduler.TeacherInfoForm.resources - Embedded, ContainedInManifestFile, 
@@ -39,10 +43,19 @@ Class Scheduler.TagTextBox: AutoLayout, AnsiClass, Class, Public, BeforeFieldIni
 Class Scheduler.ActivitiesForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Scheduler.CheckPasswordBox: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Scheduler.ClassroomInfoForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Scheduler.ClassroomsForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Scheduler.ErrorListForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Scheduler.ExtraScheduleForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Scheduler.GroupInfoForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
@@ -64,6 +77,9 @@ Class Scheduler.TeachersForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldI
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Scheduler.ScheduleForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+  :System.Windows.Forms.Form
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+Class Scheduler.SetPasswordForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Scheduler.MainForm: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
