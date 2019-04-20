@@ -503,7 +503,7 @@ namespace Scheduler {
 	}
 	
 private: System::Void textBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	Schedule.reset();
+	//Schedule.reset();
 }
 };
 }

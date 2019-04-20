@@ -1,6 +1,5 @@
 #pragma once
 #include "GlobalData.h"
-#include "generating.h"
 
 class FinalScheduleObject
 {
@@ -28,7 +27,7 @@ public:
 	GeneratedSchedule();
 
 	void reset();
-	void generate();
+	void generate(bool simple);
 	void initRules();
 	
 	vector<pair<string,string>> getErrors();

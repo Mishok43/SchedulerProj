@@ -502,7 +502,7 @@ namespace Scheduler {
 			MainData.GroupTagRules.setText(v);
 		}
 private: System::Void textBox_TextChanged(System::Object^  sender, System::EventArgs^  e) {
-	Schedule.reset();
+	//Schedule.reset();
 }
 };
 }

@@ -268,7 +268,7 @@ private: System::Void buttonGenerate_Click(System::Object^  sender, System::Even
 	vector<pair<string,string>> errors = Schedule.getErrors();
 
 	if (errors.empty())
-		Schedule.generate();
+		Schedule.generate(false);
 	else
 	{
 		ErrorListForm ^ box = gcnew ErrorListForm;
