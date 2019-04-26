@@ -153,6 +153,7 @@
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsManaged>
     </ClCompile>
+    <ClCompile Include="GenerationForm.cpp" />
     <ClCompile Include="GlobalData.cpp">
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</CompileAsManaged>
       <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</CompileAsManaged>
@@ -196,6 +197,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="GeneratedSchedule.h" />
+    <ClInclude Include="GenerationForm.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="GlobalData.h" />
     <ClInclude Include="HelpRules.h">
       <FileType>CppForm</FileType>
@@ -254,6 +258,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ExtraScheduleForm.resx">
       <DependentUpon>ExtraScheduleForm.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GenerationForm.resx">
+      <DependentUpon>GenerationForm.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GroupInfoForm.resx">
       <DependentUpon>GroupInfoForm.h</DependentUpon>

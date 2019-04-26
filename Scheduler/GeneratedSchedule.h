@@ -1,6 +1,8 @@
 #pragma once
 #include "GlobalData.h"
 
+#define SCHPARAMS 3
+
 class FinalScheduleObject
 {
 public:
@@ -26,8 +28,10 @@ class GeneratedSchedule
 public:
 	GeneratedSchedule();
 
+
 	void reset();
-	void generate(bool simple);
+	void generate();
+
 	void initRules();
 	
 	vector<pair<string,string>> getErrors();
@@ -39,10 +43,41 @@ public:
 	friend std::ostream& operator<<(std::ostream& os, GeneratedSchedule& schedule);
 	friend std::istream& operator>>(std::istream& is, GeneratedSchedule& schedule);
 
-	
+	float* process;
+	int solutionsFound;
+
 private:
 	vector<vector<FinalScheduleObject>> hour;
+	array<int, SCHPARAMS> params;
+
+	vector<pair<vector<vector<FinalScheduleObject>>, array<int, SCHPARAMS>>> solutions;
+
+	void updateSolutions();
+
+
 };
 
 
 extern GeneratedSchedule Schedule;
+
+
+
+
+ref class MessagePrinter
+{
+private:
+
+	// constructor to initialize a MessagePrinter object
+public:
+	MessagePrinter()
+	{
+
+	}
+
+	//controls Thread that prints message
+	void Print()
+	{
+		Schedule.generate();
+
+	} // end method Print
+}; // end class MessagePrinter  

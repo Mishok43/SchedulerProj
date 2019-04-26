@@ -6,6 +6,7 @@
 #include "Excel/ExcelFormat.h"
 #include "ErrorListForm.h"
 #include "ExtraScheduleForm.h"
+#include "GenerationForm.h"
 
 namespace Scheduler {
 
@@ -268,7 +269,11 @@ private: System::Void buttonGenerate_Click(System::Object^  sender, System::Even
 	vector<pair<string,string>> errors = Schedule.getErrors();
 
 	if (errors.empty())
-		Schedule.generate(false);
+	{
+		//Schedule.generate(false);
+		GenerationForm ^ form = gcnew GenerationForm;
+		form->ShowDialog();
+	}
 	else
 	{
 		ErrorListForm ^ box = gcnew ErrorListForm;

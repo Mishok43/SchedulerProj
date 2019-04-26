@@ -48,9 +48,10 @@ std::istream & operator>>(std::istream & is, FinalScheduleObject & finalSchedule
 
 }
 
+
 GeneratedSchedule::GeneratedSchedule()
 {
-
+	process = new float[200];
 
 }
 
@@ -156,11 +157,191 @@ void GeneratedSchedule::reset()
 	hour.clear();
 }
 
-void GeneratedSchedule::generate(bool simple)
+void GeneratedSchedule::generate()
 {
 
+	bool simple = false;
 	if (!simple)
 	{
+
+		reset();
+
+		vector<Activity*> act = MainData.Activities.getVal();
+
+		vector<Classroom*> cls = MainData.Classrooms.getVal();
+		int n = Rules::Settings.Days * Rules::Settings.ActivitiesPerDay;
+		for (int i = 0; i < n; i++)
+		{
+			hour.push_back(vector<FinalScheduleObject>());
+		}
+
+		std::function<bool(vector<vector<FinalScheduleObject>>&, int, int, Activity*, Classroom*)> put = [n](vector<vector<FinalScheduleObject>>& hour, int dayTime, int hourTime, Activity* act, Classroom* cl)
+		{
+			int k = 0;
+			while (Rules::dayToWeekday(k / Rules::Settings.ActivitiesPerDay) != dayTime)
+				k++;
+
+			k += hourTime;
+
+			for (int i = 0; i < act->getHours(); i++)
+			{
+				hour[k + i * 7 * Rules::Settings.ActivitiesPerDay].push_back(FinalScheduleObject(act, cl));
+			}
+
+			return true;
+		};
+
+		std::function<bool(vector<vector<FinalScheduleObject>>&, int, int, Activity*)> unput = [n](vector<vector<FinalScheduleObject>>& hour, int dayTime, int hourTime, Activity* act)
+		{
+			int k = 0;
+			while (Rules::dayToWeekday(k / Rules::Settings.ActivitiesPerDay) != dayTime)
+				k++;
+
+			k += hourTime;
+
+			for (int i = 0; i < act->getHours(); i++)
+			{
+				hour[k + i * 7 * Rules::Settings.ActivitiesPerDay].pop_back();
+			}
+
+			return true;
+		};
+
+
+
+
+		std::function<void(int)> finder = [this,&finder,&put,&unput,n,&act,&cls]( int i)
+		{
+
+			if (i == act.size())
+			{
+				updateSolutions();
+				return;
+			}
+
+
+			int sum = 0;
+			//bool donee = false;
+
+
+			for (auto g : act[i]->getGroups())
+				sum += g->getSize();
+
+			for (int dayTime = 0; dayTime < 7; dayTime++)
+				for (int hourTime = 0; hourTime < Rules::Settings.ActivitiesPerDay; hourTime++)
+					if (act[i]->getRules().getData().canDayDaytime(dayTime, hourTime))
+					{
+						
+
+						int r = dayTime * Rules::Settings.ActivitiesPerDay + hourTime;
+
+						
+						bool used = false;
+
+						for (auto h : hour[r])
+						{
+							if (h.getActivity()->getTeacher() == act[i]->getTeacher())
+								used = true;
+
+							for (auto g1 : h.getActivity()->getGroups())
+								for (auto g2 : act[i]->getGroups())
+									if (g1 == g2)
+										used = true;
+						}
+
+						if (used)
+							continue;
+
+						for (int k = 0; k < cls.size(); k++)
+							if (sum <= cls[k]->getCapacity()
+								&& act[i]->getRules().getData().canObj(RuleData::CLASSROOMOBJ, cls[k]->getId())
+								&& cls[k]->getRules().getData().canObj(RuleData::ACTIVITYOBJ, act[i]->getId()))
+							{
+								process[i] = (r*k) * 1.0 / (7 * Rules::Settings.ActivitiesPerDay*cls.size());
+
+								used = false;
+								for (auto h : hour[r])
+								{
+									if (h.getClassroom() == cls[k])
+										used = true;
+
+								}
+
+								if (used)
+									continue;
+
+								put(hour, dayTime, hourTime, act[i], cls[k]);
+
+								finder( i + 1);
+
+								unput(hour, dayTime, hourTime, act[i]);
+								
+							}
+
+					}
+
+
+
+			for (int z = 0; z < act[i]->getHours(); z++)
+			{
+				//bool done = false;
+				for (int dayTime = 0; dayTime < Rules::Settings.Days ; dayTime++)
+					for (int hourTime = 0; hourTime < Rules::Settings.ActivitiesPerDay; hourTime++)
+						if (act[i]->getRules().getData().canDayDaytime(dayTime, hourTime))
+						{
+							int r = dayTime * Rules::Settings.ActivitiesPerDay + hourTime;
+
+
+
+							bool used = false;
+
+							for (auto h : hour[r])
+							{
+								if (h.getActivity()->getTeacher() == act[i]->getTeacher())
+									used = true;
+
+								for (auto g1 : h.getActivity()->getGroups())
+									for (auto g2 : act[i]->getGroups())
+										if (g1 == g2)
+											used = true;
+							}
+
+							if (used)
+								continue;
+
+							for (int k = 0; k < cls.size(); k++)
+								if (sum <= cls[k]->getCapacity()
+									&& act[i]->getRules().getData().canObj(RuleData::CLASSROOMOBJ, cls[k]->getId())
+									&& cls[k]->getRules().getData().canObj(RuleData::ACTIVITYOBJ, act[i]->getId()))
+								{
+									used = false;
+									for (auto h : hour[r])
+									{
+										if (h.getClassroom() == cls[k])
+											used = true;
+
+									}
+
+									if (used)
+										continue;
+
+									hour[r].push_back(FinalScheduleObject(act[i], cls[k]));
+
+									finder(i + 1);
+
+									hour[r].pop_back();
+								}
+
+						}
+			}
+
+
+		};
+
+
+		finder(0);
+
+		//process = 1000;
 		/*
 		std::vector<std::pair<bool**, bool**>> activities(MainData.Activities.getVal().size());
 		std::vector<uint32_t> maxPerWeekActivities(MainData.Activities.getVal().size());
@@ -448,6 +629,14 @@ void GeneratedSchedule::generate(bool simple)
 	}
 
 	}*/
+}
+
+
+void GeneratedSchedule::updateSolutions()
+{
+	solutionsFound++;
+	solutions.clear();
+	solutions.push_back({ hour,{-1,-1,-1} });
 }
 
 
