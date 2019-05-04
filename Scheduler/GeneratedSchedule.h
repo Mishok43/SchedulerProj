@@ -46,11 +46,23 @@ public:
 	float* process;
 	int solutionsFound;
 
+	bool onPause;
+	bool ending;
+	bool doneEnding;
+
+
+	int chosenIndex;
+
 private:
 	vector<vector<FinalScheduleObject>> hour;
+
+	vector<vector<FinalScheduleObject>> tempHour;
+
 	array<int, SCHPARAMS> params;
 
 	vector<pair<vector<vector<FinalScheduleObject>>, array<int, SCHPARAMS>>> solutions;
+
+	
 
 	void updateSolutions();
 

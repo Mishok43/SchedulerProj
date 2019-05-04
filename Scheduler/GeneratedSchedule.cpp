@@ -159,20 +159,22 @@ void GeneratedSchedule::reset()
 
 void GeneratedSchedule::generate()
 {
+	onPause = false;
+	ending = false;
+	doneEnding = false;
 
-	bool simple = false;
-	if (!simple)
-	{
+	tempHour.clear();
+	chosenIndex = -1;
+	
 
-		reset();
-
+		
 		vector<Activity*> act = MainData.Activities.getVal();
 
 		vector<Classroom*> cls = MainData.Classrooms.getVal();
 		int n = Rules::Settings.Days * Rules::Settings.ActivitiesPerDay;
 		for (int i = 0; i < n; i++)
 		{
-			hour.push_back(vector<FinalScheduleObject>());
+			tempHour.push_back(vector<FinalScheduleObject>());
 		}
 
 		std::function<bool(vector<vector<FinalScheduleObject>>&, int, int, Activity*, Classroom*)> put = [n](vector<vector<FinalScheduleObject>>& hour, int dayTime, int hourTime, Activity* act, Classroom* cl)
@@ -213,6 +215,11 @@ void GeneratedSchedule::generate()
 		std::function<void(int)> finder = [this,&finder,&put,&unput,n,&act,&cls]( int i)
 		{
 
+			while (onPause) {};
+
+			if (ending)
+				return;
+
 			if (i == act.size())
 			{
 				updateSolutions();
@@ -238,7 +245,7 @@ void GeneratedSchedule::generate()
 						
 						bool used = false;
 
-						for (auto h : hour[r])
+						for (auto h : tempHour[r])
 						{
 							if (h.getActivity()->getTeacher() == act[i]->getTeacher())
 								used = true;
@@ -260,7 +267,7 @@ void GeneratedSchedule::generate()
 								process[i] = (r*k) * 1.0 / (7 * Rules::Settings.ActivitiesPerDay*cls.size());
 
 								used = false;
-								for (auto h : hour[r])
+								for (auto h : tempHour[r])
 								{
 									if (h.getClassroom() == cls[k])
 										used = true;
@@ -270,11 +277,14 @@ void GeneratedSchedule::generate()
 								if (used)
 									continue;
 
-								put(hour, dayTime, hourTime, act[i], cls[k]);
+								put(tempHour, dayTime, hourTime, act[i], cls[k]);
 
 								finder( i + 1);
 
-								unput(hour, dayTime, hourTime, act[i]);
+								if (ending)
+									return;
+
+								unput(tempHour, dayTime, hourTime, act[i]);
 								
 							}
 
@@ -295,7 +305,7 @@ void GeneratedSchedule::generate()
 
 							bool used = false;
 
-							for (auto h : hour[r])
+							for (auto h : tempHour[r])
 							{
 								if (h.getActivity()->getTeacher() == act[i]->getTeacher())
 									used = true;
@@ -315,7 +325,7 @@ void GeneratedSchedule::generate()
 									&& cls[k]->getRules().getData().canObj(RuleData::ACTIVITYOBJ, act[i]->getId()))
 								{
 									used = false;
-									for (auto h : hour[r])
+									for (auto h : tempHour[r])
 									{
 										if (h.getClassroom() == cls[k])
 											used = true;
@@ -325,21 +335,33 @@ void GeneratedSchedule::generate()
 									if (used)
 										continue;
 
-									hour[r].push_back(FinalScheduleObject(act[i], cls[k]));
+									tempHour[r].push_back(FinalScheduleObject(act[i], cls[k]));
 
 									finder(i + 1);
 
-									hour[r].pop_back();
+									if (ending)
+										return;
+
+									tempHour[r].pop_back();
 								}
 
 						}
 			}
 
 
+			
 		};
 
 
 		finder(0);
+
+		doneEnding = true;
+
+
+		if (chosenIndex!=-1)
+			hour = solutions[chosenIndex].first;
+
+		
 
 		//process = 1000;
 		/*
@@ -449,11 +471,9 @@ void GeneratedSchedule::generate()
 				}
 			}
 		}*/
-	}
-	else
-	{
+	
 
-
+	/*
 		reset();
 
 		vector<Activity*> act = MainData.Activities.getVal();
@@ -604,8 +624,8 @@ void GeneratedSchedule::generate()
 				}
 			}
 
-
-	}
+			*/
+	
 
 /*
 	reset();
