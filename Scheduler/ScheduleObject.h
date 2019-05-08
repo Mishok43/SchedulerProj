@@ -12,7 +12,11 @@
 
 class ScheduleObject
 {
+	struct CalcStruct { int days; int gapSum; int lastDay; int lastHour; int daysPerWeekSum; };
+
 public:
+
+
 	ScheduleObject(std::string name,std::string description, std::set<std::string> tags);
 	void kill();
 	bool isKilled();
@@ -46,6 +50,8 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, ScheduleObject& obj);
 	friend std::istream& operator>>(std::istream& is, ScheduleObject& obj);
+
+	CalcStruct calc;
 
 protected:
 	bool killed;

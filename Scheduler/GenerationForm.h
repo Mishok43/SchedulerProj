@@ -42,18 +42,33 @@ namespace Scheduler {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::Button^  button1;
+	private: System::Windows::Forms::Button^  buttonPause;
+	protected:
+
 	private: System::Windows::Forms::Label^  labelData;
 
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Button^  buttonEnd;
 	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column1;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column2;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column3;
+
+
+
 	private: System::Windows::Forms::ComboBox^  comboBox;
 	private: System::Windows::Forms::Button^  buttonExport;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column1;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column2;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column4;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  Column5;
+	private: System::Windows::Forms::CheckBox^  checkBoxWeek;
+
+
+
+
+
+
+
+
 	protected:
 
 
@@ -71,31 +86,33 @@ namespace Scheduler {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->buttonPause = (gcnew System::Windows::Forms::Button());
 			this->labelData = (gcnew System::Windows::Forms::Label());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column4 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->Column5 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->buttonEnd = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->comboBox = (gcnew System::Windows::Forms::ComboBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
-			this->Column1 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column2 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->Column3 = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
+			this->checkBoxWeek = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// button1
+			// buttonPause
 			// 
-			this->button1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+			this->buttonPause->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->button1->Location = System::Drawing::Point(311, 12);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(97, 32);
-			this->button1->TabIndex = 0;
-			this->button1->Text = L"Пауза";
-			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &GenerationForm::button1_Click);
+			this->buttonPause->Location = System::Drawing::Point(311, 12);
+			this->buttonPause->Name = L"buttonPause";
+			this->buttonPause->Size = System::Drawing::Size(97, 32);
+			this->buttonPause->TabIndex = 0;
+			this->buttonPause->Text = L"Пауза";
+			this->buttonPause->UseVisualStyleBackColor = true;
+			this->buttonPause->Click += gcnew System::EventHandler(this, &GenerationForm::buttonPause_Click);
 			// 
 			// labelData
 			// 
@@ -110,16 +127,54 @@ namespace Scheduler {
 			// 
 			// dataGridView1
 			// 
+			this->dataGridView1->AllowUserToAddRows = false;
+			this->dataGridView1->AllowUserToDeleteRows = false;
+			this->dataGridView1->AllowUserToResizeColumns = false;
+			this->dataGridView1->AllowUserToResizeRows = false;
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(3) {
+			this->dataGridView1->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {
 				this->Column1,
-					this->Column2, this->Column3
+					this->Column2, this->Column4, this->Column5
 			});
 			this->dataGridView1->Location = System::Drawing::Point(12, 67);
 			this->dataGridView1->Name = L"dataGridView1";
 			this->dataGridView1->RowHeadersVisible = false;
-			this->dataGridView1->Size = System::Drawing::Size(396, 152);
+			this->dataGridView1->ScrollBars = System::Windows::Forms::ScrollBars::None;
+			this->dataGridView1->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->dataGridView1->Size = System::Drawing::Size(396, 177);
 			this->dataGridView1->TabIndex = 2;
+			// 
+			// Column1
+			// 
+			this->Column1->HeaderText = L"Окна/ден (студ.)";
+			this->Column1->Name = L"Column1";
+			this->Column1->ReadOnly = true;
+			this->Column1->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Column1->Width = 99;
+			// 
+			// Column2
+			// 
+			this->Column2->HeaderText = L"Окна/ден (преп.)";
+			this->Column2->Name = L"Column2";
+			this->Column2->ReadOnly = true;
+			this->Column2->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Column2->Width = 99;
+			// 
+			// Column4
+			// 
+			this->Column4->HeaderText = L"Дни/нед (студ.)";
+			this->Column4->Name = L"Column4";
+			this->Column4->ReadOnly = true;
+			this->Column4->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Column4->Width = 99;
+			// 
+			// Column5
+			// 
+			this->Column5->HeaderText = L"Дни/нед (преп.)";
+			this->Column5->Name = L"Column5";
+			this->Column5->ReadOnly = true;
+			this->Column5->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
+			this->Column5->Width = 99;
 			// 
 			// label1
 			// 
@@ -136,7 +191,7 @@ namespace Scheduler {
 			// 
 			this->buttonEnd->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->buttonEnd->Location = System::Drawing::Point(12, 277);
+			this->buttonEnd->Location = System::Drawing::Point(12, 298);
 			this->buttonEnd->Name = L"buttonEnd";
 			this->buttonEnd->Size = System::Drawing::Size(397, 38);
 			this->buttonEnd->TabIndex = 4;
@@ -148,7 +203,7 @@ namespace Scheduler {
 			this->label2->AutoSize = true;
 			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->label2->Location = System::Drawing::Point(9, 222);
+			this->label2->Location = System::Drawing::Point(9, 247);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(109, 17);
 			this->label2->TabIndex = 5;
@@ -161,45 +216,43 @@ namespace Scheduler {
 				static_cast<System::Byte>(204)));
 			this->comboBox->FormattingEnabled = true;
 			this->comboBox->Items->AddRange(gcnew cli::array< System::Object^  >(3) { L"Группы", L"Преподаватели", L"Аудитории" });
-			this->comboBox->Location = System::Drawing::Point(12, 242);
+			this->comboBox->Location = System::Drawing::Point(12, 267);
 			this->comboBox->Name = L"comboBox";
-			this->comboBox->Size = System::Drawing::Size(138, 24);
+			this->comboBox->Size = System::Drawing::Size(147, 24);
 			this->comboBox->TabIndex = 6;
 			// 
 			// buttonExport
 			// 
 			this->buttonExport->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(204)));
-			this->buttonExport->Location = System::Drawing::Point(156, 225);
+			this->buttonExport->Location = System::Drawing::Point(309, 264);
 			this->buttonExport->Name = L"buttonExport";
-			this->buttonExport->Size = System::Drawing::Size(99, 41);
+			this->buttonExport->Size = System::Drawing::Size(99, 28);
 			this->buttonExport->TabIndex = 7;
 			this->buttonExport->Text = L"Экспорт";
 			this->buttonExport->UseVisualStyleBackColor = true;
+			this->buttonExport->Click += gcnew System::EventHandler(this, &GenerationForm::buttonExport_Click);
 			// 
-			// Column1
+			// checkBoxWeek
 			// 
-			this->Column1->HeaderText = L"Окна (студенты)";
-			this->Column1->Name = L"Column1";
-			this->Column1->Width = 135;
-			// 
-			// Column2
-			// 
-			this->Column2->HeaderText = L"Окна (препод.)";
-			this->Column2->Name = L"Column2";
-			this->Column2->Width = 130;
-			// 
-			// Column3
-			// 
-			this->Column3->HeaderText = L"Загруж. аудиторий";
-			this->Column3->Name = L"Column3";
-			this->Column3->Width = 130;
+			this->checkBoxWeek->AutoSize = true;
+			this->checkBoxWeek->Checked = true;
+			this->checkBoxWeek->CheckState = System::Windows::Forms::CheckState::Checked;
+			this->checkBoxWeek->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(204)));
+			this->checkBoxWeek->Location = System::Drawing::Point(169, 269);
+			this->checkBoxWeek->Name = L"checkBoxWeek";
+			this->checkBoxWeek->Size = System::Drawing::Size(134, 21);
+			this->checkBoxWeek->TabIndex = 46;
+			this->checkBoxWeek->Text = L"По дням недели";
+			this->checkBoxWeek->UseVisualStyleBackColor = true;
 			// 
 			// GenerationForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(421, 327);
+			this->ClientSize = System::Drawing::Size(421, 344);
+			this->Controls->Add(this->checkBoxWeek);
 			this->Controls->Add(this->buttonExport);
 			this->Controls->Add(this->comboBox);
 			this->Controls->Add(this->label2);
@@ -207,7 +260,9 @@ namespace Scheduler {
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->dataGridView1);
 			this->Controls->Add(this->labelData);
-			this->Controls->Add(this->button1);
+			this->Controls->Add(this->buttonPause);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MaximizeBox = false;
 			this->Name = L"GenerationForm";
 			this->Text = L"Поиск расписания";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &GenerationForm::GenerationForm_FormClosing);
@@ -218,16 +273,43 @@ namespace Scheduler {
 
 		}
 #pragma endregion
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	private: System::Void buttonPause_Click(System::Object^  sender, System::EventArgs^  e) {
 		
+		if (Schedule.onPause)
+		{
+			buttonPause->Text = L"Пауза";
+		}
+		else
+		{
+			buttonPause->Text = L"Продолжить";
+		}
 		
+		Schedule.onPause = !Schedule.onPause;
 	}
 
 
 	private: System::Void timer_Tick(System::Object^  sender, System::EventArgs^  e)
 	{
-		//this->labelData->Text = gcnew System::String(("PROCESS:"+to_string(Schedule.process[0])+" "+to_string(Schedule.process[1])+ " " + to_string(Schedule.process[2]) + " " + to_string(Schedule.process[3])+ " " + to_string(Schedule.process[4])+" SOLUTIONS: "+ to_string(Schedule.solutionsFound)).c_str());
-		this->labelData->Text = gcnew System::String(("Found " + to_string(Schedule.solutionsFound)+" solutions").c_str());
+		//this->labelData->Text = gcnew System::String(("PROCESS:"+to_string(Schedule.process[0])+" "+to_string(Schedule.process[1])+ " " + to_string(Schedule.process[2]) + " " + to_string(Schedule.process[3])+ " " + to_string(Schedule.process[4]) + " " + to_string(Schedule.process[5])+" SOLUTIONS: "+ to_string(Schedule.solutionsFound)).c_str());
+		this->labelData->Text = gcnew System::String(("Найдено " + to_string(Schedule.solutionsFound)+" решений").c_str());
+	
+
+		vector<array<float, SCHPARAMS>> z = Schedule.getSolutionsParams();
+		for (int i = 0; i < z.size(); i++)
+		{
+
+
+			for (int j = 0; j < SCHPARAMS; j++)
+				this->dataGridView1->Rows[i]->Cells[j]->Value = gcnew System::String(to_string(z[i][j]).c_str());
+			/*cli::array<System::String^>^ a = gcnew cli::array<System::String^>(SCHPARAMS);
+			for (int j = 0; j< SCHPARAMS; j++)
+				//a[i] = StdToSys(getParam(i));
+				a[j] = gcnew System::String(to_string(z[i][j]).c_str());
+
+			this->dataGridView1->Rows->Add(a);*/
+
+		}
+	
 	}
 	private: System::Void GenerationForm_Load(System::Object^  sender, System::EventArgs^  e) {
 
@@ -235,6 +317,19 @@ namespace Scheduler {
 		timer->Interval = (100); // 10 secs
 		timer->Tick += gcnew EventHandler(this,&GenerationForm::timer_Tick);
 		timer->Start();
+
+		this->comboBox->SelectedIndex = 0;
+
+
+		this->dataGridView1->Rows->Clear();
+		for (int i = 0; i < MAXSOLUTIONS; i++)
+		{
+			cli::array<System::String^>^ a = gcnew cli::array<System::String^>(SCHPARAMS);
+			for (int j = 0; j < SCHPARAMS; j++)
+				a[j] = gcnew System::String(to_string(-1).c_str());
+
+			this->dataGridView1->Rows->Add(a);
+		}
 
 
 
@@ -260,6 +355,33 @@ private: System::Void GenerationForm_FormClosing(System::Object^  sender, System
 	};
 
 
+}
+private: System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
+
+
+	
+	if (!this->dataGridView1->CurrentCell)
+		return;
+	
+	int chosenIndex = this->dataGridView1->CurrentCell->RowIndex;
+
+	//if (Schedule.getSolutionsParams()[chosenIndex][2] < 0)
+	//	return;
+	
+
+	tm from = Rules::Settings.StartDate;
+
+	tm to = Rules::dayToDate(Rules::Settings.Days);
+	int k;
+	switch (this->comboBox->SelectedIndex)
+	{
+	case 0: k = 0; break;
+	case 1: k = 1; break;
+	case 2: k = 3; break;
+	}
+
+	
+	Schedule.exportXls(chosenIndex,(RuleData::objtype)k, this->checkBoxWeek->Checked, Rules::dateToDay(from), Rules::dateToDay(to), "../TestData/testSchedule.xls");
 }
 };
 

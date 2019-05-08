@@ -241,6 +241,8 @@ namespace Scheduler {
 			this->Controls->Add(this->comboBox);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonGenerate);
+			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
+			this->MaximizeBox = false;
 			this->Name = L"ScheduleForm";
 			this->Text = L"ScheduleForm";
 			this->Load += gcnew System::EventHandler(this, &ScheduleForm::ScheduleForm_Load);
@@ -308,7 +310,7 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	case 2: k = 3; break;
 	}
 
-	Schedule.exportXls((RuleData::objtype)k, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
+	Schedule.exportXls(-1,(RuleData::objtype)k, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 

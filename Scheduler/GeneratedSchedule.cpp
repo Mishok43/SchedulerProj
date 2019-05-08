@@ -157,15 +157,31 @@ void GeneratedSchedule::reset()
 	hour.clear();
 }
 
+vector<array<float, SCHPARAMS>> GeneratedSchedule::getSolutionsParams()
+{
+	vector<array<float, SCHPARAMS>> v;
+
+	for (int i = 0; i < solutions.size(); i++)
+		v.push_back(solutions[i].second);
+
+	return v;
+}
+
 void GeneratedSchedule::generate()
 {
+
+	solutionsFound = 0;
+
 	onPause = false;
 	ending = false;
 	doneEnding = false;
 
 	tempHour.clear();
 	chosenIndex = -1;
-	
+	solutions.clear();
+
+	for (int i = 0; i < MAXSOLUTIONS; i++)
+		solutions.push_back(pair<vector<vector<FinalScheduleObject>>,array<float,SCHPARAMS>>(tempHour, { -1.0,-1.0,-1.0,-1.0 }));
 
 		
 		vector<Activity*> act = MainData.Activities.getVal();
@@ -184,6 +200,10 @@ void GeneratedSchedule::generate()
 				k++;
 
 			k += hourTime;
+
+			for (int i = 0; i < act->getHours(); i++)
+				if (k + i * 7 * Rules::Settings.ActivitiesPerDay > Rules::Settings.Days*Rules::Settings.ActivitiesPerDay)
+					return false;
 
 			for (int i = 0; i < act->getHours(); i++)
 			{
@@ -234,8 +254,30 @@ void GeneratedSchedule::generate()
 			for (auto g : act[i]->getGroups())
 				sum += g->getSize();
 
-			for (int dayTime = 0; dayTime < 7; dayTime++)
-				for (int hourTime = 0; hourTime < Rules::Settings.ActivitiesPerDay; hourTime++)
+			//for (int dayTime = 0; dayTime < 7; dayTime++)
+			//	for (int hourTime = 0; hourTime < Rules::Settings.ActivitiesPerDay; hourTime++)
+
+			vector<int> timeA;
+			for (int timeP = 0; timeP < 7; timeP++)
+				timeA.push_back(timeP);
+			for (int z = 0; z < 5; z++)
+				swap(timeA[rand() % 7], timeA[rand() % 7]);
+
+			vector<int> hourA;
+			for (int timeP = 0; timeP < Rules::Settings.ActivitiesPerDay; timeP++)
+				hourA.push_back(timeP);
+			for (int z = 0; z < 5; z++)
+				swap(hourA[rand() % Rules::Settings.ActivitiesPerDay], hourA[rand() % Rules::Settings.ActivitiesPerDay]);
+
+
+
+			for (int timeP = 0; timeP < 7; timeP++)
+			{
+				int dayTime = timeA[timeP];
+				for (int hourP = 0; hourP < Rules::Settings.ActivitiesPerDay; hourP++)
+				{
+					int hourTime = hourA[hourP];
+				
 					if (act[i]->getRules().getData().canDayDaytime(dayTime, hourTime))
 					{
 						
@@ -277,21 +319,25 @@ void GeneratedSchedule::generate()
 								if (used)
 									continue;
 
-								put(tempHour, dayTime, hourTime, act[i], cls[k]);
+								if (put(tempHour, dayTime, hourTime, act[i], cls[k]))
+								{
+									finder(i + 1);
 
-								finder( i + 1);
+									if (ending)
+										return;
 
-								if (ending)
-									return;
+									unput(tempHour, dayTime, hourTime, act[i]);
+								}
 
-								unput(tempHour, dayTime, hourTime, act[i]);
+								
 								
 							}
 
 					}
-
-
-
+				}
+			}
+			
+			//if (act[i]->getHours()==1)
 			for (int z = 0; z < act[i]->getHours(); z++)
 			{
 				//bool done = false;
@@ -301,7 +347,7 @@ void GeneratedSchedule::generate()
 						{
 							int r = dayTime * Rules::Settings.ActivitiesPerDay + hourTime;
 
-
+							process[i] = z*r * 1.0 / (Rules::Settings.Days*Rules::Settings.ActivitiesPerDay*act[i]->getHours());
 
 							bool used = false;
 
@@ -347,7 +393,7 @@ void GeneratedSchedule::generate()
 
 						}
 			}
-
+			
 
 			
 		};
@@ -654,9 +700,163 @@ void GeneratedSchedule::generate()
 
 void GeneratedSchedule::updateSolutions()
 {
+	
+	vector<Group*> gr = MainData.Groups.getVal();
+	vector<Teacher*> teach = MainData.Teachers.getVal();
+
+	for (int i = 0; i < gr.size(); i++)
+	{
+		gr[i]->calc.days = 0;
+		gr[i]->calc.daysPerWeekSum = 0;
+
+		
+
+		gr[i]->calc.lastDay = -1;
+		gr[i]->calc.gapSum = 0;
+	}
+
+	for (int i = 0; i < teach.size(); i++)
+	{
+		teach[i]->calc.days = 0;
+		teach[i]->calc.daysPerWeekSum = 0;
+
+		teach[i]->calc.lastDay = -1;
+		teach[i]->calc.gapSum = 0;
+	}
 	solutionsFound++;
-	solutions.clear();
-	solutions.push_back({ hour,{-1,-1,-1} });
+	
+	
+
+	int n = Rules::Settings.Days * Rules::Settings.ActivitiesPerDay;
+	int weeks = 0;
+
+	
+	for (int i = 0; i < n; i++)
+	{
+		int day = i / Rules::Settings.ActivitiesPerDay;
+		int weekday = Rules::dayToWeekday(day);
+		int hour = i % Rules::Settings.ActivitiesPerDay;
+
+		if (hour == 0 && weekday == 0)
+			weeks += 1;
+
+		for (int j = 0; j < tempHour[i].size(); j++)
+		{
+			Teacher* t = tempHour[i][j].getActivity()->getTeacher();
+			set<Group*> gs = tempHour[i][j].getActivity()->getGroups();
+
+			if (t->calc.lastDay != day)
+			{
+				t->calc.days += 1;
+
+				t->calc.lastDay = day;
+			}
+			else
+			{
+				t->calc.gapSum += hour - t->calc.lastHour - 1;
+			}
+			t->calc.lastHour = hour;
+
+			for (auto g : gs)
+			{
+				if (g->calc.lastDay != day)
+				{
+					g->calc.days += 1;
+
+
+					g->calc.lastDay = day;
+
+				}
+				else
+				{
+					g->calc.gapSum += hour - g->calc.lastHour - 1;
+				}
+
+				g->calc.lastHour = hour;
+			}
+				
+		}
+
+
+	}
+
+	
+
+	array<float, SCHPARAMS> res;
+
+	float sum;
+
+
+
+
+	//res[0] = solutionsFound;
+	//res[1] = -1;
+	sum = 0;
+	for (int i = 0; i < gr.size(); i++)
+		if (gr[i]->calc.days!=0)
+		{
+			sum += (gr[i]->calc.gapSum)*1.0 / gr[i]->calc.days;
+		}
+
+	res[0] = sum / gr.size();
+
+	sum = 0;
+	for (int i = 0; i < teach.size(); i++)
+		if (teach[i]->calc.days!=0)
+		{
+			sum += (teach[i]->calc.gapSum)*1.0 / teach[i]->calc.days;
+		}
+
+	res[1] = sum / teach.size();
+
+	sum = 0;
+	for (int i = 0; i < gr.size(); i++)
+	{
+		sum += (gr[i]->calc.days + (rand() % 7))*1.0 / weeks;
+	}
+
+	res[2] = sum / gr.size();
+
+	sum = 0;
+
+	for (int i = 0; i < teach.size(); i++)
+	{
+		sum +=  (teach[i]->calc.days+(rand() % 7))*1.0 / weeks;
+	}
+	
+
+	res[3] = sum / teach.size();
+	
+	
+
+	for (int i = 0; i < MAXSOLUTIONS; i++)
+	{
+		if (res[1] < solutions[i].second[1] || solutions[i].second[1] == -1)
+		{
+			if (i != 0 && res[1] == solutions[i - 1].second[1])
+				break;
+			
+				
+			for (int j = MAXSOLUTIONS - 1; j > i; j--)
+			{
+					
+				solutions[j] = solutions[j - 1];
+				
+			}
+
+			solutions[i] = pair<vector<vector<FinalScheduleObject>>, array<float, SCHPARAMS>>(tempHour, res);
+
+			break;
+			
+			
+		}
+	}
+	
+	//solutions.clear();
+	//solutions.push_back({ hour,{-1,-1,-1} });
+
+
+	int k = 0;
 }
 
 
@@ -740,8 +940,12 @@ void GeneratedSchedule::debugOutput(ScheduleObject* obj, const char * path)
 	xls.SaveAs(path);
 }
 
-void GeneratedSchedule::exportXls(RuleData::objtype type, bool week, int startDay, int endDay, const char * path)
+void GeneratedSchedule::exportXls(int sol,RuleData::objtype type, bool week, int startDay, int endDay, const char * path)
 {
+	if (sol != -1)
+		//hour = solutions[sol].first;
+		hour = tempHour;
+
 	ExcelFormat::BasicExcel xls;
 	xls.New(1);
 	ExcelFormat::BasicExcelWorksheet* sheet = xls.GetWorksheet(0);

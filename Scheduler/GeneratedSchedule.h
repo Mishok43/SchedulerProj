@@ -1,7 +1,8 @@
 #pragma once
 #include "GlobalData.h"
 
-#define SCHPARAMS 3
+#define SCHPARAMS 4
+#define MAXSOLUTIONS 7
 
 class FinalScheduleObject
 {
@@ -38,7 +39,7 @@ public:
 	bool isGenerated();
 
 	void debugOutput(ScheduleObject* obj, const char * path);
-	void exportXls(RuleData::objtype type, bool week, int startDay, int endDay, const char * path);
+	void exportXls(int sol, RuleData::objtype type, bool week, int startDay, int endDay, const char * path);
 
 	friend std::ostream& operator<<(std::ostream& os, GeneratedSchedule& schedule);
 	friend std::istream& operator>>(std::istream& is, GeneratedSchedule& schedule);
@@ -52,7 +53,8 @@ public:
 
 
 	int chosenIndex;
-
+	
+	vector<array<float, SCHPARAMS>> getSolutionsParams();
 private:
 	vector<vector<FinalScheduleObject>> hour;
 
@@ -60,7 +62,7 @@ private:
 
 	array<int, SCHPARAMS> params;
 
-	vector<pair<vector<vector<FinalScheduleObject>>, array<int, SCHPARAMS>>> solutions;
+	vector<pair<vector<vector<FinalScheduleObject>>, array<float, SCHPARAMS>>> solutions;
 
 	
 
