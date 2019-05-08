@@ -408,12 +408,31 @@ namespace Scheduler {
 private:
 	System::Void buttonImport_Click(System::Object^  sender, System::EventArgs^  e) {
 
-		MainData.Activities.setVal(Activity::ExcelToActivities("../TestData/lessons.xls"));
 
-		this->updateGrid();
+		OpenFileDialog  ^ dialog = gcnew OpenFileDialog;
+		dialog->Filter = "Excel Workbook (*.xls)|*.xls|All files (*.*)|*.*";
+		dialog->FilterIndex = 0;
+		dialog->RestoreDirectory = true;
+
+		if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+			string path = msclr::interop::marshal_as<string>(dialog->FileName);
+
+			MainData.Activities.setVal(Activity::ExcelToActivities(path.c_str()));
+
+			this->updateGrid();
+		}
 	}
 	System::Void buttonExport_Click(System::Object^  sender, System::EventArgs^  e) {
-		Activity::ActivitiesToExcel(MainData.Activities.getVal(), "../TestData/lessons.xls");
+		SaveFileDialog  ^ dialog = gcnew SaveFileDialog;
+		dialog->Filter = "Excel Workbook (*.xls)|*.xls|All files (*.*)|*.*";
+		dialog->FilterIndex = 0;
+		dialog->RestoreDirectory = true;
+
+		if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+			string path = msclr::interop::marshal_as<string>(dialog->FileName);
+
+			Activity::ActivitiesToExcel(MainData.Activities.getVal(), path.c_str());
+		}
 	}
 
 

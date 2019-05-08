@@ -337,11 +337,10 @@ namespace Scheduler {
 
 		//Schedule.generate(false);
 
-		MessagePrinter^ printer1 = gcnew MessagePrinter();
-		Thread^ thread1 = gcnew Thread(gcnew ThreadStart(printer1, &MessagePrinter::Print));
-		//thread1->Name = "thread1";
-
-		thread1->Start();
+		ThreadHelper^ helper = gcnew ThreadHelper();
+		Thread^ thread = gcnew Thread(gcnew ThreadStart(helper, &ThreadHelper::Run));
+		
+		thread->Start();
 	}
 
 	
@@ -380,9 +379,16 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	case 2: k = 3; break;
 	}
 
-	
-	Schedule.exportXls(chosenIndex,(RuleData::objtype)k, this->checkBoxWeek->Checked, Rules::dateToDay(from), Rules::dateToDay(to), "../TestData/testSchedule.xls");
-}
+	SaveFileDialog  ^ dialog = gcnew SaveFileDialog;
+	dialog->Filter = "Excel Workbook (*.xls)|*.xls|All files (*.*)|*.*";
+	dialog->FilterIndex = 0;
+	dialog->RestoreDirectory = true;
+
+	if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+		string path = msclr::interop::marshal_as<string>(dialog->FileName);
+		Schedule.exportXls(chosenIndex, (RuleData::objtype)k, this->checkBoxWeek->Checked, Rules::dateToDay(from), Rules::dateToDay(to), path.c_str());
+	}
+	}
 };
 
 

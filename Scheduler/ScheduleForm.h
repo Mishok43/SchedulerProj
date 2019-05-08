@@ -264,7 +264,7 @@ namespace Scheduler {
 	}
 private: System::Void buttonGenerate_Click(System::Object^  sender, System::EventArgs^  e) {
 
-	Schedule.reset();
+	//Schedule.reset();
 	Schedule.initRules();
 	
 
@@ -310,7 +310,16 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	case 2: k = 3; break;
 	}
 
-	Schedule.exportXls(-1,(RuleData::objtype)k, this->checkBoxWeek->Checked,Rules::dateToDay(from),Rules::dateToDay(to),"../TestData/schedule.xls");
+	SaveFileDialog  ^ dialog = gcnew SaveFileDialog;
+	dialog->Filter = "Excel Workbook (*.xls)|*.xls|All files (*.*)|*.*";
+	dialog->FilterIndex = 0;
+	dialog->RestoreDirectory = true;
+
+	if (dialog->ShowDialog() == Windows::Forms::DialogResult::OK) {
+		string path = msclr::interop::marshal_as<string>(dialog->FileName);
+
+		Schedule.exportXls(-1, (RuleData::objtype)k, this->checkBoxWeek->Checked, Rules::dateToDay(from), Rules::dateToDay(to), path.c_str());
+	}
 }
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 

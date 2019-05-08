@@ -942,9 +942,16 @@ void GeneratedSchedule::debugOutput(ScheduleObject* obj, const char * path)
 
 void GeneratedSchedule::exportXls(int sol,RuleData::objtype type, bool week, int startDay, int endDay, const char * path)
 {
+
+
+	vector<vector<FinalScheduleObject>> h;
+
 	if (sol != -1)
-		//hour = solutions[sol].first;
-		hour = tempHour;
+		h = solutions[sol].first;
+	else
+		h = hour;
+
+
 
 	ExcelFormat::BasicExcel xls;
 	xls.New(1);
@@ -1115,18 +1122,18 @@ void GeneratedSchedule::exportXls(int sol,RuleData::objtype type, bool week, int
 
 			tm time = Rules::dayToDate(i / Rules::Settings.ActivitiesPerDay);
 
-			for (int j = 0; j < hour[i].size(); j++)
+			for (int j = 0; j < h[i].size(); j++)
 			{
 				
 				bool show = true;
 
-				for (auto g : hour[i][j].getActivity()->getGroups())
+				for (auto g : h[i][j].getActivity()->getGroups())
 					if (!showObj[0][g->getId()])
 						show = false;
 				
-				if (!showObj[1][hour[i][j].getActivity()->getTeacher()->getId()]
-					|| !showObj[2][hour[i][j].getActivity()->getId()]
-					|| !showObj[3][hour[i][j].getClassroom()->getId()])
+				if (!showObj[1][h[i][j].getActivity()->getTeacher()->getId()]
+					|| !showObj[2][h[i][j].getActivity()->getId()]
+					|| !showObj[3][h[i][j].getClassroom()->getId()])
 					show = false;
 
 				if (!show)
@@ -1136,17 +1143,17 @@ void GeneratedSchedule::exportXls(int sol,RuleData::objtype type, bool week, int
 				switch (type)
 				{
 					case RuleData::GROUPOBJ:
-						for (auto g : hour[i][j].getActivity()->getGroups())
+						for (auto g : h[i][j].getActivity()->getGroups())
 							x.push_back(g->getId());
 						break;
 					case RuleData::TEACHEROBJ:
-						x.push_back(hour[i][j].getActivity()->getTeacher()->getId());
+						x.push_back(h[i][j].getActivity()->getTeacher()->getId());
 						break;
 					case RuleData::ACTIVITYOBJ:
-						x.push_back(hour[i][j].getActivity()->getId());
+						x.push_back(h[i][j].getActivity()->getId());
 						break;
 					case RuleData::CLASSROOMOBJ:
-						x.push_back(hour[i][j].getClassroom()->getId());
+						x.push_back(h[i][j].getClassroom()->getId());
 						break;
 				}
 
@@ -1155,13 +1162,13 @@ void GeneratedSchedule::exportXls(int sol,RuleData::objtype type, bool week, int
 				{
 					bool found = false;
 					for (int k = 0; k<arr[y][xx].size(); k++)
-						if (hour[i][j].getActivity() == arr[y][xx][k].act)
+						if (h[i][j].getActivity() == arr[y][xx][k].act)
 						{
-							arr[y][xx][k].add(hour[i][j].getClassroom(), time);
+							arr[y][xx][k].add(h[i][j].getClassroom(), time);
 							found = true;
 						}
 					if (!found)
-						arr[y][xx].push_back(MyCell(hour[i][j].getActivity(), hour[i][j].getClassroom(), time));
+						arr[y][xx].push_back(MyCell(h[i][j].getActivity(), h[i][j].getClassroom(), time));
 				}
 
 			}

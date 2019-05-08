@@ -77,21 +77,18 @@ extern GeneratedSchedule Schedule;
 
 
 
-ref class MessagePrinter
+ref class ThreadHelper
 {
 private:
 
-	// constructor to initialize a MessagePrinter object
 public:
-	MessagePrinter()
+	ThreadHelper()
 	{
 
 	}
 
-	//controls Thread that prints message
-	void Print()
+	void Run()
 	{
 		Schedule.generate();
-
-	} // end method Print
-}; // end class MessagePrinter  
+	}
+};  
