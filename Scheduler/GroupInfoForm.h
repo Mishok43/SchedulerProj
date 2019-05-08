@@ -271,7 +271,7 @@ namespace Scheduler {
 	private: System::Void GroupInfoForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 
 
-		trySave();
+		e->Cancel = !trySave();
 	}
 private: System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
 	HelpRules ^ form = gcnew HelpRules;
@@ -283,8 +283,20 @@ private: System::Void buttonDebug_Click(System::Object^  sender, System::EventAr
 	Schedule.initRules();
 	Schedule.debugOutput(dynamic_cast<ScheduleObject*>(MainData.EditingGroup), "../TestData/debug.xls");
 }
-System::Void trySave()
+bool trySave()
 {
+	if (String::IsNullOrEmpty(textBoxName->Text))
+	{
+		MessageBox::Show("Графа ИДЕНТИФИКАТОР: требуется непустая строка");
+		return false;
+	}
+
+	if (!isPositiveInteger(msclr::interop::marshal_as<std::string>(textBoxSize->Text)))
+	{
+		MessageBox::Show("Графа РАЗМЕР: требуется целое положительное число");
+		return false;
+	}
+
 	MainData.EditingGroup->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
 	MainData.EditingGroup->setSize(std::stoi(msclr::interop::marshal_as<std::string>(textBoxSize->Text)));
 	MainData.EditingGroup->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
@@ -296,6 +308,8 @@ System::Void trySave()
 	for (int i = 0; i < lines->Length; i++)
 		v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
 	MainData.EditingGroup->getRules().setText(v);
+
+	return true;
 }
 };
 }

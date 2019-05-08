@@ -9,6 +9,8 @@ using namespace std;
 
 int getTmWday(tm& time);
 
+bool isPositiveInteger(const std::string& s);
+
 struct RulesSettings
 {
 public:

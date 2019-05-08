@@ -398,8 +398,7 @@ private: System::Void ActivityInfoForm_Load(System::Object^  sender, System::Eve
 
 	private: System::Void ActivityInfoForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 
-
-		trySave();
+		e->Cancel = !trySave();
 	}
 private: System::Void buttonHelp_Click(System::Object^  sender, System::EventArgs^  e) {
 	HelpRules ^ form = gcnew HelpRules;
@@ -410,8 +409,20 @@ private: System::Void buttonDebug_Click(System::Object^  sender, System::EventAr
 	Schedule.initRules();
 	Schedule.debugOutput(dynamic_cast<ScheduleObject*>(MainData.EditingActivity), "../TestData/debug.xls");
 }
-		 System::Void trySave()
+		 bool trySave()
 		 {
+			 if (String::IsNullOrEmpty(textBoxName->Text))
+			 {
+				 MessageBox::Show("Графа НАЗВАНИЕ: требуется непустая строка");
+				 return false;
+			 }
+
+			 if (!isPositiveInteger(msclr::interop::marshal_as<std::string>(textBoxHours->Text)))
+			 {
+				 MessageBox::Show("Графа ЧАСЫ: требуется целое положительное число");
+				 return false;
+			 }
+				 
 			 MainData.EditingActivity->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
 			 //MainData.EditingActivity->setTeacher(msclr::interop::marshal_as<std::string>(textBoxTeacher->Text));
 			 MainData.EditingActivity->setTeacher(msclr::interop::marshal_as<std::string>(comboBoxTeacher->Text));
@@ -426,6 +437,8 @@ private: System::Void buttonDebug_Click(System::Object^  sender, System::EventAr
 			 for (int i = 0; i < lines->Length; i++)
 				 v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
 			 MainData.EditingActivity->getRules().setText(v);
+
+			 return true;
 		 }
 private: System::Void buttonArrow_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (buttonArrow->Text == "->")

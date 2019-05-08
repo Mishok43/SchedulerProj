@@ -257,7 +257,7 @@ private: System::Void TeacherInfoForm_Load(System::Object^  sender, System::Even
 
 	private: System::Void TeacherInfoForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 
-		trySave();
+		e->Cancel = !trySave();
 	}
 private: System::Void buttonDebug_Click(System::Object^  sender, System::EventArgs^  e) {
 	trySave();
@@ -268,8 +268,15 @@ private: System::Void buttonHelp_Click(System::Object^  sender, System::EventArg
 	HelpRules ^ form = gcnew HelpRules;
 	form->ShowDialog();
 }
-System::Void trySave()
+bool trySave()
 {
+	if (String::IsNullOrEmpty(textBoxName->Text))
+	{
+		MessageBox::Show("Графа ФИО: требуется непустая строка");
+		return false;
+	}
+
+
 	MainData.EditingTeacher->setName(msclr::interop::marshal_as<std::string>(textBoxName->Text));
 	MainData.EditingTeacher->setDescription(msclr::interop::marshal_as<std::string>(textBoxDescription->Text));
 	MainData.EditingTeacher->setTagsFromString(msclr::interop::marshal_as<std::string>(textBoxTags->Text));
@@ -280,6 +287,9 @@ System::Void trySave()
 	for (int i = 0; i < lines->Length; i++)
 		v.push_back(msclr::interop::marshal_as<std::string>(lines->GetValue(i)->ToString()));
 	MainData.EditingTeacher->getRules().setText(v);
+
+
+	return true;
 }
 
 };

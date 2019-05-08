@@ -16,6 +16,11 @@ int getTmWday(tm& time) {
 
 }
 
+bool isPositiveInteger(const std::string& s)
+{
+	return (!s.empty() && s != "0" && strspn(s.c_str(), "0123456789") == s.size());
+}
+
 
 ostream& operator<<(ostream& os, RulesSettings& settings)
 {
