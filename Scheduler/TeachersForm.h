@@ -54,7 +54,7 @@ namespace Scheduler {
 
 
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	private: System::Windows::Forms::Button^  buttonExport;
 	private: System::Windows::Forms::Button^  buttonImport;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
@@ -115,7 +115,6 @@ namespace Scheduler {
 			this->description = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->areRules = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->tags = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->BeginInit();
@@ -278,14 +277,6 @@ namespace Scheduler {
 			this->tags->SortMode = System::Windows::Forms::DataGridViewColumnSortMode::NotSortable;
 			this->tags->Width = 1000;
 			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(12, 12);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 25;
-			this->textBox1->Text = L"Ôèëüòð...";
-			// 
 			// buttonExport
 			// 
 			this->buttonExport->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
@@ -323,7 +314,6 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonEdit);
 			this->Controls->Add(this->buttonAdd);
 			this->Controls->Add(this->dataGridView);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonExport);
 			this->Controls->Add(this->buttonImport);
 			this->Name = L"TeachersForm";

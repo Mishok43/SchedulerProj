@@ -54,7 +54,7 @@ namespace Scheduler {
 
 
 
-	private: System::Windows::Forms::TextBox^  textBox1;
+
 	private: System::Windows::Forms::Button^  buttonExport;
 	private: System::Windows::Forms::Button^  buttonImport;
 	private: System::Windows::Forms::DataGridView^  dataGridView;
@@ -153,7 +153,6 @@ namespace Scheduler {
 			this->buttonRemove = (gcnew System::Windows::Forms::Button());
 			this->buttonEdit = (gcnew System::Windows::Forms::Button());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->buttonExport = (gcnew System::Windows::Forms::Button());
 			this->buttonImport = (gcnew System::Windows::Forms::Button());
 			this->dataGridView = (gcnew System::Windows::Forms::DataGridView());
@@ -268,14 +267,6 @@ namespace Scheduler {
 			this->buttonAdd->Text = L"Добавить";
 			this->buttonAdd->UseVisualStyleBackColor = true;
 			this->buttonAdd->Click += gcnew System::EventHandler(this, &ActivitiesForm::buttonAdd_Click);
-			// 
-			// textBox1
-			// 
-			this->textBox1->Location = System::Drawing::Point(12, 12);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(100, 20);
-			this->textBox1->TabIndex = 25;
-			this->textBox1->Text = L"Фильтр...";
 			// 
 			// buttonExport
 			// 
@@ -392,7 +383,6 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonRemove);
 			this->Controls->Add(this->buttonEdit);
 			this->Controls->Add(this->buttonAdd);
-			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->buttonExport);
 			this->Controls->Add(this->buttonImport);
 			this->Name = L"ActivitiesForm";
