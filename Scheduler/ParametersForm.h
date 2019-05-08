@@ -276,35 +276,53 @@ namespace Scheduler {
 	}
 	private: System::Void ParametersForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 		
-		MainData.Title = msclr::interop::marshal_as<std::string>(this->textBoxTitle->Text);
-		
-		int year = this->dateTimePicker1->Value.Year;
-		int month = this->dateTimePicker1->Value.Month;
-		int day = this->dateTimePicker1->Value.Day;
-
-		Rules::Settings.StartDate.tm_year = year - 1900;
-		Rules::Settings.StartDate.tm_mon = month - 1;
-		Rules::Settings.StartDate.tm_mday = day;
-
-		Rules::Settings.Days = ((this->dateTimePicker2->Value) - (this->dateTimePicker1->Value)).TotalDays;
-	
-		Rules::Settings.ActivitiesPerDay = (int)this->numericUpDown->Value;
-
-
-		for (int i = 0; i < 20; i++)
-		{
-			Rules::Settings.ActivityStartTime[i] = 
-				this->dateTimePickerStart[i]->Value.Hour * 60 + 
-				this->dateTimePickerStart[i]->Value.Minute;
-
-			Rules::Settings.ActivityEndTime[i] =
-				this->dateTimePickerEnd[i]->Value.Hour * 60 +
-				this->dateTimePickerEnd[i]->Value.Minute;
-		}
-
-
-		Schedule.reset();
+		e->Cancel = !trySave();
 	}
+
+			 bool trySave()
+			 {
+				 MainData.Title = msclr::interop::marshal_as<std::string>(this->textBoxTitle->Text);
+
+				 int year = this->dateTimePicker1->Value.Year;
+				 int month = this->dateTimePicker1->Value.Month;
+				 int day = this->dateTimePicker1->Value.Day;
+
+				 Rules::Settings.StartDate.tm_year = year - 1900;
+				 Rules::Settings.StartDate.tm_mon = month - 1;
+				 Rules::Settings.StartDate.tm_mday = day;
+
+				 Rules::Settings.Days = ((this->dateTimePicker2->Value) - (this->dateTimePicker1->Value)).TotalDays;
+
+				 if (Rules::Settings.Days <= 0)
+				 {
+					 MessageBox::Show("Недопустимый диапазон дат");
+					 return false;
+				 }
+
+				 Rules::Settings.ActivitiesPerDay = (int)this->numericUpDown->Value;
+
+
+				 for (int i = 0; i < 20; i++)
+				 {
+					 Rules::Settings.ActivityStartTime[i] =
+						 this->dateTimePickerStart[i]->Value.Hour * 60 +
+						 this->dateTimePickerStart[i]->Value.Minute;
+
+					 Rules::Settings.ActivityEndTime[i] =
+						 this->dateTimePickerEnd[i]->Value.Hour * 60 +
+						 this->dateTimePickerEnd[i]->Value.Minute;
+
+					 if (i < Rules::Settings.ActivitiesPerDay && Rules::Settings.ActivityStartTime[i]>=Rules::Settings.ActivityEndTime[i])
+					 {
+						 MessageBox::Show("Недопустимый диапазон времени для "+(i+1)+" пары");
+						 return false;
+					 }
+				 }
+
+
+				 Schedule.reset();
+				 return true;
+			 }
 	private: System::Void numericUpDown_ValueChanged(System::Object^  sender, System::EventArgs^  e) {
 		this->updateSize();
 	}
