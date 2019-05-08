@@ -225,7 +225,7 @@ namespace Scheduler {
 			this->Controls->Add(this->labelDescription);
 			this->Controls->Add(this->labelName);
 			this->Name = L"TeacherInfoForm";
-			this->Text = L"TeacherInfoForm";
+			this->Text = L"Преподаватели | Редактирование";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &TeacherInfoForm::TeacherInfoForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &TeacherInfoForm::TeacherInfoForm_Load);
 			this->ResumeLayout(false);

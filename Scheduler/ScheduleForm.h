@@ -244,7 +244,7 @@ namespace Scheduler {
 			this->FormBorderStyle = System::Windows::Forms::FormBorderStyle::FixedSingle;
 			this->MaximizeBox = false;
 			this->Name = L"ScheduleForm";
-			this->Text = L"ScheduleForm";
+			this->Text = L"Расписание";
 			this->Load += gcnew System::EventHandler(this, &ScheduleForm::ScheduleForm_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();

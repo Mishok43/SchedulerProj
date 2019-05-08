@@ -236,7 +236,7 @@ namespace Scheduler {
 			this->Controls->Add(this->labelSize);
 			this->Controls->Add(this->labelName);
 			this->Name = L"GroupInfoForm";
-			this->Text = L"GroupInfoForm";
+			this->Text = L"Группы | Редактирование";
 			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &GroupInfoForm::GroupInfoForm_FormClosing);
 			this->Load += gcnew System::EventHandler(this, &GroupInfoForm::GroupInfoForm_Load);
 			this->ResumeLayout(false);
