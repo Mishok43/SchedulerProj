@@ -116,7 +116,7 @@ namespace Scheduler {
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->dataGridView);
 			this->Name = L"ErrorListForm";
-			this->Text = L"ErrorListForm";
+			this->Text = L"Синтаксические ошибки";
 			this->Load += gcnew System::EventHandler(this, &ErrorListForm::ErrorListForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView))->EndInit();
 			this->ResumeLayout(false);

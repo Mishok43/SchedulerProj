@@ -216,6 +216,7 @@ namespace Scheduler {
 			this->buttonDebug->TabIndex = 42;
 			this->buttonDebug->Text = L"DEBUG INFO";
 			this->buttonDebug->UseVisualStyleBackColor = true;
+			this->buttonDebug->Visible = false;
 			this->buttonDebug->Click += gcnew System::EventHandler(this, &ClassroomInfoForm::buttonDebug_Click);
 			// 
 			// buttonHelp

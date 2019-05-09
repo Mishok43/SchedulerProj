@@ -201,28 +201,28 @@ namespace Scheduler {
 			// newToolStripMenuItem
 			// 
 			this->newToolStripMenuItem->Name = L"newToolStripMenuItem";
-			this->newToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->newToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->newToolStripMenuItem->Text = L"Создать";
 			this->newToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::newToolStripMenuItem_Click);
 			// 
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->openToolStripMenuItem->Text = L"Открыть";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(162, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(180, 22);
 			this->saveToolStripMenuItem->Text = L"Сохранить";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::saveToolStripMenuItem_Click);
 			// 
 			// saveAsToolStripMenuItem1
 			// 
 			this->saveAsToolStripMenuItem1->Name = L"saveAsToolStripMenuItem1";
-			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(162, 22);
+			this->saveAsToolStripMenuItem1->Size = System::Drawing::Size(180, 22);
 			this->saveAsToolStripMenuItem1->Text = L"Сохранить как...";
 			this->saveAsToolStripMenuItem1->Click += gcnew System::EventHandler(this, &MainForm::saveAsToolStripMenuItem1_Click);
 			// 
@@ -243,7 +243,7 @@ namespace Scheduler {
 			this->MaximizeBox = false;
 			this->Name = L"MainForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
-			this->Text = L"Scheduler";
+			this->Text = L"Составитель расписания";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->menuStrip->ResumeLayout(false);
 			this->menuStrip->PerformLayout();
@@ -310,12 +310,21 @@ private: System::Void openToolStripMenuItem_Click(System::Object^  sender, Syste
 		GlobalData::Path = msclr::interop::marshal_as<string>(dialog->FileName);
 
 
-		ifstream in(GlobalData::Path);
-		in >> MainData;
-		Activity::GlobalGroups = MainData.Groups;
-		Activity::GlobalTeachers = MainData.Teachers;
-		in >> Schedule;
-		in.close();
+
+		try 
+		{
+			ifstream in(GlobalData::Path);
+			in >> MainData;
+			Activity::GlobalGroups = MainData.Groups;
+			Activity::GlobalTeachers = MainData.Teachers;
+			in >> Schedule;
+			in.close();
+		}
+		catch (exception& e)
+		{
+			MessageBox::Show("Некорректный формат файла. \n Ошибка при чтении: "+ gcnew System::String(e.what()));
+			return;
+		}
 
 
 		CheckPasswordBox ^ check = gcnew CheckPasswordBox;

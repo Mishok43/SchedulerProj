@@ -114,7 +114,7 @@ namespace Scheduler {
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->textBox);
 			this->Name = L"TagTextBox";
-			this->Text = L"TagTextBox";
+			this->Text = L"Теги";
 			this->Load += gcnew System::EventHandler(this, &TagTextBox::TagTextBox_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
