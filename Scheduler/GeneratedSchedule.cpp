@@ -157,6 +157,11 @@ void GeneratedSchedule::reset()
 	hour.clear();
 }
 
+void GeneratedSchedule::chooseSolution(int sol)
+{
+	hour = solutions[sol].first;
+}
+
 vector<array<float, SCHPARAMS>> GeneratedSchedule::getSolutionsParams()
 {
 	vector<array<float, SCHPARAMS>> v;
@@ -177,7 +182,6 @@ void GeneratedSchedule::generate()
 	doneEnding = false;
 
 	tempHour.clear();
-	chosenIndex = -1;
 	solutions.clear();
 
 	for (int i = 0; i < MAXSOLUTIONS; i++)
@@ -404,9 +408,7 @@ void GeneratedSchedule::generate()
 		doneEnding = true;
 
 
-		if (chosenIndex!=-1)
-			hour = solutions[chosenIndex].first;
-
+		
 		
 
 		//process = 1000;

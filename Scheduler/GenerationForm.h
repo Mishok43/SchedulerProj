@@ -197,6 +197,7 @@ namespace Scheduler {
 			this->buttonEnd->TabIndex = 4;
 			this->buttonEnd->Text = L"Выбрать решение";
 			this->buttonEnd->UseVisualStyleBackColor = true;
+			this->buttonEnd->Click += gcnew System::EventHandler(this, &GenerationForm::buttonEnd_Click);
 			// 
 			// label2
 			// 
@@ -364,8 +365,8 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 	
 	int chosenIndex = this->dataGridView1->CurrentCell->RowIndex;
 
-	//if (Schedule.getSolutionsParams()[chosenIndex][2] < 0)
-	//	return;
+	if (Schedule.getSolutionsParams()[chosenIndex][2] < 0)
+		return;
 	
 
 	tm from = Rules::Settings.StartDate;
@@ -389,6 +390,17 @@ private: System::Void buttonExport_Click(System::Object^  sender, System::EventA
 		Schedule.exportXls(chosenIndex, (RuleData::objtype)k, this->checkBoxWeek->Checked, Rules::dateToDay(from), Rules::dateToDay(to), path.c_str());
 	}
 	}
+private: System::Void buttonEnd_Click(System::Object^  sender, System::EventArgs^  e) {
+	
+	int chosenIndex = this->dataGridView1->CurrentCell->RowIndex;
+
+	if (Schedule.getSolutionsParams()[chosenIndex][2] < 0)
+		return;
+
+	Schedule.chooseSolution(chosenIndex);
+
+	this->Close();
+}
 };
 
 

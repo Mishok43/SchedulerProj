@@ -45,14 +45,14 @@ public:
 	friend std::istream& operator>>(std::istream& is, GeneratedSchedule& schedule);
 
 	float* process;
-	int solutionsFound;
+	long long  solutionsFound;
 
 	bool onPause;
 	bool ending;
 	bool doneEnding;
 
-
-	int chosenIndex;
+	void chooseSolution(int sol);
+	
 	
 	vector<array<float, SCHPARAMS>> getSolutionsParams();
 private:
